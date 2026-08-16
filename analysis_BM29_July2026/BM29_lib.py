@@ -13,10 +13,10 @@ def extract_sample_name(sample):
     return result, block
 
 def blockpath(block):
-     bpath = Path("C:/Users/rikoh/Documents/Physik Göttingen&Grenoble 2022-2026/8. SoSe 26/SHK Synaptische Proteine, Lipidmembranen SoSe 2026/Code/BM29_data_and_analysis/data_BM29_July2026") / block
-    # bpath = Path("C:/Users/riko05/Documents/8. SoSe 26/Code/BM29_data_and_analysis_2026/data_BM29_July2026") / block
+    # bpath = Path("C:/Users/rikoh/Documents/Physik Göttingen&Grenoble 2022-2026/8. SoSe 26/SHK Synaptische Proteine, Lipidmembranen SoSe 2026/Code/BM29_data_and_analysis/data_BM29_July2026") / block
+    bpath = Path("C:/Users/riko05/Documents/8. SoSe 26/Code/BM29_data_and_analysis_2026/data_BM29_July2026") / block
     #  bpath = Path("/home/AG_Salditt/Projekte_Membranbiophysik/PSCM_Riko/Code and data/BM29_data_and_analysis_2026/data_BM29_July2026") / block
-     return bpath
+    return bpath
 
 def plot_together(who, title):
     """
