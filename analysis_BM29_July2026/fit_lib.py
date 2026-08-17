@@ -1,15 +1,16 @@
+import multiprocessing
 import numpy as np
 import matplotlib.pyplot as plt
 # import fabio
 # import pyFAI
 import os
-
 from scipy import optimize
 from scipy.optimize import curve_fit
 import scipy
 from pathlib import Path
 from multiprocessing import Pool
 from functools import partial
+from tqdm import tqdm
 
 plt.rcParams['font.size']   = 18
 plt.rcParams['text.usetex'] = True
@@ -243,7 +244,6 @@ def F_ell_asym(theta, q, R, eps, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_
     return res
 
 # ============== ellipsoid lipid bilayer shell vesicle model =====================================================
-from tqdm import tqdm
 rho_c = 1
 
 
