@@ -7,22 +7,22 @@ plt.rcParams["text.usetex"] = False
 from scipy import optimize
 from scipy.optimize import curve_fit
 
-target_folder = Path("C:/Users/riko05/Documents/8. SoSe 26/Code/BM29_data_and_analysis_2026/analysis_BM29_July2026/Results_and_Figures/Aug16")
+target_folder = Path("/home/AG_Salditt/Projekte_Membranbiophysik/PSCM_Riko/Code and data/BM29_data_and_analysis_2026/analysis_BM29_July2026/Results_and_Figures/Aug16")
 
 who = [
-    "BII_S9",
+    # "BII_S9",
 
     # LV4 + aSyn WT
     # "BIV_S1",
     # "BIV_S2",
     # "BIV_S3",
     # "BIV_S4",
-    "BIV_S5",
+    # "BIV_S5",
     "BIV_S6",
     "BIV_S7",
-    "BIV_S8",
-    "BIV_S9",
-    "BIV_S10",
+    # "BIV_S8",
+    # "BIV_S9",
+    # "BIV_S10",
 
     # LV4 + aSyn A124T
     # "BIV_S21",
@@ -32,9 +32,9 @@ who = [
     "BIV_S25",
     "BIV_S26",
     "BIV_S27",
-    "BIV_S28",
-    "BIV_S29",
-    "BIV_S30",  
+    # "BIV_S28",
+    # "BIV_S29",
+    # "BIV_S30",  
 ]
 
 for sample in who:
@@ -88,7 +88,7 @@ for sample in who:
     upper_bounds = [       25,        9,     1.5,       0.7,       3,      3,        0.6,      0.6,      1.1,        2,  +np.inf] # ,  0.2,  0.5,  +np.inf]
 
     #======================== Fit ===========================================
-    popt, pcov = curve_fit(fit_function, q, I, sigma=I_err, maxfev=5000, p0=p0, bounds = (lower_bounds, upper_bounds))
+    popt, pcov = curve_fit(fit_function, q_thinned, I_thinned, sigma=I_err_thinned, maxfev=5000, p0=p0, bounds = (lower_bounds, upper_bounds))
 
     param_names = ["R_fit", "sigma_R_fit", "eps_fit", "sigma_eps_fit", "rho_h1_fit", "rho_h2_fit",
                   "sigma_h1_fit", "sigma_h2_fit", "sigma_c_fit","z_h_fit","scale_fit"]
@@ -126,10 +126,9 @@ for sample in who:
 
     plt.tight_layout()
     plt.savefig(target_folder / f"fit_{BM29.sample_dict[sample]}_Aug16.png", bbox_inches='tight', pad_inches=0.05)
-    plt.show()
+    # plt.show()
     #==================== EDP Plot ==================================================
-    fig=fit.EDP_plot(R, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text, 
-                f'{BM29.sample_dict[sample]} using ellipsoidal asym (op. error)')
+    fig=fit.EDP_plot(R_fit, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text_print, f'{BM29.sample_dict[sample]} using ellipsoidal asym (op. error)')
     fig.savefig(target_folder / f"fit_EDP_{BM29.sample_dict[sample]}_Aug16.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
 
     
