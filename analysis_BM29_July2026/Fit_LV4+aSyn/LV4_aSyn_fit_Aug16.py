@@ -1,6 +1,8 @@
+from pathlib import Path
+import sys
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 import fit_lib as fit
 import BM29_lib as BM29
-from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 plt.rcParams["text.usetex"] = False
@@ -52,7 +54,7 @@ for sample in who:
 
     q     = q
     I     = I 
-    I_err = Ierr # np.maximum(I, 0) / 30
+    I_err = np.abs(I / 30) #Ierr # np.maximum(I, 0) / 30
 
     thinning = 2
     q_thinned = q[::thinning]
