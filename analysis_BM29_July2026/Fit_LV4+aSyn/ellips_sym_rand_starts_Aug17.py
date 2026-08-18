@@ -35,7 +35,7 @@ I_err_op = np.abs(I * 1/30)
 thinning = 4
 q_thinned = q[::thinning]
 I_thinned = I[::thinning]
-I_err_thinned = I_err_op[::thinning]
+I_err_thinned = I_err_Poisson[::thinning]
 
 # ========================== Parameters ==========================
 R = 20
@@ -85,12 +85,12 @@ chi2 = 114.76
 
 # popt = [        R_fit,  sigma_R_fit,     eps_fit, sigma_eps_fit,  rho_h_fit, sigma_h_fit,  sigma_c_fit,      z_h_fit,    scale_fit,   c2_fit,   c3_fit,       c4_fit]
 p0           = [        R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [       10,        3,     0.7,       0.2,    1.0,    0.13,        0.5,      1.5,        0] # ,    0,    0,  -np.inf]
-upper_bounds = [       16,        7,     1.0,       0.7,    2.5,     0.6,          1,      2.2,    0.001] # ,  0.2,  0.5,  +np.inf]
+lower_bounds = [       11,        4,     0.8,       0.0,    1.0,    0.13,        0.5,      1.5,        0] # ,    0,    0,  -np.inf]
+upper_bounds = [       25,        6,     0.9,       0.7,    2.5,     0.5,        0.9,      2.2,    0.001] # ,  0.2,  0.5,  +np.inf]
 
 chi2 = 1e6
-chi2_goal = 50
-i = 1
+chi2_goal = 10
+i = 3
 
 if __name__ == "__main__":
     while chi2 > chi2_goal:
