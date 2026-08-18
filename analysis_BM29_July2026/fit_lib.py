@@ -924,7 +924,7 @@ def EDP_analysis(params):
 def EDP_plot(R, sigma_h1, sigma_h2, sigma_tail, rho_h1, rho_h2, eps_h1, eps_h2, info_text, title, z_h3=2.2, sigma_h3=1, rho_h3=0):
 
     R = 0
-    r = np.linspace(R - 2*eps_h1, R + 2*eps_h2, 1500)
+    r = np.linspace(R - 2*eps_h1, R + 3*eps_h2, 1500)
     rho_h   = [rho_h1, -1, rho_h2, rho_h3]
     rho_pos = [R - eps_h1, R, R + eps_h2, R + z_h3]
     sigma   = [sigma_h1, sigma_tail, sigma_h2, sigma_h3]

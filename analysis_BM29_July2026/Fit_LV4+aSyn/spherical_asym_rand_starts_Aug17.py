@@ -30,6 +30,9 @@ q     = q
 I     = I
 I_err_Poisson = Ierr
 I_err_op = np.abs(I * 1/30) 
+mask = (q <= 0.1) & (q >= 4.1)
+I_err_op[mask] = np.abs(I[mask] * 1/15) 
+I_err_Poisson[mask] = I_err_Poisson[mask] * 2
 
 # ========================== Parameters ==========================
 R = 18
@@ -52,7 +55,7 @@ lower_bounds = [   9,          2,      0.8,      0.8,       0.13,      0.13,    
 upper_bounds = [  25,          8,        4,        4,        0.7,       0.7,      1.2,      2,   0.001] #,       4,     0.5, +np.inf]
 
 chi2 = 1e6
-chi2_goal = 10
+chi2_goal = 20
 i = 4
 while chi2 > chi2_goal:
     if i % 100 == 0:
@@ -75,7 +78,7 @@ while chi2 > chi2_goal:
     # print(fit_lib_entry)
     chi2, info_text_print = fit.all_info(q, I, I_err_Poisson, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-    if chi2 < 25:
+    if chi2 < 30:
         this_file = Path(__file__).resolve()
         analysis_BM29_July2026 = this_file.parent.parent
         target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / f"fit_{fit_function_name}"
@@ -97,7 +100,7 @@ while chi2 > chi2_goal:
 
         plt.xlabel('$q [1/\\mathrm{nm}]$')
         plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
-        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (Poisson error)')
+        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (op. error)')
         plt.grid(True)
         legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
         legend.set_title(info_text_print)
