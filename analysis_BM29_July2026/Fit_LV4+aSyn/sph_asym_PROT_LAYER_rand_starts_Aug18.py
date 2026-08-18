@@ -49,13 +49,13 @@ rho_h3 = 0.5
 scale = 5e-7
 # ========================== Setting Bounds ==============================
 p0           = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [       10,        2,          0.4,    0.4,        0.1,      0.1,      0.5,      1.5,     2,      0.2,      0.0,        0] #,    0,    0,  -np.inf]
-upper_bounds = [       25,        9,            4,      4,        0.7,      0.7,        1,        2,     5,      1.5,      2.0,   0.0001] # ,  0.2,  0.5,  +np.inf]
+lower_bounds = [       10,        4,          0.4,    0.4,        0.1,      0.1,      0.5,      1.5,     2,      0.2,      0.0,        0] #,    0,    0,  -np.inf]
+upper_bounds = [       15,        9,            4,      4,        0.7,      0.7,        1,        2,     5,      1.5,      2.0,   0.0001] # ,  0.2,  0.5,  +np.inf]
 
 
 chi2 = 1e6
 chi2_goal = 6
-i = 1
+i = 3
 if __name__ == "__main__":
     while chi2 > chi2_goal:
         print(f"Iteration {i}, current chi2 = {chi2:.4g}")
