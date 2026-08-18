@@ -14,7 +14,7 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ULV_spheric_asym"
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, 0)
-DAY = "Aug17"
+DAY = "Aug18"
 
 # -------------- LOAD DATA --------------------------------------------------
 sample = "BII_S9" # "BII_S9_15mM_LV4_PBS_FVII"
@@ -43,13 +43,17 @@ z_h = 1.75
 scale = 0.00013965
 
 # ========================== Setting Bounds ==============================
+# p0           = [   R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale] #,      c2,      c3,      c4]
+# lower_bounds = [   9,          3,      1.0,      1.0,       0.15,      0.15,      0.5,    1.5,       0] #,       0,       0, -np.inf]
+# upper_bounds = [  30,          9,      2.5,      2.5,        0.6,       0.6,      1.0,      2,     0.2] #,       4,     0.5, +np.inf]
+
 p0           = [   R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale] #,      c2,      c3,      c4]
-lower_bounds = [   9,          3,      1.0,      1.0,       0.15,      0.15,      0.5,    1.5,       0] #,       0,       0, -np.inf]
-upper_bounds = [  30,          9,      2.5,      2.5,        0.6,       0.6,      1.0,      2,     0.2] #,       4,     0.5, +np.inf]
+lower_bounds = [   9,          2,      0.8,      0.8,       0.13,      0.13,      0.5,    1.5,       0] #,       0,       0, -np.inf]
+upper_bounds = [  25,          8,        4,        4,        0.7,       0.7,      1.2,      2,   0.001] #,       4,     0.5, +np.inf]
 
 chi2 = 1e6
-chi2_goal = 50
-i = 1
+chi2_goal = 10
+i = 4
 while chi2 > chi2_goal:
     if i % 100 == 0:
         print(f"Iteration {i}, current chi2 = {chi2:.4g}")
@@ -57,7 +61,7 @@ while chi2 > chi2_goal:
     p0 = np.random.uniform(lower_bounds, upper_bounds)
 
     #======================== Fit ===========================================
-    popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_op, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
+    popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_Poisson, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
 
     param_names = ["R_fit", "sigma_R_fit", "rho_h1_fit", "rho_h2_fit", "sigma_h1_fit", "sigma_h2_fit", "sigma_c_fit", "z_h_fit", "scale_fit"]
 
@@ -71,7 +75,7 @@ while chi2 > chi2_goal:
     # print(fit_lib_entry)
     chi2, info_text_print = fit.all_info(q, I, I_err_Poisson, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-    if chi2 < 200:
+    if chi2 < 25:
         this_file = Path(__file__).resolve()
         analysis_BM29_July2026 = this_file.parent.parent
         target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / f"fit_{fit_function_name}"
@@ -81,7 +85,7 @@ while chi2 > chi2_goal:
         print("Fit successful with chi2 = ", chi2)
         print(info_text_print)
         with open(target_folder/f"info_texts_{DAY}.txt", "a", encoding="utf-8") as k:
-            k.write(f"\n\n{BM29.sample_dict[sample]} using {fit_function_name}\n" + info_text_print + "\n" + fit_lib_entry + "\n###########################################\n")
+            k.write(f"\n\n{BM29.sample_dict[sample]} using {fit_function_name} with fit nr. {i}\n" + info_text_print + "\n" + fit_lib_entry + "\n###########################################\n")
 
         #=========================== Plot ===========================================
         q_fit = np.linspace(min(q), max(q), 1000)
@@ -93,7 +97,7 @@ while chi2 > chi2_goal:
 
         plt.xlabel('$q [1/\\mathrm{nm}]$')
         plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
-        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (op. error)')
+        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (Poisson error)')
         plt.grid(True)
         legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
         legend.set_title(info_text_print)
