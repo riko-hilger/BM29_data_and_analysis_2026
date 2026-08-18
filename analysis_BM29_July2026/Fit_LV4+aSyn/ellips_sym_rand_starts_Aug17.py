@@ -14,7 +14,8 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ellipsoid_sym"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale: fit.ULV_ellipsoid(q, R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale,   0, 0, 0)
-DAY = "Aug17"
+DAY = "Aug18"
+print(DAY)
 
 # -------------- LOAD DATA --------------------------------------------------
 sample = "BII_S9" # "BII_S9_15mM_LV4_PBS_FVII"
@@ -50,11 +51,42 @@ c2 = 0
 c3 = 0
 c4 = 0.007
 
+"""
+BII_S9_15mM_LV4_PBS_FVII using ellipsoid_sym
+R = 29.286 (9, 30)
+sigma_R = 4.3412 (2, 9)
+eps = 0.92634 (0.8, 1.5)
+sigma_eps = 0.12049 (0, 0.7)
+rho_h = 1.7716 (1.0, 2.5)
+sigma_h = 0.27334 (0.15, 0.6)
+sigma_c = 0.89605 (0.5, 1)
+z_h = 1.5266 (1.5, 2)
+scale = 0.0037534 (0, 0.01)
+chi2_initial = 1.0719e+13
+ 
+R_fit = 13.476 ± 0.32321
+sigma_R_fit = 4.9124 ± 0.23382
+eps_fit = 0.85322 ± 0.083741
+sigma_eps_fit = 0.44145 ± 0.078613
+rho_h_fit = 2.1212 ± 0.17401
+sigma_h_fit = 0.16418 ± 0.01432
+sigma_c_fit = 0.59212 ± 0.033699
+z_h_fit = 1.9427 ± 0.029883
+scale_fit = 5.5829e-07 ± 6.4782e-08
+chi2 = 114.76
+[13.48, 4.912, 0.8532, 0.4415, 2.121, 0.1642, 0.5921, 1.943, 5.583e-07]
+"""
+
 # ========================== Setting Bounds ==============================
 # popt = [        R_fit,  sigma_R_fit,     eps_fit, sigma_eps_fit,  rho_h_fit, sigma_h_fit,  sigma_c_fit,      z_h_fit,    scale_fit,   c2_fit,   c3_fit,       c4_fit]
+# p0           = [        R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale] # ,   c2,   c3,       c4]
+# lower_bounds = [        9,        2,     0.8,         0,    1.0,    0.15,        0.5,      1.5,        0] # ,    0,    0,  -np.inf]
+# upper_bounds = [       30,        9,     1.5,       0.7,    2.5,     0.6,          1,        2,     0.01] # ,  0.2,  0.5,  +np.inf]
+
+# popt = [        R_fit,  sigma_R_fit,     eps_fit, sigma_eps_fit,  rho_h_fit, sigma_h_fit,  sigma_c_fit,      z_h_fit,    scale_fit,   c2_fit,   c3_fit,       c4_fit]
 p0           = [        R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [        9,        2,     0.8,         0,    1.0,    0.15,        0.5,      1.5,        0] # ,    0,    0,  -np.inf]
-upper_bounds = [       30,        9,     1.5,       0.7,    2.5,     0.6,          1,        2,     0.01] # ,  0.2,  0.5,  +np.inf]
+lower_bounds = [       10,        3,     0.7,       0.2,    1.0,    0.13,        0.5,      1.5,        0] # ,    0,    0,  -np.inf]
+upper_bounds = [       16,        7,     1.0,       0.7,    2.5,     0.6,          1,      2.2,    0.001] # ,  0.2,  0.5,  +np.inf]
 
 chi2 = 1e6
 chi2_goal = 50
