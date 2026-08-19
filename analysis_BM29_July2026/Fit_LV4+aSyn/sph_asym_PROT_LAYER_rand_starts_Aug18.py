@@ -14,7 +14,7 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ULV_sph_asym_prot_layer"
 fit_function = lambda q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale: fit.ULV_sph_asym_prot_layer(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, 0, 0, 0)
-DAY = "Aug18"
+DAY = "Aug19"
 
 # -------------- LOAD DATA --------------------------------------------------
 sample = "BIV_S9" # "BII_S9_15mM_LV4_PBS_FVII"
@@ -49,8 +49,8 @@ rho_h3 = 0.5
 scale = 5e-7
 # ========================== Setting Bounds ==============================
 p0           = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [       10,        4,          0.4,    0.4,        0.1,      0.1,      0.5,      1.5,     2,      0.2,      0.0,        0] #,    0,    0,  -np.inf]
-upper_bounds = [       15,        9,            4,      4,        0.7,      0.7,        1,        2,     5,      1.5,      2.0,   0.0001] # ,  0.2,  0.5,  +np.inf]
+lower_bounds = [       10,        3,          0.4,    0.4,        0.1,      0.1,      0.5,      1.5,     2,      0.2,      0.0,        0] #,    0,    0,  -np.inf]
+upper_bounds = [       20,        9,          2.5,    2.5,        0.7,      0.7,        1,        2,     5,      1.5,      2.0,   0.0001] # ,  0.2,  0.5,  +np.inf]
 
 
 chi2 = 1e6
