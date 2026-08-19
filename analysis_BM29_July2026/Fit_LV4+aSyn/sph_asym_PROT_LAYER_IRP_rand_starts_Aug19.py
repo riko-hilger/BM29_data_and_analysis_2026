@@ -63,7 +63,7 @@ if __name__ == "__main__":
         p0 = np.random.uniform(lower_bounds, upper_bounds)
 
         #======================== Fit ===========================================
-        popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_Poisson, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
+        popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_op, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
 
         param_names = ["R_fit", "sigma_R_fit", "rho_h1_fit", "rho_h2_fit",
                     "sigma_h1_fit", "sigma_h2_fit", "sigma_c_fit","z_h_fit", "z_h3_fit", "sigma_h3_fit", "rho_h3_fit", "scale_fit"]
