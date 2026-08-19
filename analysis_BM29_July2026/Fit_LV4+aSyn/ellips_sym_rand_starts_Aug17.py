@@ -14,8 +14,7 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ellipsoid_sym"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale: fit.ULV_ellipsoid(q, R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale,   0, 0, 0)
-DAY = "Aug18"
-print(DAY)
+DAY = "Aug19"
 
 # -------------- LOAD DATA --------------------------------------------------
 sample = "BII_S9" # "BII_S9_15mM_LV4_PBS_FVII"
@@ -31,6 +30,9 @@ q     = q
 I     = I
 I_err_Poisson = Ierr
 I_err_op = np.abs(I * 1/30) 
+mask = (q <= 0.1) & (q >= 4.1)
+I_err_op[mask] = np.abs(I[mask] * 1/15) 
+I_err_Poisson[mask] = I_err_Poisson[mask] * 2
 
 thinning = 4
 q_thinned = q[::thinning]
@@ -85,8 +87,8 @@ chi2 = 114.76
 
 # popt = [        R_fit,  sigma_R_fit,     eps_fit, sigma_eps_fit,  rho_h_fit, sigma_h_fit,  sigma_c_fit,      z_h_fit,    scale_fit,   c2_fit,   c3_fit,       c4_fit]
 p0           = [        R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [       11,        4,     0.8,       0.0,    1.0,    0.13,        0.5,      1.5,        0] # ,    0,    0,  -np.inf]
-upper_bounds = [       25,        6,     0.9,       0.7,    2.5,     0.5,        0.9,      2.2,    0.001] # ,  0.2,  0.5,  +np.inf]
+lower_bounds = [       14,      4.5,     0.8,       0.0,    1.0,    0.10,        0.5,      1.8,        0] # ,    0,    0,  -np.inf]
+upper_bounds = [       19,        6,     1.0,       0.7,    2.8,     0.5,        0.7,      2.0,   0.0001] # ,  0.2,  0.5,  +np.inf]
 
 chi2 = 1e6
 chi2_goal = 10
