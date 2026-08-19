@@ -92,7 +92,7 @@ upper_bounds = [       19,        6,     1.0,       0.7,    2.8,     0.5,       
 
 chi2 = 1e6
 chi2_goal = 10
-i = 1
+i = 4
 
 if __name__ == "__main__":
     while chi2 > chi2_goal:

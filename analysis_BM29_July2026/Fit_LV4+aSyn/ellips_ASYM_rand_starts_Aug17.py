@@ -14,7 +14,7 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ellipsoid_asym"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, 0)
-DAY = "Aug18"
+DAY = "Aug19"
 
 # -------------- LOAD DATA --------------------------------------------------
 sample = "BII_S9" # "BII_S9_15mM_LV4_PBS_FVII"
@@ -30,6 +30,9 @@ q     = q
 I     = I
 I_err_Poisson = Ierr
 I_err_op = np.abs(I * 1/30) 
+mask = (q <= 0.1) & (q >= 4.1)
+I_err_op[mask] = np.abs(I[mask] * 1/15) 
+I_err_Poisson[mask] = I_err_Poisson[mask] * 2
 
 thinning = 4
 q_thinned = q[::thinning]
@@ -37,19 +40,19 @@ I_thinned = I[::thinning]
 I_err_thinned = I_err_Poisson[::thinning]
 
 # ========================== Parameters ==========================
-R       = 14.019
-sigma_R = 4.2152
+R       = 16.13
+sigma_R = 4.99
 eps  = 1
-sigma_eps = 0.0000001
+sigma_eps = 0.437
 
-rho_h1   = 1.1
-rho_h2   = 1.4244
-sigma_h1 = 0.48867
-sigma_h2 = 0.27396
-sigma_c = 0.79833
-z_h = 1.844
+rho_h1   = 2.8
+rho_h2   = 2.5
+sigma_h1 = 0.13
+sigma_h2 = 0.12
+sigma_c = 0.558
+z_h = 1.8468
 
-scale = 0.00002445 
+scale = 3.66e-7
 """
 BII_S9_15mM_LV4_PBS_FVII using ellipsoid_sym
 R = 15.545 (11, 16)
@@ -82,8 +85,8 @@ chi2 = 25.125
 # upper_bounds = [       30,        9,     1.5,       0.6,     2.5,    2.5,        0.6,      0.6,        1,        2,    0.001] # ,  0.2,  0.5,  +np.inf]
 
 p0           = [        R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [       15,        4,    0.80,         0,     1.0,    1.0,       0.12,     0.12,      0.5,      1.7,        0] # ,    0,    0,  -np.inf]
-upper_bounds = [       17,        6,     1.0,       0.6,       3,      3,        0.6,      0.6,      0.9,      2.0,    0.001] # ,  0.2,  0.5,  +np.inf]
+lower_bounds = [       15,      4.5,    0.82,         0,     2.0,    2.0,       0.10,     0.10,      0.5,      1.8,        0] # ,    0,    0,  -np.inf]
+upper_bounds = [       17,      6.0,     1.1,       0.6,       3,      3,        0.5,      0.5,      0.9,     1.95,     1e-5] # ,  0.2,  0.5,  +np.inf]
 
 chi2 = 1e6
 chi2_goal = 6
@@ -93,7 +96,6 @@ if __name__ == "__main__":
     while chi2 > chi2_goal:
         print(f"Iteration {i}, current chi2 = {chi2:.4g}")
         print("Current params: ", p0)
-        p0 = np.random.uniform(lower_bounds, upper_bounds)
 
         #======================== Fit ===========================================
         popt, pcov = curve_fit(fit_function, q_thinned, I_thinned, sigma=I_err_thinned, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
@@ -108,7 +110,7 @@ if __name__ == "__main__":
             fit_lib_entry += f"{value:.4g}, "
         fit_lib_entry = fit_lib_entry[:-2]
         fit_lib_entry += "]"
-        # print(fit_lib_entry)
+        print(fit_lib_entry)
         chi2, info_text_print = fit.all_info(q, I, I_err_Poisson, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
         this_file = Path(__file__).resolve()
@@ -132,13 +134,15 @@ if __name__ == "__main__":
 
         plt.xlabel('$q [1/\\mathrm{nm}]$')
         plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
-        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (Poisson error)')
+        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (improv. Poisson err)')
         plt.grid(True)
         legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
         legend.set_title(info_text_print)
         plt.tight_layout()
         plt.savefig(target_folder / f"{sample}_{fit_function_name}_{i}_{DAY}.png",dpi=400, bbox_inches='tight', pad_inches=0.05)
-        # fig = fit.EDP_plot(R_fit, sigma_head, sigma_head, sigma_tail, rho_head, rho_head, eps_head, eps_head, info_text_print, 
-        #             f'{sample} using {fit_function_name}, nr. {i}')
-        # fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{i}_{DAY}.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
+        fig = fit.EDP_plot(R_fit, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text_print, 
+                           f'{sample} using {fit_function_name}, nr. {i}')
+        fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{i}_{DAY}.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
+
+        p0 = np.random.uniform(lower_bounds, upper_bounds)
         i += 1
