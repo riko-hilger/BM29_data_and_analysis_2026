@@ -35,32 +35,47 @@ I_err_op[mask] = np.abs(I[mask] * 1/15)
 I_err_Poisson[mask] = I_err_Poisson[mask] * 2
 
 # ========================== Parameters ==========================
-R = 10
-sigma_R = 5.5  # BEST FROM SPHERICAL ASYM FIT
-rho_h1 = 1.8
-rho_h2 = 1.15
-sigma_h1 = 0.3
-sigma_h2 = 0.44
-sigma_c = 0.5
-z_h = 1.76
-z_h3 = 2.9
-sigma_h3 = 0.3
-rho_h3 = 0.5
-scale = 5e-7
-# ========================== Setting Bounds ==============================
-p0           = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [       10,        3,          0.4,    0.4,        0.1,      0.1,      0.5,      1.5,     2,      0.2,      0.0,        0] #,    0,    0,  -np.inf]
-upper_bounds = [       20,        9,          2.5,    2.5,        0.7,      0.7,        1,        2,     5,      1.5,      2.0,   0.0001] # ,  0.2,  0.5,  +np.inf]
+# R_fit = 14.92 ± 0.30916
+# sigma_R_fit = 8 ± 0.15377
+# rho_h1_fit = 0.9473 ± 0.066661
+# rho_h2_fit = 2.5 ± 0.055027
+# sigma_h1_fit = 0.6 ± 0.0095372
+# sigma_h2_fit = 0.25496 ± 0.017453
+# sigma_c_fit = 1.1113 ± 0.084372
+# z_h_fit = 1.7849 ± 0.0044036
+# z_h3_fit = 4.5571 ± 0.2683
+# sigma_h3_fit = 1.2 ± 0.18786
+# rho_h3_fit = 0.037587 ± 0.0023078
+# scale_fit = 2.6192e-07 ± 7.688e-09
+# chi2 = 14.562
 
+# ========================== Setting Bounds ==============================
+# p0         = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale] # ,   c2,   c3,       c4]
+lower_bounds = [       13,        5,          0.9,    0.9,        0.1,      0.1,      0.5,      1.7,     3,      0.8,      0.0,        0] #,    0,    0,  -np.inf]
+upper_bounds = [       17,        9,          3.5,    3.5,        0.7,      0.7,     1.15,      1.9,     5,      1.9,      2.0,     1e-5] # ,  0.2,  0.5,  +np.inf]
+p0 = [
+    14.385,       # R_fit
+    8.5538,       # sigma_R_fit
+    1.0026,       # rho_h1_fit
+    3.0,          # rho_h2_fit
+    0.58528,      # sigma_h1_fit
+    0.21102,      # sigma_h2_fit
+    1.1381,       # sigma_c_fit
+    1.7946,       # z_h_fit
+    4.1512,       # z_h3_fit
+    1.5,          # sigma_h3_fit
+    0.041031,     # rho_h3_fit
+    2.5805e-07    # scale_fit
+]
 
 chi2 = 1e6
 chi2_goal = 5
-i = 14
+i = 18
 if __name__ == "__main__":
     while chi2 > chi2_goal:
         print(f"Iteration {i}, current chi2 = {chi2:.4g}")
-        print("Current params: ", p0)
         p0 = np.random.uniform(lower_bounds, upper_bounds)
+        print("Current params: ", p0)
 
         #======================== Fit ===========================================
         popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_Poisson, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
@@ -75,10 +90,10 @@ if __name__ == "__main__":
             fit_lib_entry += f"{value:.4g}, "
         fit_lib_entry = fit_lib_entry[:-2]
         fit_lib_entry += "]"
-        # print(fit_lib_entry)
+        print(fit_lib_entry)
         chi2, info_text_print = fit.all_info(q, I, I_err_Poisson, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-        if chi2 < 25:
+        if chi2 < 9.5:
             this_file = Path(__file__).resolve()
             analysis_BM29_July2026 = this_file.parent.parent
             target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / f"fit_{fit_function_name}"
@@ -96,7 +111,7 @@ if __name__ == "__main__":
             plt.figure(figsize=(12, 7.5))
             plt.errorbar(q, I, I_err_Poisson, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
             plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
-            plt.loglog(q_fit, fit_function(q_fit, R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale), color='orange', label='initial guess')
+            plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
 
             plt.xlabel('$q [1/\\mathrm{nm}]$')
             plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
@@ -109,5 +124,6 @@ if __name__ == "__main__":
 
             fig=fit.EDP_plot(R_fit, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text_print,  f'{BM29.sample_dict[sample]} using {fit_function_name} nr. {i}', z_h3_fit, sigma_h3_fit, rho_h3_fit)
             fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{i}.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
-
+            
+        
         i += 1
