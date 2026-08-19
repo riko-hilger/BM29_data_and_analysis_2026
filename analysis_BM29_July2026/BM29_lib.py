@@ -43,6 +43,26 @@ def plot_together(who, title):
     plt.legend()
     return
 
+def improved_Poisson_error_low_high(q, Ierr_Poisson):
+    mask = (q <= 0.1) & (q >= 4.1)
+    Ierr_Poisson_improved = Ierr_Poisson.copy()
+    Ierr_Poisson_improved[mask] = Ierr_Poisson[mask] * 2
+    return Ierr_Poisson_improved
+
+def op_error_classic(q, I):
+    mask = (q <= 0.1) & (q >= 4.1)
+    Ierr_op = np.abs(I * 1/30)
+    Ierr_op[mask] = np.abs(I[mask] * 1/15) 
+    return Ierr_op
+
+def op_error_focus_minimum_high(q, Ierr_Poisson):
+    mask1 = (q <= 0.1)
+    Ierr_op = Ierr_Poisson.copy()
+    Ierr_op[mask1] = Ierr_op[mask1] * 2
+    mask2 = ((q > 0.15) & (q < 0.4)) | (q >= 4.1)
+    Ierr_op[mask2] = Ierr_op[mask2] * 0.5
+    return Ierr_op
+
 sample_dict = {
     "BII_S1": "BII_S1_15mM_LV4_TBS",
     "BII_S2": "BII_S2_15mM_LV4_30nm_PBS",
