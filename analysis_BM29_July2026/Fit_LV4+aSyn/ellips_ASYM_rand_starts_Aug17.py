@@ -34,7 +34,7 @@ I_err_op = np.abs(I * 1/30)
 thinning = 4
 q_thinned = q[::thinning]
 I_thinned = I[::thinning]
-I_err_thinned = I_err_op[::thinning]
+I_err_thinned = I_err_Poisson[::thinning]
 
 # ========================== Parameters ==========================
 R       = 14.019
@@ -51,33 +51,29 @@ z_h = 1.844
 
 scale = 0.00002445 
 """
-BII_S9_15mM_LV4_PBS_FVII using ellipsoid_asym
-R = 25.678 (9, 30)
-sigma_R = 4.1007 (2, 9)
-eps = 1.2776 (0.8, 1.5)
-sigma_eps = 0.16797 (0, 0.6)
-rho_h1 = 2.3958 (1.0, 2.5)
-rho_h2 = 1.9401 (1.0, 2.5)
-sigma_h1 = 0.32919 (0.15, 0.6)
-sigma_h2 = 0.45234 (0.15, 0.6)
-sigma_c = 0.64306 (0.5, 1)
-z_h = 1.6711 (1.5, 2)
-scale = 0.00069516 (0, 0.001)
-chi2_initial = 1.1199e+14
+BII_S9_15mM_LV4_PBS_FVII using ellipsoid_sym
+R = 15.545 (11, 16)
+sigma_R = 5.1886 (4, 6)
+eps = 0.81488 (0.8, 0.9)
+sigma_eps = 0.40363 (0.0, 0.7)
+rho_h = 1.3832 (1.0, 2.5)
+sigma_h = 0.17433 (0.13, 0.5)
+sigma_c = 0.64154 (0.5, 0.9)
+z_h = 1.5327 (1.5, 2.2)
+scale = 0.00015445 (0, 0.001)
+chi2_initial = 8.9667e+08
  
-R_fit = 15.603 ± 5.9099
-sigma_R_fit = 3.9839 ± 2.0713
-eps_fit = 0.88111 ± 0.17323
-sigma_eps_fit = 0.51069 ± 0.11695
-rho_h1_fit = 2.1707 ± 21.861
-rho_h2_fit = 1.6637 ± 17.318
-sigma_h1_fit = 0.16933 ± 1.7051
-sigma_h2_fit = 0.1715 ± 1.7921
-sigma_c_fit = 0.52941 ± 0.033732
-z_h_fit = 2 ± 0.032804
-scale_fit = 4.9218e-07 ± 3.3719e-07
-chi2 = 317.64
-[15.6, 3.984, 0.8811, 0.5107, 2.171, 1.664, 0.1693, 0.1715, 0.5294, 2, 4.922e-07]
+R_fit = 16 ± 0.38935
+sigma_R_fit = 5.1402 ± 0.33214
+eps_fit = 0.9 ± 0.06058
+sigma_eps_fit = 0.46436 ± 0.017759
+rho_h_fit = 2.5 ± 0.4217
+sigma_h_fit = 0.13619 ± 0.028892
+sigma_c_fit = 0.56261 ± 0.032527
+z_h_fit = 1.897 ± 0.018051
+scale_fit = 4.1576e-07 ± 3.8304e-08
+chi2 = 25.125
+[16, 5.14, 0.9, 0.4644, 2.5, 0.1362, 0.5626, 1.897, 4.158e-07]
 """
 
 # ========================== Setting Bounds ==============================
@@ -86,11 +82,11 @@ chi2 = 317.64
 # upper_bounds = [       30,        9,     1.5,       0.6,     2.5,    2.5,        0.6,      0.6,        1,        2,    0.001] # ,  0.2,  0.5,  +np.inf]
 
 p0           = [        R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale] # ,   c2,   c3,       c4]
-lower_bounds = [       12,        2,     0.7,         0,     1.0,    1.0,       0.12,     0.12,      0.5,      1.5,        0] # ,    0,    0,  -np.inf]
-upper_bounds = [       18,        6,     1.0,       0.6,     2.5,    2.5,        0.6,      0.6,        1,      2.5,    0.001] # ,  0.2,  0.5,  +np.inf]
+lower_bounds = [       15,        4,    0.80,         0,     1.0,    1.0,       0.12,     0.12,      0.5,      1.7,        0] # ,    0,    0,  -np.inf]
+upper_bounds = [       17,        6,     1.0,       0.6,       3,      3,        0.6,      0.6,      0.9,      2.0,    0.001] # ,  0.2,  0.5,  +np.inf]
 
 chi2 = 1e6
-chi2_goal = 50
+chi2_goal = 6
 i = 1
 
 if __name__ == "__main__":
@@ -136,7 +132,7 @@ if __name__ == "__main__":
 
         plt.xlabel('$q [1/\\mathrm{nm}]$')
         plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
-        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (op. error)')
+        plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name} (Poisson error)')
         plt.grid(True)
         legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
         legend.set_title(info_text_print)
