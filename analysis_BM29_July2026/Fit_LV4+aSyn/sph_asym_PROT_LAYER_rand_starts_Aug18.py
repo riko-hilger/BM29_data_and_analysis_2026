@@ -54,8 +54,8 @@ upper_bounds = [       20,        9,          2.5,    2.5,        0.7,      0.7,
 
 
 chi2 = 1e6
-chi2_goal = 6
-i = 4
+chi2_goal = 5
+i = 14
 if __name__ == "__main__":
     while chi2 > chi2_goal:
         print(f"Iteration {i}, current chi2 = {chi2:.4g}")
@@ -105,9 +105,9 @@ if __name__ == "__main__":
             legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
             legend.set_title(info_text_print)
             plt.tight_layout()
-            plt.savefig(target_folder / f"{sample}_{fit_function_name}_PSCM{i}_{DAY}.png",dpi=400, bbox_inches='tight', pad_inches=0.05)
+            plt.savefig(target_folder / f"{sample}_{fit_function_name}_{i}_{DAY}.png",dpi=400, bbox_inches='tight', pad_inches=0.05)
 
             fig=fit.EDP_plot(R_fit, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text_print,  f'{BM29.sample_dict[sample]} using {fit_function_name} nr. {i}', z_h3_fit, sigma_h3_fit, rho_h3_fit)
-            fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_PSCM{i}.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
+            fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{i}.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
 
         i += 1

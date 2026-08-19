@@ -841,7 +841,7 @@ def ULV_sph_asym_prot_layer(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, s
 
 def sph_asym_prot_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3):
     
-    n_R = 60
+    n_R = 100
     R_vals   = np.linspace(R   - 3*sigma_R,     R + 3*sigma_R,     n_R)
     theta = np.linspace(0, np.pi/2, 250)  # fixed grid for integration
     sin_theta = np.sin(theta)
