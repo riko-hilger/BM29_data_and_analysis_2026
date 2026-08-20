@@ -19,7 +19,7 @@ DAY = "Aug20"
 who = BM29.sample_dict.keys()
 
 for sample in who:
-    print(f"Now working on sample {sample} ...")
+    print(f"Now working on sample {BM29.sample_dict[sample]} ...")
     # -------------- LOAD DATA --------------------------------------------------
     block = sample.split("_")[0]
     block_path = BM29.blockpath(block)
@@ -93,7 +93,9 @@ for sample in who:
         plt.figure(figsize=(12, 7.5))
         plt.errorbar(q, I, I_err_Poisson, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
         plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
-        plt.loglog(q_fit, fit_function(q_fit, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, scale), color='orange', label='initial guess')
+        plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
+        plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4_fit), color='black', label='pow law bgr')
+        plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4), color='black', label='initial bgr', ls="--")
 
         plt.xlabel('$q [1/\\mathrm{nm}]$')
         plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
