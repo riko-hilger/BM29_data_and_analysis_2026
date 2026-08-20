@@ -12,17 +12,26 @@ from scipy.optimize import curve_fit
 
 # =============== SPHERIC ASYM NO BGR ======================================
 # =========================================================================
-fit_function_name = "ULV_spheric_asym"
-fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, 0)
-DAY = "Aug19"
+fit_function_name = "ULV_spheric_asym_C4"
+fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
+DAY = "Aug20"
 
 who = BM29.sample_dict.keys()
 
 for sample in who:
+    print(f"Now working on sample {sample} ...")
     # -------------- LOAD DATA --------------------------------------------------
-    sample = "BII_S9" # "BII_S9_15mM_LV4_PBS_FVII"
     block = sample.split("_")[0]
     block_path = BM29.blockpath(block)
+    this_file = Path(__file__).resolve()
+    analysis_BM29_July2026 = this_file.parent.parent
+    block_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / block
+    if not block_folder.exists():
+        block_folder.mkdir()
+    target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / block / sample
+    if not target_folder.exists():
+        target_folder.mkdir()
+
     dir_names = [x.name for x in block_path.iterdir()]
     for dir_name in dir_names:
         if dir_name[:-13].endswith(sample):
@@ -42,6 +51,7 @@ for sample in who:
     sigma_h2 = 0.3
     sigma_c = 0.75
     z_h = 1.75
+    c4 = 0
     scale = 0.00013965
 
     # ========================== Setting Bounds ==============================
@@ -49,20 +59,19 @@ for sample in who:
     # lower_bounds = [   9,          3,      1.0,      1.0,       0.15,      0.15,      0.5,    1.5,       0] #,       0,       0, -np.inf]
     # upper_bounds = [  30,          9,      2.5,      2.5,        0.6,       0.6,      1.0,      2,     0.2] #,       4,     0.5, +np.inf]
 
-    p0           = [   R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale] #,      c2,      c3,      c4]
-    lower_bounds = [   9,          2,      0.8,      0.8,       0.13,      0.13,      0.5,    1.5,       0] #,       0,       0, -np.inf]
-    upper_bounds = [  25,          8,        3,        3,        0.7,       0.7,      1.0,      2,   0.001] #,       4,     0.5, +np.inf]
+    p0           = [   R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      c4]
+    lower_bounds = [   9,          2,      0.8,      0.8,       0.13,      0.13,      0.5,    1.5,       0,       0] #,       0,       0, -np.inf]
+    upper_bounds = [  25,          8,        3,        3,        0.7,       0.7,      1.0,      2,   0.001,       1] #,       4,     0.5, +np.inf]
 
     chi2 = 1e6
     i = 0
-    while i < 3:
+    while i < 4:
         p0 = np.random.uniform(lower_bounds, upper_bounds)
 
         #======================== Fit ===========================================
         popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_Poisson, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
 
-        param_names = ["R_fit", "sigma_R_fit", "rho_h1_fit", "rho_h2_fit", "sigma_h1_fit", "sigma_h2_fit", "sigma_c_fit", "z_h_fit", "scale_fit"]
-
+        param_names = ["R_fit", "sigma_R_fit", "rho_h1_fit", "rho_h2_fit", "sigma_h1_fit", "sigma_h2_fit", "sigma_c_fit", "z_h_fit", "scale_fit", "c4_fit"]
         perr = np.sqrt(np.diag(pcov))
         fit_lib_entry = "["
         for name, value in zip(param_names, popt):
@@ -73,16 +82,10 @@ for sample in who:
         # print(fit_lib_entry)
         chi2, info_text_print = fit.all_info(q, I, I_err_Poisson, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-        this_file = Path(__file__).resolve()
-        analysis_BM29_July2026 = this_file.parent.parent
-        target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / f"ALL_SAMPLES_{fit_function_name}"
-        if not target_folder.exists():
-            target_folder.mkdir()
-
-        print("Fit successful with chi2 = ", chi2)
-        print(info_text_print)
-        with open(target_folder/f"info_texts_{DAY}.txt", "a", encoding="utf-8") as k:
-            k.write(f"\n\n{BM29.sample_dict[sample]} using {fit_function_name} \n" + info_text_print + "\n" + fit_lib_entry + "\n###########################################\n")
+        # print("Fit successful with chi2 = ", chi2)
+        # print(info_text_print)
+        with open(target_folder/f"info_texts_{sample}{DAY}.txt", "a", encoding="utf-8") as k:
+            k.write(f"\n\n{BM29.sample_dict[sample]} using {fit_function_name}, nr. {i}\n" + info_text_print + "\n" + fit_lib_entry + "\n###########################################\n")
 
         #=========================== Plot ===========================================
         q_fit = np.linspace(min(q), max(q), 1000)
@@ -99,7 +102,7 @@ for sample in who:
         legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
         legend.set_title(info_text_print)
         plt.tight_layout()
-        plt.savefig(target_folder / f"{sample}_{fit_function_name}_{i}_{DAY}.png",dpi=400, bbox_inches='tight', pad_inches=0.05)
+        plt.savefig(target_folder / f"{sample}_{fit_function_name}_{i}_{DAY}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
         # fig = fit.EDP_plot(R_fit, sigma_head, sigma_head, sigma_tail, rho_head, rho_head, eps_head, eps_head, info_text_print, 
         #             f'{sample} using {fit_function_name}, nr. {i}')
         # fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{i}_{DAY}.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
