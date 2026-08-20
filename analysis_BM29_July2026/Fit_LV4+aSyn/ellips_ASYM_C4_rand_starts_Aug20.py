@@ -58,9 +58,11 @@ scale = 3.66e-7
 
 #p0          = [        R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,     scale] # ,   c2,   c3,       c4]
 lower_bounds = [      9.9,      4.0,    0.70,       0.4,     1.9,    1.5,       0.10,     0.10,      0.4,      1.8,         0,   0] # ,    0,    0,  -np.inf]
-upper_bounds = [       14,      6.0,     1.0,       0.6,     2.9,    2.9,        0.2,      0.2,      0.8,      2.1,      1e-5,   1] # ,  0.2,  0.5,  +np.inf]
-p0           = [    10.49,    5.252,  0.8678,    0.5104,     2.6,    2.2,     0.1466,     0.15,   0.6026,     1.86, 8.672e-07,   0]
+upper_bounds = [       14,      6.0,     1.1,       0.6,     2.9,    2.9,        0.2,      0.2,      0.8,      2.1,      1e-5,   1] # ,  0.2,  0.5,  +np.inf]
+# p0           = [    10.49,    5.252,  0.8678,    0.5104,     2.6,    2.2,     0.1466,     0.15,   0.6026,     1.86, 8.672e-07,   0]
 # p0           = [    10.53,        5,    0.82,    0.4957,     2.3,      2,     0.1628,   0.1654,      0.6,    1.869, 9.651e-07]
+p0 = [13.34, 4.575, 1, 0.4377, 2.845, 2.52, 0.1327, 0.1, 0.5188, 1.882, 5.916e-07, 0.0002187]
+
 
 
 chi2 = 1e6
@@ -107,7 +109,7 @@ if __name__ == "__main__":
             plt.figure(figsize=(12, 7.5))
             plt.errorbar(q, I, I_err_Poisson, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
             plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
-            plt.loglog(q_fit, fit_function(q_fit, R, sigma_R, eps, sigma_eps, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, scale), color='orange', label='initial guess')
+            plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
 
             plt.xlabel('$q [1/\\mathrm{nm}]$')
             plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
