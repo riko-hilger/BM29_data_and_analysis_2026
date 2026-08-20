@@ -70,7 +70,7 @@ p0 = [
 
 chi2 = 1e6
 chi2_goal = 5
-i = 18
+i = 22
 if __name__ == "__main__":
     while chi2 > chi2_goal:
         print(f"Iteration {i}, current chi2 = {chi2:.4g}")
@@ -93,7 +93,7 @@ if __name__ == "__main__":
         print(fit_lib_entry)
         chi2, info_text_print = fit.all_info(q, I, I_err_Poisson, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-        if chi2 < 9.5:
+        if chi2 < 9.2:
             this_file = Path(__file__).resolve()
             analysis_BM29_July2026 = this_file.parent.parent
             target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / f"fit_{fit_function_name}"

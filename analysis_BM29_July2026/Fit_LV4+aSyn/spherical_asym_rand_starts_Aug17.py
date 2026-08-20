@@ -14,7 +14,7 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ULV_spheric_asym"
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, 0)
-DAY = "Aug18"
+DAY = "Aug19"
 
 # -------------- LOAD DATA --------------------------------------------------
 sample = "BII_S9" # "BII_S9_15mM_LV4_PBS_FVII"
@@ -28,11 +28,7 @@ for dir_name in dir_names:
 
 q     = q
 I     = I
-I_err_Poisson = Ierr
-I_err_op = np.abs(I * 1/30) 
-mask = (q <= 0.1) & (q >= 4.1)
-I_err_op[mask] = np.abs(I[mask] * 1/15) 
-I_err_Poisson[mask] = I_err_Poisson[mask] * 2
+I_err_Poisson = BM29.op_error_focus_minimum_high(q, Ierr)
 
 # ========================== Parameters ==========================
 R = 18
@@ -52,11 +48,11 @@ scale = 0.00013965
 
 p0           = [   R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale] #,      c2,      c3,      c4]
 lower_bounds = [   9,          2,      0.8,      0.8,       0.13,      0.13,      0.5,    1.5,       0] #,       0,       0, -np.inf]
-upper_bounds = [  25,          8,        4,        4,        0.7,       0.7,      1.2,      2,   0.001] #,       4,     0.5, +np.inf]
+upper_bounds = [  25,          8,        3,        3,        0.7,       0.7,      1.0,      2,   0.001] #,       4,     0.5, +np.inf]
 
 chi2 = 1e6
-chi2_goal = 20
-i = 4
+chi2_goal = 8
+i = 1
 while chi2 > chi2_goal:
     if i % 100 == 0:
         print(f"Iteration {i}, current chi2 = {chi2:.4g}")
