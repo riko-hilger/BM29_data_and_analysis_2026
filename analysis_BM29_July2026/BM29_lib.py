@@ -59,8 +59,8 @@ def op_error_focus_minimum_high(q, Ierr_Poisson):
     mask1 = (q <= 0.1)
     Ierr_op = Ierr_Poisson.copy()
     Ierr_op[mask1] = Ierr_op[mask1] * 2
-    mask2 = ((q > 0.15) & (q < 0.4)) | (q >= 4.1)
-    Ierr_op[mask2] = Ierr_op[mask2] * 0.5
+    mask2 = ((q > 0.15) & (q < 0.4)) | (q >= 3)
+    Ierr_op[mask2] = Ierr_op[mask2] * 0.1
     return Ierr_op
 
 sample_dict = {
