@@ -14,7 +14,7 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ellipsoid_asym_C4"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
-DAY = "Aug20"
+DAY = "Aug21"
 
 who = [
     "BII_S9",
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         q     = q
         I     = I
 
-        Ierr = BM29.op_error_focus_lowq_and_minimum(q, I_err_Poisson)
+        Ierr = BM29.op_error_focus_minimum_high(q, I_err_Poisson)
 
         thinning = 4
         q_thinned = q[::thinning]
@@ -65,12 +65,14 @@ if __name__ == "__main__":
         I_err_thinned = Ierr[::thinning]
 
         # ========================== Parameters ==========================
-        p0 = BM29.best_fits[sample]["ULV_spheric_asym_C4"][1]
+        p0_real = BM29.best_fits[sample]["ULV_spheric_asym_C4"][1]
+        p0 = np.copy(BM29.best_fits[sample]["ULV_spheric_asym_C4"][1])
+        p0 = np.insert(p0, 2, [1, 0.01])
 
         # ========================== Setting Bounds ==============================
         # p0         = [          R,     sigma_R,         eps,   sigma_eps,        rho_h1,      rho_h2,     sigma_h1,      sigma_h2,     sigma_c,          z_h,        scale,    c4]
-        lower_bounds = [p0[0] - 0.2, p0[1] - 0.2,         0.7,           0,   p0[2] - 0.1, p0[3] - 0.1, p0[4] - 0.01, p0[5] - 0.01,  p0[0] - 0.2,  p0[0] - 0.1,            0,     0] 
-        upper_bounds = [p0[0] + 0.2, p0[1] + 0.2,         1.2,         0.7,   p0[2] + 0.1, p0[3] + 0.1,  p0[4] + 0.1,  p0[5] + 0.1,  p0[0] + 0.2,  p0[0] + 0.1,         1e-1,     1] 
+        lower_bounds = [p0_real[0] - 0.2, p0_real[1] - 0.2,         0.7,           0,   p0_real[2] - 0.1, p0_real[3] - 0.1, p0_real[4] - 0.01, p0_real[5] - 0.01,  p0_real[6] - 0.2,  p0_real[7] - 0.1,            0,     0] 
+        upper_bounds = [p0_real[0] + 0.2, p0_real[1] + 0.2,         1.2,         0.7,   p0_real[2] + 0.1, p0_real[3] + 0.1,  p0_real[4] + 0.1,  p0_real[5] + 0.1,  p0_real[6] + 0.2,  p0_real[7] + 0.1,         1e-1,     1] 
 
         #======================== Fit ===========================================
         try:
@@ -128,8 +130,8 @@ if __name__ == "__main__":
         legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
         legend.set_title(info_text_print)
         plt.tight_layout()
-        plt.savefig(target_folder / f"{sample}_{fit_function_name}_{i}_{DAY}.png",dpi=400, bbox_inches='tight', pad_inches=0.05)
+        plt.savefig(target_folder / f"{sample}_{fit_function_name}_{DAY}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
         fig = fit.EDP_plot(R_fit, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text_print, 
-                        f'{sample} using {fit_function_name}, nr. {i}')
-        fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{DAY}.png", dpi=400, bbox_inches='tight', pad_inches=0.05)
+                        f'{sample} using {fit_function_name}')
+        fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{DAY}.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
 
