@@ -44,9 +44,9 @@ def plot_together(who, title):
     return
 
 def improved_Poisson_error_low_high(q, Ierr_Poisson):
-    mask = (q <= 0.1) & (q >= 4.1)
-    Ierr_Poisson_improved = Ierr_Poisson.copy()
-    Ierr_Poisson_improved[mask] = Ierr_Poisson[mask] * 2
+    mask = (q <= 0.1) | (q >= 4.1)
+    Ierr_Poisson_improved = Ierr_Poisson.copy() * 1.5
+    Ierr_Poisson_improved[mask] = Ierr_Poisson_improved[mask] * 2
     return Ierr_Poisson_improved
 
 def op_error_classic(q, I):
@@ -236,6 +236,9 @@ best_fits = {
     "BII_S9": {
         "ULV_spheric_asym_C4": {
             1: [16.09, 2.936, 1.383, 0.9795, 0.3527, 0.3049, 0.6648, 1.907, 0.0001727, 0.0005608]
+        },
+        "ULV_ellipsoid_asym_C4": {
+            1: []
         }
     },
     "BIV_S1": {
