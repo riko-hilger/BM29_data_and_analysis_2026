@@ -1242,7 +1242,7 @@ def all_info(q, I, I_err, param_names, p0, popt, perr, function, lower_bounds, u
     residuals = I - function(q, *p0)
     initial_chi2 = np.sum((residuals / I_err)**2) / (len(I) - len(p0) - 1)
     names2 = [name[:-4] for name in param_names]
-    info_text2 = "\n".join(f"{name} = {val:.5g} ({lower_bounds[i]}, {upper_bounds[i]})" for name, val, i in zip(names2, p0, range(len(p0))))
+    info_text2 = "\n".join(f"{name} = {val:.5g} ({(lower_bounds[i]):.3g}, {(upper_bounds[i]):.3g})" for name, val, i in zip(names2, p0, range(len(p0))))
     info_text2 += f"\nchi2_initial = {initial_chi2:.5g}\n \n"
     
     info_text_print = info_text2 + info_text
