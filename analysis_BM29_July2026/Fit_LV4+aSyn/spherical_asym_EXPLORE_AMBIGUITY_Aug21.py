@@ -18,8 +18,8 @@ threshold = 10
 # =========================================================================
 fit_function_name = "ULV_spheric_asym_C4"
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-DAY = "Aug21"
-task_name = "spheric_asym_EXPLORE_AMBIGUITY"
+DAY = "Aug23"
+task_name = "spheric_asym_EXPLORE_AMBIGUITY_op_error"
 
 who = [
     "BII_S9",
@@ -67,11 +67,11 @@ for sample in who:
 
     q     = q
     I     = I
-    I_err_Poisson = BM29.improved_Poisson_error_low_high(q, Ierr)
+    I_err_op = BM29.op_error_classic(q, I)
 
     # ========================== Setting Bounds ==============================
     lower_bounds = [   9,          2,      0.8,      0.8,       0.13,      0.13,      0.5,    1.5,       0,       0]
-    upper_bounds = [  25,          8,      2.5,      2.5,        0.7,       0.7,      1.0,      2,   0.001,       1] 
+    upper_bounds = [  30,          9,      2.5,      2.5,        0.7,       0.7,      1.0,      2,   0.001,       1] 
 
     fit_list = []
     fit_list.append(BM29.best_fits[sample]["ULV_spheric_asym_C4"][1])
@@ -79,13 +79,13 @@ for sample in who:
     count = 0
     chi2 = 1e6
     i = 2
-    while ((i < 11) and (count < 1e+4)):
+    while ((i < 11) and (count < 5e+3)):
         count += 1
-        if count % 1000 == 0:
+        if count % 500 == 0:
             print(f"Reached attempt {count}...")
         p0 = np.random.uniform(lower_bounds, upper_bounds)
         #======================== Fit ===========================================
-        popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_Poisson, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
+        popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_op, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
 
         param_names = ["R_fit", "sigma_R_fit", "rho_h1_fit", "rho_h2_fit", "sigma_h1_fit", "sigma_h2_fit", "sigma_c_fit", "z_h_fit", "scale_fit", "c4_fit"]
         perr = np.sqrt(np.diag(pcov))
@@ -95,9 +95,9 @@ for sample in who:
             fit_lib_entry += f"{value:.4g}, "
         fit_lib_entry = fit_lib_entry[:-2]
         fit_lib_entry += "]"
-        chi2, info_text_print = fit.all_info(q, I, I_err_Poisson, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
+        chi2, info_text_print = fit.all_info(q, I, I_err_op, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-        if chi2 < 10: 
+        if chi2 < 50: 
             novelty_list = [average_deviation_percent(popt, previous_fit) for previous_fit in fit_list]
             if all(novelty > threshold for novelty in novelty_list):
                 fit_list.append(popt)
