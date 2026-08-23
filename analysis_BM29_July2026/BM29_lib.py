@@ -43,19 +43,19 @@ def plot_together(who, title):
     plt.legend()
     return
 
-def improved_Poisson_error_low_high(q, Ierr_Poisson):
+def Poisson_error_lowq_highq(q, Ierr_Poisson):
     mask = (q <= 0.1) | (q >= 4.1)
     Ierr_Poisson_improved = Ierr_Poisson.copy() * 1.7
     Ierr_Poisson_improved[mask] = Ierr_Poisson_improved[mask] * 2
     return Ierr_Poisson_improved
 
 def op_error_classic(q, I):
-    mask = (q <= 0.1) & (q >= 4.1)
+    mask = (q <= 0.1) | (q >= 4.1)
     Ierr_op = np.abs(I * 1/30)
-    Ierr_op[mask] = np.abs(I[mask] * 1/15) 
+    Ierr_op[mask] = np.abs(I[mask] * 1/10) 
     return Ierr_op
 
-def op_error_focus_minimum_high(q, Ierr_Poisson):
+def Poisson_error_focus_minimum_highq(q, Ierr_Poisson):
     mask1 = (q <= 0.1)
     Ierr_op = Ierr_Poisson.copy()
     Ierr_op[mask1] = Ierr_op[mask1] * 2
@@ -63,7 +63,7 @@ def op_error_focus_minimum_high(q, Ierr_Poisson):
     Ierr_op[mask2] = Ierr_op[mask2] * 0.1
     return Ierr_op
 
-def op_error_focus_lowq_and_minimum(q, Ierr_Poisson):
+def Poisson_error_focus_lowq_and_minimum(q, Ierr_Poisson):
     Ierr_op = Ierr_Poisson.copy()
     mask2 = ((q > 0.15) & (q < 0.4)) | (q <= 0.1)
     Ierr_op[mask2] = Ierr_op[mask2] * 0.33
