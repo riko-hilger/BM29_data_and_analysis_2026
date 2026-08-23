@@ -15,7 +15,7 @@ from scipy.optimize import curve_fit
 fit_function_name = "ellipsoid_asym_C4"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
 DAY = "Aug22"
-task_name = "ellips_aym_BETTER"
+task_name = "ellips_asym_BETTER"
 
 who = [
     "BII_S9",
@@ -35,12 +35,12 @@ who = [
     "BIV_S22",
     "BIV_S23",
     "BIV_S24",
-    "BIV_S25",
-    "BIV_S26",
-    "BIV_S27",
-    "BIV_S28",
-    "BIV_S29",
-    "BIV_S30"
+    # "BIV_S25",
+    # "BIV_S26",
+    # "BIV_S27",
+    # "BIV_S28",
+    # "BIV_S29",
+    # "BIV_S30"
 ]
 
 if __name__ == "__main__":
