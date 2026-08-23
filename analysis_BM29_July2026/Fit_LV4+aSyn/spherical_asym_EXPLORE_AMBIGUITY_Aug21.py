@@ -79,8 +79,10 @@ for sample in who:
     count = 0
     chi2 = 1e6
     i = 2
-    while ((i < 11) and (count < 5e+5)):
+    while ((i < 11) and (count < 1e+4)):
         count += 1
+        if count % 1000 == 0:
+            print(f"Reached attempt {count}...")
         p0 = np.random.uniform(lower_bounds, upper_bounds)
         #======================== Fit ===========================================
         popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_Poisson, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
@@ -98,11 +100,12 @@ for sample in who:
         if chi2 < 10: 
             novelty_list = [average_deviation_percent(popt, previous_fit) for previous_fit in fit_list]
             if all(novelty > threshold for novelty in novelty_list):
-                i += 1
                 fit_list.append(popt)
-                print(f"Found successful fit nr. {i} for {sample} with chi2 = {chi2:.4g}")
-                print(fit_lib_entry)            
+                print(f"Found successful fit nr. {i} for {sample} at attempt {count} with chi2 = {chi2:.4g}")
+                print(fit_lib_entry)  
+                print("\n")          
                 with open(target_folder/f"info_texts_{sample}.txt", "a", encoding="utf-8") as k:
                     k.write(f"\n\n{BM29.sample_dict[sample]} using {fit_function_name}, nr. {i}\n" + fit_lib_entry + "\n###########################################\n")
+                i += 1
 
                 

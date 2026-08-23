@@ -15,26 +15,26 @@ from scipy.optimize import curve_fit
 fit_function_name = "ellipsoid_asym_C4"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
 DAY = "Aug22"
-task_name = "ellips_aym_BETTER"
+task_name = "ellips_asym_BETTER"
 
 who = [
-    "BII_S9",
+    #"BII_S9",
 
-    "BIV_S1",
-    "BIV_S2",
-    "BIV_S3",
-    "BIV_S4",
-    "BIV_S5",
-    "BIV_S6",
-    "BIV_S7",
-    "BIV_S8",
-    "BIV_S9",
-    "BIV_S10",
+    #"BIV_S1",
+    #"BIV_S2",
+    #"BIV_S3",
+    #"BIV_S4",
+    #"BIV_S5",
+    #"BIV_S6",
+    #"BIV_S7",
+    #"BIV_S8",
+    #"BIV_S9",
+    #"BIV_S10",
 
-    "BIV_S21",
-    "BIV_S22",
-    "BIV_S23",
-    "BIV_S24",
+    #"BIV_S21",
+    #"BIV_S22",
+    #"BIV_S23",
+    #"BIV_S24",
     "BIV_S25",
     "BIV_S26",
     "BIV_S27",
@@ -51,7 +51,7 @@ if __name__ == "__main__":
         p0_real = BM29.best_fits[sample]["ULV_spheric_asym_C4"][1]
         p0 = np.copy(BM29.best_fits[sample]["ULV_spheric_asym_C4"][1])
         p0 = np.insert(p0, 2, [1, 0.01])
-        while ((count < 3) & (chi2 > 5)):
+        while ((count < 3) and (chi2 > 5)):
             print(f"Now fitting with {fit_function_name} sample {sample} ...")
             # -------------- LOAD DATA --------------------------------------------------
             block = sample.split("_")[0]
