@@ -16,20 +16,22 @@ fit_function_name = "ellipsoid_asym_C4"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
 DAY = "Aug23"
 task_name = "ellips_asym_BETTER_op_error"
+DAY = "Aug23"
+task_name = "ellips_asym_BETTER_op_error"
 
 who = [
-    #"BII_S9",
+    # "BII_S9",
 
-    #"BIV_S1",
-    #"BIV_S2",
-    #"BIV_S3",
-    #"BIV_S4",
-    #"BIV_S5",
-    #"BIV_S6",
-    #"BIV_S7",
-    #"BIV_S8",
-    #"BIV_S9",
-    #"BIV_S10",
+    # "BIV_S1",
+    "BIV_S2",
+    "BIV_S3",
+    "BIV_S4",
+    "BIV_S5",
+    "BIV_S6",
+    "BIV_S7",
+    "BIV_S8",
+    "BIV_S9",
+    "BIV_S10",
 
     #"BIV_S21",
     #"BIV_S22",
@@ -62,6 +64,10 @@ if __name__ == "__main__":
                 if dir_name[:-13].endswith(sample):
                     sub_dat_path = block_path / dir_name / "avg_and_sub" / BM29.sample_dict[sample]
                     q, I, I_err_Poisson = np.loadtxt(sub_dat_path, unpack=True)
+
+            mask = q >= 0.07
+            q    = q[mask]
+            I    = I[mask]
 
             q     = q
             I     = I
@@ -111,6 +117,7 @@ if __name__ == "__main__":
             fit_lib_entry += "]"
             print(fit_lib_entry)
             chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
+            chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
             this_file = Path(__file__).resolve()
             analysis_BM29_July2026 = this_file.parent.parent
@@ -124,10 +131,12 @@ if __name__ == "__main__":
                 k.write(f"\n\n{BM29.sample_dict[sample]} fitted using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
 
             if chi2 < 45:
+            if chi2 < 45:
                 #=========================== Plot ===========================================
                 q_fit = np.linspace(min(q), max(q), 1000)
                 plt.close("all")
                 plt.figure(figsize=(12, 7.5))
+                plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
                 plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
                 plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
                 plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
