@@ -91,7 +91,7 @@ def integrate_CSLB_ellips(q, R, sigma_R, eps, sigma_eps, z_h, sigma_h, rho_h, z_
     for R_i in R_vals:
         for eps_j in eps_vals:
             F_vals = F_CSLB_ellips(theta, q, R_i, eps_j, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2)
-            F_int = np.trapz(np.abs(F_vals)**2 * sin_theta, theta)
+            F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)
             I += P_R(R_i, R, sigma_R) * P_eps(eps_j, eps, sigma_eps) * F_int
     
     dR = R_vals[1] - R_vals[0]
@@ -137,8 +137,8 @@ def integrate_rough_for_q(args, n_pts=1000):
 
     kernel = gaussian * volume**2 * np.abs(hard_sphere_raw(q_val, r) * Debye_Waller_factor(q_val, a))**2
 
-    # Integrate using the trapz rule
-    I_integrated = np.trapz(kernel, r)
+    # Integrate using the trapezoid rule
+    I_integrated = np.trapezoid(kernel, r)
 
     return I_integrated
 
@@ -210,7 +210,7 @@ def ell_asym_integrator(q, R, sigma_R, eps, sigma_eps, rho_h1, rho_h2, sigma_h1,
     for R_i in R_vals:
         for eps_j in eps_vals:
             F_vals = F_ell_asym(theta, q, R_i, eps_j, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h)
-            F_int = np.trapz(np.abs(F_vals)**2 * sin_theta, theta)         
+            F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)         
             I += P_R(R_i, R, sigma_R) * F_int * P_eps(eps_j, eps, sigma_eps)
     
     dR = R_vals[1] - R_vals[0]
@@ -311,7 +311,7 @@ def I_func(q, R, sigma_R, eps, sigma_eps, rho_h, sigma_h, sigma_c, z_h):
     for R_i in R_vals:
         for eps_j in eps_vals:
             F_vals = F(theta, q, R_i, eps_j, rho_h, sigma_h, sigma_c, z_h)
-            F_int = np.trapz(np.abs(F_vals)**2 * sin_theta, theta)
+            F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)
             I += P_R(R_i, R, sigma_R) * P_eps(eps_j, eps, sigma_eps) * F_int
     
     dR = R_vals[1] - R_vals[0]
@@ -392,7 +392,7 @@ def integrate_F_ellipsoid_homogen(q, R, sigma_R, eps, sigma_eps,
                                   n_R=12, n_eps=12, n_theta=150):
     """
     Compute I(q) for one q value, averaged over distributions in R and eps.
-    Vectorized over theta and uses np.trapz for fast integration.
+    Vectorized over theta and uses np.trapezoid for fast integration.
     """
     R_vals   = np.linspace(R - 3*sigma_R, R + 3*sigma_R, n_R)
     eps_vals = np.linspace(eps - 3*sigma_eps, eps + 3*sigma_eps, n_eps)
@@ -407,7 +407,7 @@ def integrate_F_ellipsoid_homogen(q, R, sigma_R, eps, sigma_eps,
     for i, R_i in enumerate(R_vals):
         for j, eps_j in enumerate(eps_vals):
             F_vals = F_ellipsoid_homogen(theta, q, R_i, eps_j)
-            F_int = np.trapz(np.abs(F_vals)**2 * sin_theta, theta)
+            F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)
             I += P_R_vals[i] * P_eps_vals[j] * F_int
 
     dR = R_vals[1] - R_vals[0]
@@ -459,8 +459,8 @@ def integrate_for_q(args, n_pts=1000):
 
     kernel = gaussian * volume**2 * np.abs(hard_sphere_raw(q_val, r))**2
 
-    # Integrate using the trapz rule
-    I_integrated = np.trapz(kernel, r)
+    # Integrate using the trapezoid rule
+    I_integrated = np.trapezoid(kernel, r)
 
     return I_integrated
     
@@ -790,7 +790,7 @@ def ell_asym_prot_integrator(q, R, sigma_R, eps, sigma_eps, rho_h1, rho_h2, sigm
     for R_i in R_vals:
         for eps_j in eps_vals:
             F_vals = F_ell_asym_prot(theta, q, R_i, eps_j, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3)
-            F_int = np.trapz(np.abs(F_vals)**2 * sin_theta, theta)         
+            F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)         
             I += P_R(R_i, R, sigma_R) * F_int * P_eps(eps_j, eps, sigma_eps)
     
     dR = R_vals[1] - R_vals[0]
@@ -849,7 +849,7 @@ def sph_asym_prot_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, 
     I = 0
     for R_i in R_vals:
         F_vals = F_sph_asym_prot(theta, q, R_i, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3)
-        F_int = np.trapz(np.abs(F_vals)**2 * sin_theta, theta)         
+        F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)         
         I += P_R(R_i, R, sigma_R) * F_int 
     
     dR = R_vals[1] - R_vals[0]
@@ -909,9 +909,9 @@ def EDP_analysis(params):
     for i in range(len(r)):
         if ((rho[i-1]>0 and rho[i]<0) or (rho[i-1]<0 and rho[i]>0)) and (np.abs(r[i]) < z_h):
             root_indices.append(i)
-    rho_1 = np.trapz(rho[:root_indices[0]], r[:root_indices[0]])
-    rho_2 = np.trapz(rho[root_indices[0]:root_indices[1]], r[root_indices[0]:root_indices[1]])
-    rho_3 = np.trapz(rho[root_indices[1]:], r[root_indices[1]:])
+    rho_1 = np.trapezoid(rho[:root_indices[0]], r[:root_indices[0]])
+    rho_2 = np.trapezoid(rho[root_indices[0]:root_indices[1]], r[root_indices[0]:root_indices[1]])
+    rho_3 = np.trapezoid(rho[root_indices[1]:], r[root_indices[1]:])
     
     EDP_tot     = rho_1 + rho_2 + rho_3
     EDP_hg      = rho_1 + rho_3
@@ -932,7 +932,7 @@ def EDP_plot(R, sigma_h1, sigma_h2, sigma_tail, rho_h1, rho_h2, eps_h1, eps_h2, 
     rho = np.zeros_like(r)
     for i in range(4):
         rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
-    EDP_int = np.trapz(rho, r) 
+    EDP_int = np.trapezoid(rho, r) 
     
     fig = plt.figure(figsize=(12, 7.5))
     plt.plot(r, rho, color='darkgreen', label='EDP')
@@ -971,13 +971,13 @@ def EDP_plot_together(param_list, title):
         if sample.startswith("flat asym."):
             plt.plot(r, rho, label=sample, color=color, ls="--")
         else:
-            plt.plot(r, rho, label=sample, color=color)
+            plt.plot(r, rho, label=sample, color=color, lw=3)
     
     plt.xlabel('$z[\\mathrm{nm}]$')
     plt.ylabel('$\\rho[\\mathrm{a.u.}]$')
     # plt.title(title)
     plt.grid(True)
-    plt.legend()
+    # plt.legend()
     # legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
     # legend.set_title(info_text)
     return fig
