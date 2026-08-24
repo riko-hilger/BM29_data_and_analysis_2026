@@ -23,26 +23,28 @@ who = [
     # "BII_S9",
 
     # "BIV_S1",
-    "BIV_S2",
-    "BIV_S3",
-    "BIV_S4",
-    "BIV_S5",
+    
     "BIV_S6",
     "BIV_S7",
     "BIV_S8",
     "BIV_S9",
     "BIV_S10",
 
+    "BIV_S2",
+    "BIV_S3",
+    "BIV_S4",
+    "BIV_S5",
+
     #"BIV_S21",
     #"BIV_S22",
     #"BIV_S23",
     #"BIV_S24",
-    "BIV_S25",
-    "BIV_S26",
-    "BIV_S27",
-    "BIV_S28",
-    "BIV_S29",
-    "BIV_S30"
+    #"BIV_S25",
+    #"BIV_S26",
+    #"BIV_S27",
+    #"BIV_S28",
+    #"BIV_S29",
+    #"BIV_S30"
 ]
 
 if __name__ == "__main__":
@@ -54,7 +56,7 @@ if __name__ == "__main__":
         p0 = np.copy(BM29.best_fits[sample]["ULV_spheric_asym_C4"][1])
         p0 = np.insert(p0, 2, [1, 0.01])
         
-        while ((count < 3) and (chi2 > 45)):
+        while ((count < 1) and (chi2 > 45)):
             print(f"Now fitting with {fit_function_name} sample {sample} ...")
             # -------------- LOAD DATA --------------------------------------------------
             block = sample.split("_")[0]
@@ -86,9 +88,9 @@ if __name__ == "__main__":
             
 
             # ========================== Setting Bounds ==============================
-            # p0         = [          R,     sigma_R,         eps,   sigma_eps,        rho_h1,      rho_h2,     sigma_h1,      sigma_h2,     sigma_c,          z_h,        scale,    c4]
-            lower_bounds = [p0_real[0] - 0.2, p0_real[1] - 0.2,         0.7,           0,   p0_real[2] - 0.1, p0_real[3] - 0.1, p0_real[4] - 0.01, p0_real[5] - 0.01,  p0_real[6] - 0.2,  p0_real[7] - 0.1,            0,     0] 
-            upper_bounds = [p0_real[0] + 0.2, p0_real[1] + 0.2,         1.2,         0.7,   p0_real[2] + 0.1, p0_real[3] + 0.1,  p0_real[4] + 0.1,  p0_real[5] + 0.1,  p0_real[6] + 0.2,  p0_real[7] + 0.1,         1e-1,     1] 
+            # p0         = [          R,     sigma_R,                   eps,   sigma_eps,        rho_h1,      rho_h2,     sigma_h1,      sigma_h2,     sigma_c,          z_h,        scale,    c4]
+            lower_bounds = [p0_real[0] - 0.2, p0_real[1] - 0.2,         0.7,           0,           0.8,         0.8, p0_real[4] - 0.01, p0_real[5] - 0.01,  p0_real[6] - 0.2,  p0_real[7] - 0.1,            0,     0] 
+            upper_bounds = [p0_real[0] + 0.2, p0_real[1] + 0.2,         1.2,         0.7,           2.5,         2.5, p0_real[4] + 0.1,  p0_real[5] + 0.1,  p0_real[6] + 0.2,  p0_real[7] + 0.1,         1e-1,     1] 
 
             #======================== Fit ===========================================
             try:
@@ -130,7 +132,6 @@ if __name__ == "__main__":
             with open(target_folder/f"info_texts_{DAY}.txt", "a", encoding="utf-8") as k:
                 k.write(f"\n\n{BM29.sample_dict[sample]} fitted using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
 
-            if chi2 < 45:
             if chi2 < 45:
                 #=========================== Plot ===========================================
                 q_fit = np.linspace(min(q), max(q), 1000)

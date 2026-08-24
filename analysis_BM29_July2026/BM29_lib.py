@@ -51,7 +51,7 @@ def Poisson_error_lowq_highq(q, Ierr_Poisson):
 
 def op_error_classic(q, I):
     mask = (q <= 0.1) | (q >= 4.1)
-    Ierr_op = np.abs(I * 1/30)
+    Ierr_op = np.abs(I * 1/30) 
     Ierr_op[mask] = np.abs(I[mask] * 1/10) 
     return Ierr_op
 

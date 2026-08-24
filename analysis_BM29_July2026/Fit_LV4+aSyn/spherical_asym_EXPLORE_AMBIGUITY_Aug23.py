@@ -22,7 +22,7 @@ DAY = "Aug23"
 task_name = "spheric_asym_EXPLORE_AMBIGUITY_op_error"
 
 who = [
-    "BII_S9",
+    #"BII_S9",
 
     "BIV_S1",
     "BIV_S2",
@@ -70,8 +70,8 @@ for sample in who:
     I_err_op = BM29.op_error_classic(q, I)
 
     # ========================== Setting Bounds ==============================
-    lower_bounds = [   9,          2,      0.8,      0.8,       0.13,      0.13,      0.5,    1.5,       0,       0]
-    upper_bounds = [  30,          9,      2.5,      2.5,        0.7,       0.7,      1.0,      2,   0.001,       1] 
+    lower_bounds = [   9,          2,      1.0,      1.0,       0.13,      0.13,      0.5,    1.5,       0,       0]
+    upper_bounds = [  25,          9,      2.5,      2.5,        0.7,       0.7,      1.0,      2,   0.001,       1] 
 
     fit_list = []
     fit_list.append(BM29.best_fits[sample]["ULV_spheric_asym_C4"][1])
@@ -79,7 +79,7 @@ for sample in who:
     count = 0
     chi2 = 1e6
     i = 2
-    while ((i < 11) and (count < 5e+3)):
+    while ((i < 11) and (count < 500)):
         count += 1
         if count % 500 == 0:
             print(f"Reached attempt {count}...")
@@ -97,7 +97,7 @@ for sample in who:
         fit_lib_entry += "]"
         chi2, info_text_print = fit.all_info(q, I, I_err_op, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-        if chi2 < 50: 
+        if chi2 < 26: 
             novelty_list = [average_deviation_percent(popt, previous_fit) for previous_fit in fit_list]
             if all(novelty > threshold for novelty in novelty_list):
                 fit_list.append(popt)
