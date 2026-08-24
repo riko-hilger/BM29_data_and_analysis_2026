@@ -16,31 +16,35 @@ fit_function_name = "ellipsoid_asym_C4"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
 DAY = "Aug23"
 task_name = "ellips_asym_BETTER_op_error"
+DAY = "Aug23"
+task_name = "ellips_asym_BETTER_op_error"
 
 who = [
     # "BII_S9",
 
     # "BIV_S1",
-    "BIV_S2",
-    "BIV_S3",
-    "BIV_S4",
-    "BIV_S5",
+    
     "BIV_S6",
     "BIV_S7",
     "BIV_S8",
     "BIV_S9",
     "BIV_S10",
 
-    "BIV_S21",
-    "BIV_S22",
-    "BIV_S23",
-    "BIV_S24",
-    # "BIV_S25",
-    # "BIV_S26",
-    # "BIV_S27",
-    # "BIV_S28",
-    # "BIV_S29",
-    # "BIV_S30"
+    "BIV_S2",
+    "BIV_S3",
+    "BIV_S4",
+    "BIV_S5",
+
+    #"BIV_S21",
+    #"BIV_S22",
+    #"BIV_S23",
+    #"BIV_S24",
+    #"BIV_S25",
+    #"BIV_S26",
+    #"BIV_S27",
+    #"BIV_S28",
+    #"BIV_S29",
+    #"BIV_S30"
 ]
 
 if __name__ == "__main__":
@@ -51,7 +55,8 @@ if __name__ == "__main__":
         p0_real = BM29.best_fits[sample]["ULV_spheric_asym_C4"][1]
         p0 = np.copy(BM29.best_fits[sample]["ULV_spheric_asym_C4"][1])
         p0 = np.insert(p0, 2, [1, 0.01])
-        while ((count < 3) and (chi2 > 45)):
+        
+        while ((count < 1) and (chi2 > 45)):
             print(f"Now fitting with {fit_function_name} sample {sample} ...")
             # -------------- LOAD DATA --------------------------------------------------
             block = sample.split("_")[0]
@@ -68,6 +73,11 @@ if __name__ == "__main__":
 
             q     = q
             I     = I
+
+            mask = q >= 0.07
+            q    = q[mask]
+            I    = I[mask]
+
             Ierr = BM29.op_error_classic(q, I)
 
             thinning = 4
@@ -78,9 +88,9 @@ if __name__ == "__main__":
             
 
             # ========================== Setting Bounds ==============================
-            # p0         = [          R,     sigma_R,         eps,   sigma_eps,        rho_h1,      rho_h2,     sigma_h1,      sigma_h2,     sigma_c,          z_h,        scale,    c4]
-            lower_bounds = [p0_real[0] - 0.2, p0_real[1] - 0.2,         0.7,           0,   p0_real[2] - 0.1, p0_real[3] - 0.1, p0_real[4] - 0.01, p0_real[5] - 0.01,  p0_real[6] - 0.2,  p0_real[7] - 0.1,            0,     0] 
-            upper_bounds = [p0_real[0] + 0.2, p0_real[1] + 0.2,         1.2,         0.7,   p0_real[2] + 0.1, p0_real[3] + 0.1,  p0_real[4] + 0.1,  p0_real[5] + 0.1,  p0_real[6] + 0.2,  p0_real[7] + 0.1,         1e-1,     1] 
+            # p0         = [          R,     sigma_R,                   eps,   sigma_eps,        rho_h1,      rho_h2,     sigma_h1,      sigma_h2,     sigma_c,          z_h,        scale,    c4]
+            lower_bounds = [p0_real[0] - 0.2, p0_real[1] - 0.2,         0.7,           0,           0.8,         0.8, p0_real[4] - 0.01, p0_real[5] - 0.01,  p0_real[6] - 0.2,  p0_real[7] - 0.1,            0,     0] 
+            upper_bounds = [p0_real[0] + 0.2, p0_real[1] + 0.2,         1.2,         0.7,           2.5,         2.5, p0_real[4] + 0.1,  p0_real[5] + 0.1,  p0_real[6] + 0.2,  p0_real[7] + 0.1,         1e-1,     1] 
 
             #======================== Fit ===========================================
             try:
@@ -109,6 +119,7 @@ if __name__ == "__main__":
             fit_lib_entry += "]"
             print(fit_lib_entry)
             chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
+            chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
             this_file = Path(__file__).resolve()
             analysis_BM29_July2026 = this_file.parent.parent
@@ -126,6 +137,7 @@ if __name__ == "__main__":
                 q_fit = np.linspace(min(q), max(q), 1000)
                 plt.close("all")
                 plt.figure(figsize=(12, 7.5))
+                plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
                 plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
                 plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
                 plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
