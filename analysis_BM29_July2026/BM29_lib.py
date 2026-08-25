@@ -40,7 +40,7 @@ def plot_together(who, title):
     plt.xscale("log")
     plt.yscale("log")
     plt.title(title)
-    plt.legend()
+    legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
     return
 
 def Poisson_error_lowq_highq(q, Ierr_Poisson):
@@ -182,24 +182,24 @@ sample_dict = {
     "BVII_S21": "BVII_S21_3mM_DOPC_DOPS_100uM_aSynE46K",
     "BVII_S22": "BVII_S22_3mM_LV4_100uM_aSynE46K",
 
-    "BVIII_S1": "BVIII_S1_15mM_LV4_6uM_aSynWT",
-    "BVIII_S2": "BVIII_S2_15mM_LV4_9uM_aSynWT",
-    "BVIII_S3": "BVIII_S3_15mM_LV4_15uM_aSynWT",
-    "BVIII_S4": "BVIII_S4_15mM_LV4_25uM_aSynWT",
-    "BVIII_S5": "BVIII_S5_15mM_LV4_50uM_aSynWT",
-    "BVIII_S6": "BVIII_S6_15mM_LV4_75uM_aSynWT",
-    "BVIII_S7": "BVIII_S7_15mM_LV4_100uM_aSynWT",
-    "BVIII_S8": "BVIII_S8_3mM_LV4_100uM_aSynWT",
-    "BVIII_S9": "BVIII_S9_5mM_LV4_150uM_aSynWT",
-    "BVIII_S11": "BVIII_S11_15mM_LV4_6uM_aSynG14R",
-    "BVIII_S12": "BVIII_S12_15mM_LV4_9uM_aSynG14R",
-    "BVIII_S13": "BVIII_S13_15mM_LV4_15uM_aSynG14R",
-    "BVIII_S14": "BVIII_S14_15mM_LV4_25uM_aSynG14R",
-    "BVIII_S15": "BVIII_S15_15mM_LV4_50uM_aSynG14R",
-    "BVIII_S16": "BVIII_S16_15mM_LV4_75uM_aSynG14R",
-    "BVIII_S17": "BVIII_S17_15mM_LV4_100uM_aSynG14R",
-    "BVIII_S18": "BVIII_S18_3mM_LV4_100uM_aSynG14R",
-    "BVIII_S19": "BVIII_S19_5mM_LV4_150uM_aSynG14R",
+    "BVIII_S1": "BVIII_S1_15mM_LV4_6uM_aSynWTpep",
+    "BVIII_S2": "BVIII_S2_15mM_LV4_9uM_aSynWTpep",
+    "BVIII_S3": "BVIII_S3_15mM_LV4_15uM_aSynWTpep",
+    "BVIII_S4": "BVIII_S4_15mM_LV4_25uM_aSynWTpep",
+    "BVIII_S5": "BVIII_S5_15mM_LV4_50uM_aSynWTpep",
+    "BVIII_S6": "BVIII_S6_15mM_LV4_75uM_aSynWTpep",
+    "BVIII_S7": "BVIII_S7_15mM_LV4_100uM_aSynWTpep",
+    "BVIII_S8": "BVIII_S8_3mM_LV4_100uM_aSynWTpep",
+    "BVIII_S9": "BVIII_S9_5mM_LV4_150uM_aSynWTpep",
+    "BVIII_S11": "BVIII_S11_15mM_LV4_6uM_aSynG14Rpep",
+    "BVIII_S12": "BVIII_S12_15mM_LV4_9uM_aSynG14Rpep",
+    "BVIII_S13": "BVIII_S13_15mM_LV4_15uM_aSynG14Rpep",
+    "BVIII_S14": "BVIII_S14_15mM_LV4_25uM_aSynG14Rpep",
+    "BVIII_S15": "BVIII_S15_15mM_LV4_50uM_aSynG14Rpep",
+    "BVIII_S16": "BVIII_S16_15mM_LV4_75uM_aSynG14Rpep",
+    "BVIII_S17": "BVIII_S17_15mM_LV4_100uM_aSynG14Rpep",
+    "BVIII_S18": "BVIII_S18_3mM_LV4_100uM_aSynG14Rpep",
+    "BVIII_S19": "BVIII_S19_5mM_LV4_150uM_aSynG14Rpep",
     "BVIII_S20": "BVIII_S20_15mM_LV4_6uM_HBpep",
     "BVIII_S21": "BVIII_S21_15mM_LV4_9uM_HBpep",
     "BVIII_S22": "BVIII_S22_15mM_LV4_15uM_HBpep",
@@ -213,13 +213,13 @@ sample_dict = {
 
     "BIX_S1": "BIX_S1_15mM_POPG",
     "BIX_S2": "BIX_S2_15mM_DOPC_GM1_80_20",
-    "BIX_S3": "BIX_S3_15mM_LV4_1uM_aSynG14R_1_25",
-    "BIX_S4": "BIX_S4_15mM_LV4_2uM_aSynG14R_1_25",
-    "BIX_S5": "BIX_S5_15mM_LV4_3uM_aSynG14R_1_25",
-    "BIX_S6": "BIX_S6_15mM_LV4_6uM_aSynG14R_1_25",
-    "BIX_S7": "BIX_S7_15mM_LV4_9uM_aSynG14R_1_25",
-    "BIX_S8": "BIX_S8_15mM_LV4_15uM_aSynG14R_1_25",
-    "BIX_S9": "BIX_S9_15mM_LV4_25uM_aSynG14R_1_25",
+    "BIX_S3": "BIX_S3_15mM_LV4_1uM_aSynG14Rpep",
+    "BIX_S4": "BIX_S4_15mM_LV4_2uM_aSynG14Rpep",
+    "BIX_S5": "BIX_S5_15mM_LV4_3uM_aSynG14Rpep",
+    "BIX_S6": "BIX_S6_15mM_LV4_6uM_aSynG14Rpep",
+    "BIX_S7": "BIX_S7_15mM_LV4_9uM_aSynG14Rpep",
+    "BIX_S8": "BIX_S8_15mM_LV4_15uM_aSynG14Rpep",
+    "BIX_S9": "BIX_S9_15mM_LV4_25uM_aSynG14Rpep",
     "BIX_S10": "BIX_S10_15mM_DOPS_6uM_aSynWT",
     "BIX_S11": "BIX_S11_15mM_DOPS_9uM_aSynWT",
     "BIX_S12": "BIX_S12_15mM_DOPS_15uM_aSynWT",
@@ -340,7 +340,9 @@ best_fits = {
             1: [0.3141, 0.4021, 0.7549, 1, 2.391, 1.84, 0.02373, 0.000775]
         },
         'ULV_spheric_asym_C4': {
-            1: [9.793, 6.719, 0.8183, 1.843, 0.3249, 0.2602, 0.6434, 1.882, 0.0002879, 0.0007089]
+            1: [9.793, 6.719, 0.8183, 1.843, 0.3249, 0.2602, 0.6434, 1.882, 0.0002879, 0.0007089],
+            # forced to have higher maximum on left side and larger radius:
+            2: [17.48, 6.869, 1.703, 1.33, 0.1981, 0.4524, 0.814, 1.807, 0.0001049, 0.0008936]
         },
         'ULV_ellipsoid_asym_C4': {
             1: [9.835, 6.916, 1.066, 0.02601, 0.8369, 1.826, 0.315, 0.2664, 0.6469, 1.842, 5.358e-07, 0.0006962],
