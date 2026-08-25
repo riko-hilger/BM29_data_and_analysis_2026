@@ -973,8 +973,10 @@ def EDP_plot_together(param_list, title):
         else:
             plt.plot(r, rho, label=sample, color=color, lw=3)
     
-    plt.xlabel('$z[\\mathrm{nm}]$')
-    plt.ylabel('$\\rho[\\mathrm{a.u.}]$')
+    plt.xlabel('$z[\\mathrm{nm}]$', fontsize=24)
+    plt.ylabel('$\\rho[\\mathrm{a.u.}]$', fontsize=24)
+    plt.xticks(fontsize=24)
+    plt.yticks(fontsize=24)
     # plt.title(title)
     plt.grid(True)
     # plt.legend()
