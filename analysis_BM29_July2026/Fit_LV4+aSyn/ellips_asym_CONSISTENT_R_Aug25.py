@@ -19,9 +19,9 @@ task_name = "ellips_asym_CONSISTENT_R"
 
 who = [
     # "BII_S9",
-    # "BIV_S8",
-    "BIV_S9",
-    # "BIV_S10",
+    #"BIV_S8",
+    #"BIV_S9",
+    "BIV_S10",
 ]
 
 if __name__ == "__main__":
@@ -29,7 +29,7 @@ if __name__ == "__main__":
         count = 0
         chi2 = 1e+6
         # ========================== Parameters ==========================
-        p0 = [9.835, 6.916, 1.066, 0.02601, 1, 1.5, 0.315, 0.2664, 0.6469, 1.842, 5.358e-07, 0.0006962]
+        p0 = [16.35, 5.284, 1.098, 0.1713, 1.605, 0.8125, 0.3115, 0.3098, 0.6131, 1.826, 3.133e-07, 0.0006509] # BIV_S8
         
         while (count < 2):
             print(f"Now fitting with {fit_function_name} sample {sample} ...")
