@@ -32,18 +32,18 @@ who = [
     "BIV_S7",
     "BIV_S8",
     "BIV_S9",
-    "BIV_S10",
+    # "BIV_S10",
 
-    "BIV_S21",
-    "BIV_S22",
-    "BIV_S23",
-    "BIV_S24",
-    "BIV_S25",
-    "BIV_S26",
-    "BIV_S27",
-    "BIV_S28",
-    "BIV_S29",
-    "BIV_S30"
+    # "BIV_S21",
+    # "BIV_S22",
+    # "BIV_S23",
+    # "BIV_S24",
+    # "BIV_S25",
+    # "BIV_S26",
+    # "BIV_S27",
+    # "BIV_S28",
+    # "BIV_S29",
+    # "BIV_S30"
 ]
 
 for sample in who:
@@ -77,10 +77,10 @@ for sample in who:
     print("Current best fit has chi2 ", BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq"))
     # ========================== 1. Fit with different initial guesses and limits ==========================
     i = 0
-    for rho_h1 in [1.2, 1.4, 1.6]:
-        for rho_h2 in [1.6, 1.4, 1.3]:
-            for sigma_h1 in [0.2]:
-                for sigma_h2 in [0.2]:
+    for sigma_R_uplim in [6, 8, 10]:
+        for r_uplim in [1.4, 1.6, 2.5]:
+            for s_uplim in [0.55, 0.8]:
+                for sigma_h2 in [0.2, 0.4]:
                     for s_lowlim in [0, 0.1, 0.15, 0.20]:
                         for r_lowlim in [0.7, 0.8, 1, 1.2]:
                                 count += 1
@@ -92,10 +92,10 @@ for sample in who:
                                 c4 = 0.0
                                 plt.close()
                                 # ========================== Setting Bounds ==============================
-                                p0           = [   R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      c4]
-                                lower_bounds = [   6,          1, r_lowlim, r_lowlim,   s_lowlim,  s_lowlim,      0.5,    1.5, -np.inf,       0]
-                                upper_bounds = [  25,          8,      2.8,      2.8,        0.8,       0.8,        1,      2, +np.inf, +np.inf]
-
+                                # p0           = [   R,       sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      c4]
+                                lower_bounds = [   6,             1, r_lowlim, r_lowlim,   s_lowlim,  s_lowlim,      0.5,    1.6,       0,       0]
+                                upper_bounds = [  25, sigma_R_uplim,  r_uplim,  r_uplim,    s_uplim,   s_uplim,        1,      2,    1e-3,    1e-2]
+                                p0 = np.random.uniform(lower_bounds, upper_bounds)
                                 
                                 # while count < 200:
                                 #     count += 1
@@ -103,7 +103,11 @@ for sample in who:
                                 #     p0 = np.concatenate(([R, sigma_R], p0_EDP, [z_h, scale, c4]))
                                     # print(p0)
                                     #======================== Fit ===========================================
-                                popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_op, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
+                                try:
+                                    popt, pcov = curve_fit(fit_function, q, I, sigma=I_err_op, maxfev=10000, p0=p0, bounds = (lower_bounds, upper_bounds))
+                                except (RuntimeError, ValueError) as error:
+                                    print(f"Fit attempt {count} failed for {sample}: {error}")
+                                    continue
 
                                 param_names = ["R_fit", "sigma_R_fit", "rho_h1_fit", "rho_h2_fit", "sigma_h1_fit", "sigma_h2_fit", "sigma_c_fit", "z_h_fit", "scale_fit", "c4_fit"]
                                 perr = np.sqrt(np.diag(pcov))
