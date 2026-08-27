@@ -93,8 +93,8 @@ for sample in who:
                                 plt.close()
                                 # ========================== Setting Bounds ==============================
                                 # p0           = [   R,       sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      c4]
-                                lower_bounds = [   6,             1, r_lowlim, r_lowlim,   s_lowlim,  s_lowlim,      0.5,    1.6,       0,       0]
-                                upper_bounds = [  25, sigma_R_uplim,  r_uplim,  r_uplim,    s_uplim,   s_uplim,        1,      2,    1e-3,    1e-2]
+                                lower_bounds = [     6,             1, r_lowlim, r_lowlim,   s_lowlim,  s_lowlim,      0.5,    1.6,       0,       0]
+                                upper_bounds = [    25, sigma_R_uplim,  r_uplim,  r_uplim,    s_uplim,   s_uplim,        1,      2,    1e-3,    1e-2]
                                 p0 = np.random.uniform(lower_bounds, upper_bounds)
                                 
                                 # while count < 200:
