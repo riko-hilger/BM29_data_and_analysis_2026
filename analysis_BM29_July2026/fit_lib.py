@@ -22,6 +22,7 @@ def powerlaw_bgr(q, c2, c3, c4):
 
 base_path = Path("/home/AG_Salditt/Projekte_Membranbiophysik/Riko_BA/Data/BM26/Scatt_curves_average_for_same_position/")
 
+
 #============== DAB (Debye Anderson Brumberger) Model =====================================
 def DAB_model(q, c, xi):
     return c / (1 + (q*xi)**2)**2
@@ -764,6 +765,29 @@ def F_spheric_asym(q, R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h):
     res = 4 * np.pi * np.sqrt(2*np.pi) * (term_h - term_c)
     return res
 
+#=========== spherical ULV model with numerical integration over LOG NORMAL polydispersity =====================================
+# ============= Log-normal distribution for polydispersity ==========================================
+from scipy.stats import lognorm
+def lognormal_polydisp(R, sigma, R0):
+    P = lognorm.pdf(R, s=sigma, scale=R0)
+    return P
+# R0 is the median of the distribution, sigma is the shape parameter (not standard deviation) !!!
+
+def ULV_spheric_asym_lognormal(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, scale, c2, c3, c4):
+    I_func_partial = partial(spheric_asym_lognormal_integrator, R=R, sigma_R=sigma_R, rho_h1=rho_h1, rho_h2=rho_h2,
+                             sigma_h1=sigma_h1, sigma_h2=sigma_h2, sigma_c=sigma_c, z_h=z_h)
+    with Pool(processes=9) as pool: 
+        I_res = list(tqdm(pool.imap(I_func_partial, q), total=len(q), desc="Computing I(q)", ncols=80))
+        # I_res = pool.map(I_func_partial, q)
+
+    return scale * np.array(I_res) + c2 * q**(-c3) + c4      
+
+def spheric_asym_lognormal_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h):
+    #q, R, sigma_R, eps, sigma_eps, rho_h, sigma_h, sigma_c, z_h = args
+    n_R    = 1000
+    R_vals = np.linspace(1e-1, 70, n_R)    
+    I      = np.trapezoid(lognormal_polydisp(R_vals, sigma_R, R) * np.abs(F_spheric_asym(q, R_vals, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h))**2, R_vals)
+    return I 
 
 # ================== model for ellipsoid ULV (asym. EDP) with additional outer protein layer =============================
 
