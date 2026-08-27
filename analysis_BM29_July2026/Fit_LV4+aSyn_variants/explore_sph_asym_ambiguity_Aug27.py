@@ -21,29 +21,29 @@ DAY = "Aug27"
 task_name = "spheric_asym_ambiguity_WT_A124T"
 
 who = [
-    "BII_S9",
+    #"BII_S9",
 
-    "BIV_S1",
-    "BIV_S2",
-    "BIV_S3",
-    "BIV_S4",
-    "BIV_S5",
-    "BIV_S6",
-    "BIV_S7",
-    "BIV_S8",
-    "BIV_S9",
-    # "BIV_S10",
+    #"BIV_S1",
+    #"BIV_S2",
+    #"BIV_S3",
+    #"BIV_S4",
+    #"BIV_S5",
+    #"BIV_S6",
+    #"BIV_S7",
+    #"BIV_S8",
+    #"BIV_S9",
+    "BIV_S10",
 
-    # "BIV_S21",
-    # "BIV_S22",
-    # "BIV_S23",
-    # "BIV_S24",
-    # "BIV_S25",
-    # "BIV_S26",
-    # "BIV_S27",
-    # "BIV_S28",
-    # "BIV_S29",
-    # "BIV_S30"
+    "BIV_S21",
+    "BIV_S22",
+    "BIV_S23",
+    "BIV_S24",
+    "BIV_S25",
+    "BIV_S26",
+    "BIV_S27",
+    "BIV_S28",
+    "BIV_S29",
+    "BIV_S30"
 ]
 
 for sample in who:
@@ -73,7 +73,7 @@ for sample in who:
 
     count = 0
     chi2 = 1e6
-    chi2_threshold = BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq") + 40
+    chi2_threshold = BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq") + 20
     print("Current best fit has chi2 ", BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq"))
     # ========================== 1. Fit with different initial guesses and limits ==========================
     i = 0
