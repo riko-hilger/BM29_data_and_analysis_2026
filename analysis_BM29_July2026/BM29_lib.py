@@ -69,6 +69,29 @@ def Poisson_error_focus_lowq_and_minimum(q, Ierr_Poisson):
     Ierr_op[mask2] = Ierr_op[mask2] * 0.33
     return Ierr_op
 
+def get_chi2(sample, error_model):
+    block = sample.split("_")[0]
+    block_path = blockpath(block)
+    dir_names = [x.name for x in block_path.iterdir()]
+    for dir_name in dir_names:
+        if dir_name[:-13].endswith(sample):
+            sub_dat_path = block_path / dir_name / "avg_and_sub" / sample_dict[sample]
+            q, I, Ierr_Poisson = np.loadtxt(sub_dat_path, unpack=True)
+    mask = (q >= 0.07) & (q <= 5.1)
+    q    = q[mask]
+    I    = I[mask]
+    Ierr_Poisson = Ierr_Poisson[mask]
+    if error_model == "Poisson_error_focus_minimum_highq":
+        Ierr_op = Poisson_error_focus_minimum_highq(q, Ierr_Poisson)
+    elif error_model == "op_error_classic":
+        Ierr_op = op_error_classic(q, I)
+    p0_sph_asym = best_fits[sample]["ULV_spheric_asym_C4"][1]
+    fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
+    I_sph_asym = fit_function(q, *p0_sph_asym)
+    residuals     = I - I_sph_asym
+    chi2_sph_asym = np.sum((residuals / Ierr_op)**2) / (len(I) - len(p0_sph_asym) - 1)     
+    return chi2_sph_asym
+
 sample_dict = {
     "BII_S1": "BII_S1_15mM_LV4_TBS",
     "BII_S2": "BII_S2_15mM_LV4_30nm_PBS",
@@ -260,7 +283,8 @@ best_fits = {
     },
     'BIV_S2': {
         'ULV_spheric_asym_C4': {
-            1: [9.984, 4.576, 1.277, 1.016, 0.3272, 0.3519, 0.6674, 1.906, 0.0003534, 0.0004885]
+            1: [16.35, 2.843, 1.353, 0.9624, 0.3525, 0.3089, 0.6547, 1.908, 0.0001566, 0.0004852],
+            # 1: [9.984, 4.576, 1.277, 1.016, 0.3272, 0.3519, 0.6674, 1.906, 0.0003534, 0.0004885]
         },
         'ULV_ellipsoid_asym_C4': {
             # 1:  [10.18, 4.776, 0.9143, 0.2056, 1.884, 1.166, 0.3172, 0.3419, 0.8674, 1.858, 6.867e-07, 6.052e-05],
@@ -269,7 +293,8 @@ best_fits = {
     },
     'BIV_S3': {
         'ULV_spheric_asym_C4': {
-            1: [10.25, 4.523, 1.236, 1.042, 0.3548, 0.3601, 0.7038, 1.888, 0.0003148, 0.0004641]
+            1: [16.34, 2.899, 1.399, 0.9106, 0.3549, 0.3456, 0.6896, 1.892, 0.0001451, 0.0004615],
+            # 1: [10.25, 4.523, 1.236, 1.042, 0.3548, 0.3601, 0.7038, 1.888, 0.0003148, 0.0004641]
         },
         'ULV_ellipsoid_asym_C4': {
             # 1: [10.26, 4.722, 0.9766, 0.1896, 1.294, 1.125, 0.3465, 0.3501, 0.7296, 1.878, 6.305e-07, 0.0004352]
@@ -340,9 +365,9 @@ best_fits = {
             1: [0.3141, 0.4021, 0.7549, 1, 2.391, 1.84, 0.02373, 0.000775]
         },
         'ULV_spheric_asym_C4': {
-            1: [9.793, 6.719, 0.8183, 1.843, 0.3249, 0.2602, 0.6434, 1.882, 0.0002879, 0.0007089],
             # forced to have higher maximum on left side and larger radius:
-            2: [17.48, 6.869, 1.703, 1.33, 0.1981, 0.4524, 0.814, 1.807, 0.0001049, 0.0008936]
+            1: [17.48, 6.869, 1.703, 1.33, 0.1981, 0.4524, 0.814, 1.807, 0.0001049, 0.0008936],
+            2: [9.793, 6.719, 0.8183, 1.843, 0.3249, 0.2602, 0.6434, 1.882, 0.0002879, 0.0007089],
         },
         'ULV_ellipsoid_asym_C4': {
             1: [9.835, 6.916, 1.066, 0.02601, 0.8369, 1.826, 0.315, 0.2664, 0.6469, 1.842, 5.358e-07, 0.0006962],
@@ -351,7 +376,8 @@ best_fits = {
     },
     'BIV_S21': {
         'ULV_spheric_asym_C4': {
-            1: [9.439, 4.549, 1.285, 1.029, 0.327, 0.3481, 0.6689, 1.909, 0.0004254, 0.0005276]
+            1: [16.16, 2.794, 1.386, 0.9551, 0.3473, 0.308, 0.6549, 1.911, 0.0001761, 0.0005239],
+            # 1: [9.439, 4.549, 1.285, 1.029, 0.327, 0.3481, 0.6689, 1.909, 0.0004254, 0.0005276]
         },
         'ULV_ellipsoid_asym_C4': {
             # 1: [9.371, 4.747, 0.9896, 0.1953, 1.347, 1.097, 0.317, 0.338, 0.6874, 1.889, 8.572e-07, 0.0005051],
@@ -395,6 +421,7 @@ best_fits = {
     },
     'BIV_S26': {
         'ULV_spheric_asym_C4': {
+            1: [15.47, 3.765, 1.475, 0.8843, 0.3333, 0.3322, 0.6582, 1.901, 0.0002034, 0.0006327],
             # 1: [9, 5.06, 1.221, 1.086, 0.336, 0.3382, 0.6656, 1.9, 0.0004797, 0.0006352]
         },
         'ULV_ellipsoid_asym_C4': {
@@ -403,7 +430,8 @@ best_fits = {
     },
     'BIV_S27': {
         'ULV_spheric_asym_C4': {
-            1: [9, 5.376, 1.139, 1.186, 0.3437, 0.3312, 0.6719, 1.892, 0.0004574, 0.0006214]
+            1: [15.3, 4.563, 1.575, 0.843, 0.3269, 0.3381, 0.6638, 1.894, 0.0001994, 0.0006189],
+            # 2: [9, 5.376, 1.139, 1.186, 0.3437, 0.3312, 0.6719, 1.892, 0.0004574, 0.0006214]
         },
         'ULV_ellipsoid_asym_C4': {
             # 1: [9.021, 5.541, 0.8988, 0.2963, 1.134, 1.171, 0.3341, 0.3257, 0.6508, 1.889, 1.111e-06, 0.0006048],
