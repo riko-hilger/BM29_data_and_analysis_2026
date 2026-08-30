@@ -16,7 +16,12 @@ plt.rcParams['font.size']   = 18
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'\usepackage{xfrac, amsmath}'
 
-# most models come with this power law background
+# =========== Guinier fit =====================================
+# remember: q * Rg < 1.3 for the Guinier approximation to be valid
+def guinier_fit(q, I0, Rg):
+    return I0 * np.exp(-q**2 * Rg**2 / 3)
+
+# ========= most models come with this power law background ==========================
 def powerlaw_bgr(q, c2, c3, c4):
     return c2 * q**(-c3) + c4
 
