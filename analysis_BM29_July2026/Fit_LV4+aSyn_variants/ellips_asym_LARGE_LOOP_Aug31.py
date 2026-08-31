@@ -20,11 +20,11 @@ task_name = "all_pure_lipids_and_BVI"
 who = [       # Pure lipid samples and BVI
     # Pure lipid samples
     #"BII_S2",
-    #"BII_S10",
-    #"BII_S4",
-    #"BII_S11",
-    #"BIX_S1",
-    #"BIX_S2",
+    "BII_S10",
+    "BII_S4",
+    "BII_S11",
+    "BIX_S1",
+    "BIX_S2",
 
     # BVI
     "BVI_S1",
@@ -140,10 +140,10 @@ if __name__ == "__main__":
             legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
             legend.set_title(info_text_print)
             plt.tight_layout()
-            plt.savefig(target_folder / f"{sample}_{fit_function_name}_{DAY}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
+            plt.savefig(target_folder / f"{sample}_{fit_function_name}_{count}_{DAY}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
             fig = fit.EDP_plot(R_fit, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text_print, 
                             f'{sample} using {fit_function_name}')
-            fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{DAY}.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
+            fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{count}_{DAY}.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
 
             p0 = np.random.uniform(lower_bounds, upper_bounds)
             count += 1

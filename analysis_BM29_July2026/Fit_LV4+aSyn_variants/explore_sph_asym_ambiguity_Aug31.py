@@ -67,7 +67,9 @@ for sample in who:
     Ierr_Poisson = Ierr_Poisson[mask]
     I_err_op = BM29.Poisson_error_focus_minimum_highq(q, Ierr_Poisson)
     fit_list = []
-    fit_list.append(BM29.best_fits[sample]["ULV_spheric_asym_C4"][1])
+    fits = BM29.best_fits[sample]["ULV_spheric_asym_C4"]
+    for key in fits:
+        fit_list.append(fits[key])
 
     count = 0
     chi2 = 1e6
@@ -75,7 +77,7 @@ for sample in who:
     print("Current best fit has chi2 ", BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq"))
     # ========================== 1. Fit with different initial guesses and limits ==========================
     i = 0
-    for sigma_R_uplim in [6, 8, 10]:
+    for R_lowlim in [9, 11, 16]:
         for r_uplim in [1.4, 1.6, 2.5]:
             for s_uplim in [0.55, 0.8]:
                 for sigma_h2 in [0.2, 0.4]:
@@ -90,9 +92,9 @@ for sample in who:
                                 c4 = 0.0
                                 plt.close()
                                 # ========================== Setting Bounds ==============================
-                                # p0           = [   R,       sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      c4]
-                                lower_bounds = [     6,             1, r_lowlim, r_lowlim,   s_lowlim,  s_lowlim,      0.5,    1.6,       0,       0]
-                                upper_bounds = [    25, sigma_R_uplim,  r_uplim,  r_uplim,    s_uplim,   s_uplim,        1,      2,    1e-3,    1e-2]
+                                # p0           = [     R,       sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      c4]
+                                lower_bounds = [R_lowlim,             1, r_lowlim, r_lowlim,   s_lowlim,  s_lowlim,      0.5,    1.6,       0,       0]
+                                upper_bounds = [      27,           8.5,  r_uplim,  r_uplim,    s_uplim,   s_uplim,        1,      2,    1e-3,    1e-2]
                                 p0 = np.random.uniform(lower_bounds, upper_bounds)
                                 
                                 # while count < 200:
