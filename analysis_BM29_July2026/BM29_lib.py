@@ -34,7 +34,7 @@ def plot_together(who, title):
             if dir_name[:-13].endswith(sample):
                 sub_dat_path = block_path / dir_name / "avg_and_sub" / sample_dict[sample]
                 q, I, Ierr = np.loadtxt(sub_dat_path, unpack=True)
-                plt.errorbar(q, I, Ierr, ls = "None", marker="o", label=sample_dict[sample], markersize=2.0)
+                plt.errorbar(q, I, Ierr, ls = "None", marker="o", label=nice_sample_names[sample], markersize=2.0)
     plt.xlabel("$q$")
     plt.ylabel("$I$")
     plt.xscale("log")
@@ -428,6 +428,9 @@ best_fits = {
         'ULV_spheric_asym_C4': {
             1: [10.08, 4.466, 1.148, 1.129, 0.3627, 0.318, 0.6704, 1.907, 0.0003359, 0.0005405],
             2: [16.11, 2.776, 1.326, 1, 0.3568, 0.2934, 0.6537, 1.91, 0.0001565, 0.0005422],
+            3: [9, 5.223, 1.398, 0.9256, 0.3331, 0.3422, 0.6687, 1.907, 0.0003811, 0.0005462],
+            4: [9, 4.534, 1.2, 1.2, 0.3408, 0.2801, 0.6417, 1.92, 0.0004127, 0.0005093],
+            5: [16.09, 2.796, 1.578, 0.821, 0.2986, 0.3561, 0.6506, 1.912, 0.0001565, 0.0005276],
         },
         'ULV_ellipsoid_asym_C4': {
             1: [],
@@ -491,6 +494,7 @@ best_fits = {
             2: [7.344, 6, 1.2, 1.21, 0.2993, 0.3373, 0.6648, 1.888, 0.0005254, 0.0006842],
             3: [14.83, 5.697, 1.4, 1.2, 0.3883, 0.2202, 0.6674, 1.886, 0.000189, 0.0006824],
             4: [15.02, 5.619, 1.723, 0.8, 0.3145, 0.3297, 0.6647, 1.889, 0.0001832, 0.0006723],
+            5: [16, 5.481, 1.649, 1, 0.4119, 0.3609, 0.8864, 1.822, 0.0001409, 0.0006827],
         },
         'ULV_ellipsoid_asym_C4': {
             1: [],
@@ -642,6 +646,8 @@ best_fits = {
         'ULV_spheric_asym_C4': {
             1: [16, 2.684, 1.344, 1.008, 0.3486, 0.2828, 0.6361, 1.919, 0.0001774, 0.0004727],
             2: [8.666, 4.5, 1.353, 0.9918, 0.3078, 0.3385, 0.6437, 1.919, 0.0004861, 0.000474],
+            3: [15.71, 2.422, 1.255, 1.2, 0.3693, 0.2317, 0.6294, 1.92, 0.000188, 0.0004538],
+            4: [9, 4.394, 1.2, 1.2, 0.3349, 0.2783, 0.6292, 1.928, 0.0004653, 0.0004417],
         },
         'ULV_ellipsoid_asym_C4': {
             1: [],
@@ -704,6 +710,7 @@ best_fits = {
             1: [15.67, 4.279, 1.525, 0.8607, 0.3404, 0.3371, 0.6746, 1.887, 0.000172, 0.0005896],
             2: [6.929, 5.7, 1.257, 1.081, 0.3238, 0.344, 0.669, 1.888, 0.0005703, 0.000589],
             3: [14.26, 2.668, 1.315, 1.2, 0.3758, 0.2187, 0.6424, 1.892, 0.0002309, 0.0005691],
+            4: [16, 4.073, 1.29, 1.2, 0.3981, 0.2369, 0.6649, 1.889, 0.0001698, 0.000575],
         },
         'ULV_ellipsoid_asym_C4': {
             1: [],
@@ -724,6 +731,8 @@ best_fits = {
             1: [15.52, 5.349, 1.69, 0.8, 0.3266, 0.3288, 0.6658, 1.884, 0.0002085, 0.0008922],
             2: [6.462, 6, 1.029, 1.358, 0.3453, 0.2985, 0.6539, 1.887, 0.0007319, 0.0008657],
             3: [14.1, 5.587, 1.4, 1.213, 0.3941, 0.2133, 0.6615, 1.883, 0.0002499, 0.0008945],
+            4: [9, 7.632, 1.706, 0.8, 0.3156, 0.3285, 0.6584, 1.885, 0.0004107, 0.000883],
+            5: [9, 7.722, 1.4, 1.155, 0.3852, 0.2284, 0.6613, 1.883, 0.000411, 0.0008946],
         },
         'ULV_ellipsoid_asym_C4': {
             1: [],
@@ -747,8 +756,24 @@ best_fits = {
 
 
 nice_sample_names = {
+    "BII_S1": "15 mM LVs (TBS)", # all other vesicles in PBS, also proteins
+    "BII_S2": "15 mM LVs (30 nm)",
+    "BII_S3": "1 mM LVs",
+    "BII_S4": "2 mM LVs",
+    "BII_S5": "3 mM LVs",
+    "BII_S6": "6 mM LVs",
+    "BII_S7": "9 mM LVs",
+    "BII_S8": "12 mM LVs",
     "BII_S9": "15 mM LVs",
+    "BII_S10": "15 mM DOPS",
+    "BII_S11": "15 mM DOPC/DOPS (80/20)",
 
+    "BIII_S1": "75 μM aSynWT",
+    "BIII_S2": "100 μM aSynWT",
+    "BIII_S3": "100 μM aSynE61V",
+    "BIII_S4": "100 μM aSynA124T",
+    "BIII_S5": "100 μM aSynE46K",
+    
     "BIV_S1": "15 mM LVs + 1 μM aSynWT",
     "BIV_S2": "15 mM LVs + 2 μM aSynWT",
     "BIV_S3": "15 mM LVs + 3 μM aSynWT",
@@ -789,4 +814,112 @@ nice_sample_names = {
     "BIV_S38": "15 mM LVs + 50 μM aSynE46K",
     "BIV_S39": "15 mM LVs + 75 μM aSynE46K",
     "BIV_S40": "15 mM LVs + 100 μM aSynE46K",
+
+    "BV_S1": "15 mM LVs + 15 μM aSynG14R",
+    "BV_S2": "15 mM LVs + 25 μM aSynG14R",
+    "BV_S3": "15 mM LVs + 6 μM aSynA53T",
+    "BV_S4": "15 mM LVs + 9 μM aSynA53T",
+    "BV_S5": "15 mM LVs + 15 μM aSynA53T",
+    "BV_S6": "15 mM LVs + 25 μM aSynA53T",
+    "BV_S7": "15 mM LVs + 15 μM aSynA30P",
+    "BV_S8": "15 mM LVs + 25 μM aSynA30P",
+
+    "BVI_S1": "15 mM DOPC/GM1 (80/20) + 6 uM aSynWT",
+    "BVI_S2": "15 mM DOPC/GM1 (80/20) + 9 uM aSynWT",
+    "BVI_S3": "15 mM DOPC/GM1 (80/20) + 15 uM aSynWT",
+    "BVI_S4": "15 mM DOPC/GM1 (80/20) + 25 uM aSynWT",
+    "BVI_S5": "15 mM DOPC/GM1 (80/20) + 50 uM aSynWT",
+    "BVI_S6": "15 mM DOPC/GM1 (80/20) + 75 uM aSynWT",
+    "BVI_S7": "15 mM DOPC/GM1 (80/20) + 100 uM aSynWT",
+    "BVI_S8": "15 mM DOPC/GM1 (80/20) + 25 uM aSynE61V",
+    "BVI_S9": "15 mM DOPC/GM1 (80/20) + 25 uM aSynA124T",
+    "BVI_S10": "15 mM DOPC/GM1 (80/20) + 25 uM aSynE46K",  
+    "BVI_S11": "15 mM POPG + 6 uM aSynWT",
+    "BVI_S12": "15 mM POPG + 9 uM aSynWT",
+    "BVI_S13": "15 mM POPG + 15 uM aSynWT",
+    "BVI_S14": "15 mM POPG + 25 uM aSynWT",
+    "BVI_S15": "15 mM POPG + 50 uM aSynWT",
+    "BVI_S16": "15 mM POPG + 75 uM aSynWT",
+    "BVI_S17": "15 mM POPG + 100 uM aSynWT",
+    "BVI_S18": "15 mM POPG + 25 uM aSynE61V",
+    "BVI_S19": "15 mM POPG + 25 uM aSynA124T",
+    "BVI_S20": "15 mM POPG + 25 uM aSynE46K",
+
+    "BVII_S1": "15 mM DOPS + 75 uM aSynWT",
+    "BVII_S2": "15 mM DOPS + 100 uM aSynWT",
+    "BVII_S3": "3 mM DOPS + 100 uM aSynWT",
+    "BVII_S4": "15 mM DOPC/DOPS (80/20) + 75 uM aSynWT",
+    "BVII_S5": "15 mM DOPC/DOPS (80/20) + 100 uM aSynWT",
+    "BVII_S6": "3 mM DOPC/DOPS (80/20) + 100 uM aSynWT",
+    "BVII_S7": "3 mM LVs + 100 uM aSynWT",
+
+    "BVII_S8": "15 mM DOPS + 75 uM aSynE61V",
+    "BVII_S9": "3 mM DOPS + 100 uM aSynE61V",
+    "BVII_S10": "15 mM DOPC/DOPS (80/20) + 75 uM aSynE61V",
+    "BVII_S11": "3 mM DOPC/DOPS (80/20) + 100 uM aSynE61V",
+    "BVII_S12": "3 mM LVs + 100 uM aSynE61V",
+
+    "BVII_S13": "15 mM DOPS + 75 uM aSynA124T",
+    "BVII_S14": "3 mM DOPS + 100 uM aSynA124T",
+    "BVII_S15": "15 mM DOPC/DOPS (80/20) + 75 uM aSynA124T",
+    "BVII_S16": "3 mM DOPC/DOPS (80/20) + 100 uM aSynA124T",
+    "BVII_S17": "3 mM LVs + 100 uM aSynA124T",
+
+    "BVII_S18": "15 mM DOPS + 75 uM aSynE46K",
+    "BVII_S19": "3 mM DOPS + 100 uM aSynE46K",
+    "BVII_S20": "15 mM DOPC/DOPS (80/20) + 75 uM aSynE46K",
+    "BVII_S21": "3 mM DOPC/DOPS (80/20) + 100 uM aSynE46K",
+    "BVII_S22": "3 mM LVs + 100 uM aSynE46K",
+
+    "BVIII_S1": "15 mM LVs + 6 uM aSynWT (1-25)",
+    "BVIII_S2": "15 mM LVs + 9 uM aSynWT (1-25)",
+    "BVIII_S3": "15 mM LVs + 15 uM aSynWT (1-25)",
+    "BVIII_S4": "15 mM LVs + 25 uM aSynWT (1-25)",
+    "BVIII_S5": "15 mM LVs + 50 uM aSynWT (1-25)",
+    "BVIII_S6": "15 mM LVs + 75 uM aSynWT (1-25)",
+    "BVIII_S7": "15 mM LVs + 100 uM aSynWT (1-25)",
+    "BVIII_S8": "3 mM LVs + 100 uM aSynWT (1-25)",
+    "BVIII_S9": "5 mM LVs + 150 uM aSynWT (1-25)",
+    "BVIII_S11": "15 mM LVs + 6 uM aSynG14R (1-25)",
+    "BVIII_S12": "15 mM LVs + 9 uM aSynG14R (1-25)",
+    "BVIII_S13": "15 mM LVs + 15 uM aSynG14R (1-25)",
+    "BVIII_S14": "15 mM LVs + 25 uM aSynG14R (1-25)",
+    "BVIII_S15": "15 mM LVs + 50 uM aSynG14R (1-25)",
+    "BVIII_S16": "15 mM LVs + 75 uM aSynG14R (1-25)",
+    "BVIII_S17": "15 mM LVs + 100 uM aSynG14R (1-25)",
+    "BVIII_S18": "3 mM LVs + 100 uM aSynG14R (1-25)",
+    "BVIII_S19": "5 mM LVs + 150 uM aSynG14R (1-25)",    
+    "BVIII_S20": "15 mM LVs + 6 uM HBpep",
+    "BVIII_S21": "15 mM LVs + 9 uM HBpep",
+    "BVIII_S22": "15 mM LVs + 15 uM HBpep",
+    "BVIII_S23": "15 mM LVs + 25 uM HBpep",
+    "BVIII_S24": "15 mM LVs + 50 uM HBpep",
+    "BVIII_S25": "15 mM LVs + 75 uM HBpep",
+    "BVIII_S26": "15 mM LVs + 100 uM HBpep",
+    "BVIII_S27": "3 mM LVs + 100 uM HBpep",
+    "BVIII_S28": "5 mM LVs + 150 uM HBpep",
+    "BVIII_S29": "5 mM LVs + 250 uM HBpep",
+
+    "BIX_S1": "15 mM POPG",
+    "BIX_S2": "15 mM DOPC/GM1 (80/20)",
+    
+    "BIX_S3": "15 mM LVs + 1 uM aSynG14R (1-25)",
+    "BIX_S4": "15 mM LVs + 2 uM aSynG14R (1-25)",
+    "BIX_S5": "15 mM LVs + 3 uM aSynG14R (1-25)",
+    "BIX_S6": "15 mM LVs + 6 uM aSynG14R (1-25)",
+    "BIX_S7": "15 mM LVs + 9 uM aSynG14R (1-25)",
+    "BIX_S8": "15 mM LVs + 15 uM aSynG14R (1-25)",
+    "BIX_S9": "15 mM LVs + 25 uM aSynG14R (1-25)",  
+
+    "BIX_S10": "15 mM DOPS + 6 uM aSynWT",
+    "BIX_S11": "15 mM DOPS + 9 uM aSynWT",
+    "BIX_S12": "15 mM DOPS + 15 uM aSynWT",
+    "BIX_S13": "15 mM DOPS + 25 uM aSynWT",
+    "BIX_S14": "15 mM DOPS + 50 uM aSynWT",
+            
+    "BIX_S15": "15 mM DOPC/DOPS (80/20) + 6 uM aSynWT",
+    "BIX_S16": "15 mM DOPC/DOPS  (80/20) + 9 uM aSynWT",
+    "BIX_S17": "15 mM DOPC/DOPS (80/20) + 15 uM aSynWT",
+    "BIX_S18": "15 mM DOPC/DOPS (80/20) + 25 uM aSynWT",
+    "BIX_S19": "15 mM DOPC/DOPS (80/20) + 50 uM aSynWT",
 }
