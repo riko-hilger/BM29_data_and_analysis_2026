@@ -17,7 +17,7 @@ threshold = 10
 # =============== SPHERIC ASYM NO BGR ======================================
 fit_function_name = "ULV_spheric_asym_C4"
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-DAY = "Aug31"
+DAY = "Sep1"
 task_name = "spheric_asym_ambiguity_E61V_E46K"
 
 who = [
@@ -29,8 +29,8 @@ who = [
     "BIV_S16",
     "BIV_S17",
     "BIV_S18",
-    "BIV_S19",
-    "BIV_S20",
+    #"BIV_S19",
+    #"BIV_S20",
 
     "BIV_S31",
     "BIV_S32",
@@ -41,7 +41,7 @@ who = [
     "BIV_S37",
     "BIV_S38",
     "BIV_S39",
-    "BIV_S40",
+    #"BIV_S40",
 ]
 
 for sample in who:
