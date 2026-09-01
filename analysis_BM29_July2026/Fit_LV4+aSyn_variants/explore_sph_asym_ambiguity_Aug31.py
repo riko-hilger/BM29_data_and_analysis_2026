@@ -13,36 +13,42 @@ from scipy.optimize import curve_fit
 def average_deviation_percent(a, b):
     deviations = [abs(x - y) / abs(x) * 100 for x, y in zip(a, b)]
     return sum(deviations) / len(deviations)
-threshold = 10
+threshold = 7
 # =============== SPHERIC ASYM NO BGR ======================================
 fit_function_name = "ULV_spheric_asym_C4"
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
 DAY = "Sep1"
-task_name = "spheric_asym_ambiguity_E61V_E46K"
+task_name = "sph_asym_ambiguity_accept_less_novelty"
 
 who = [
-    "BIV_S11",
+    # "BIV_S11",
     "BIV_S12",
-    "BIV_S13",
-    "BIV_S14",
-    "BIV_S15",
-    "BIV_S16",
-    "BIV_S17",
-    "BIV_S18",
-    #"BIV_S19",
-    #"BIV_S20",
+    # "BIV_S13",
+    # "BIV_S14",
+    # "BIV_S15",
+    # "BIV_S16",
+    # "BIV_S17",
+    # "BIV_S18",
+    # "BIV_S19",
+    # "BIV_S20",
 
     "BIV_S31",
-    "BIV_S32",
-    "BIV_S33",
-    "BIV_S34",
-    "BIV_S35",
-    "BIV_S36",
-    "BIV_S37",
-    "BIV_S38",
-    "BIV_S39",
+    # "BIV_S32",
+    # "BIV_S33",
+    # "BIV_S34",
+    # "BIV_S35",
+    # "BIV_S36",
+    # "BIV_S37",
+    # "BIV_S38",
+    # "BIV_S39",
     #"BIV_S40",
 ]
+
+this_file = Path(__file__).resolve()
+analysis_BM29_July2026 = this_file.parent.parent
+target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name
+if not target_folder.exists():
+    target_folder.mkdir()
 
 for sample in who:
     print(f"Now working on sample {BM29.sample_dict[sample]} ...")
@@ -52,7 +58,7 @@ for sample in who:
     this_file = Path(__file__).resolve()
     analysis_BM29_July2026 = this_file.parent.parent
  
-    target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / sample
+    target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name / sample
     if not target_folder.exists():
         target_folder.mkdir()
 
