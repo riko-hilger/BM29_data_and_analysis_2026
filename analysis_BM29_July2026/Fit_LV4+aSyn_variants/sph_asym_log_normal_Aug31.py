@@ -14,40 +14,31 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym_lognormal(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
 fit_function_name = "ULV_spheric_asym_C4_lognormal"
-DAY = "Aug31"
+DAY = "Sep2"
 task_name = "lognormal_experiments"
 
-who = [       # Pure lipid samples and BVI
-    # Pure lipid samples
-    "BII_S2",
-    "BII_S10",
-    "BII_S4",
-    "BII_S11",
-    "BIX_S1",
-    "BIX_S2",
+who = [      
+    "BIV_S11",
+    "BIV_S12",
+    "BIV_S13",
+    "BIV_S14",
+    "BIV_S15",
+    "BIV_S16",
+    "BIV_S17",
+    "BIV_S18",
+    "BIV_S19",
+    "BIV_S20",
 
-    # BVI
-    "BIV_S1",
-    "BIV_S2",
-    "BIV_S3",
-    "BIV_S4",
-    "BIV_S5",
-    "BIV_S6",
-    "BIV_S7",
-    "BIV_S8",
-    "BIV_S9",
-    "BIV_S10",
-
-    "BIV_S21",
-    "BIV_S22",
-    "BIV_S23",
-    "BIV_S24",
-    "BIV_S25",
-    "BIV_S26",
-    "BIV_S27",
-    "BIV_S28",
-    "BIV_S29",
-    "BIV_S30"
+    "BIV_S31",
+    "BIV_S32",
+    "BIV_S33",
+    "BIV_S34",
+    "BIV_S35",
+    "BIV_S36",
+    "BIV_S37",
+    "BIV_S38",
+    "BIV_S39",
+    "BIV_S40",
  ]
 
 if __name__ == "__main__":
@@ -81,9 +72,9 @@ if __name__ == "__main__":
             I_err_thinned = Ierr[::thinning]
             
             # ========================== Setting Bounds ==============================
-            # p0         = [   R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,   c4] #,      c2,      c3,      c4]
-            lower_bounds = [ 9.0,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,      0,   0] #,       0,       0, -np.inf]
-            upper_bounds = [  25,          1,      3.0,      1.7,         0.6,       0.6,      1.2,      2,      1,   1] #,       4,     0.5, +np.inf]
+            # p0         = [   R,    sigma_R,   rho_h1,   rho_h2,    sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,   c4] 
+            lower_bounds = [ 9.0,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
+            upper_bounds = [  25,          1,      2.5,      2.5,         0.6,       0.6,      1.2,      2,       1,    1] 
             #======================== Fit ===========================================
             try:
                 popt, pcov = curve_fit(
@@ -143,14 +134,14 @@ if __name__ == "__main__":
             # fig = fit.EDP_plot(R_fit, sigma_h1_fit, sigma_h2_fit, sigma_c_fit, rho_h1_fit, rho_h2_fit, z_h_fit, z_h_fit, info_text_print, 
             #                 f'{sample} using {fit_function_name}')
             # fig.savefig(target_folder / f"EDP_{sample}_{fit_function_name}_{DAY}.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
-            f = plt.figure(figsize=(12, 7.5))
-            from scipy.stats import lognorm
-            sigma = sigma_R_fit
-            R0 = R_fit
-            R = np.linspace(0, R_fit + 50, 1000)
-            P = lognorm.pdf(R, s=sigma, scale=R0)
-            plt.plot(R, P)
-            f.savefig(target_folder / f"Polydisp_{sample}_{fit_function_name}_{count}_{DAY}.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
+            # f = plt.figure(figsize=(12, 7.5))
+            # from scipy.stats import lognorm
+            # sigma = sigma_R_fit
+            # R0 = R_fit
+            # R = np.linspace(0, R_fit + 50, 1000)
+            # P = lognorm.pdf(R, s=sigma, scale=R0)
+            # plt.plot(R, P)
+            # f.savefig(target_folder / f"Polydisp_{sample}_{fit_function_name}_{count}_{DAY}.png", dpi=200, bbox_inches='tight', pad_inches=0.05)
 
             p0 = np.random.uniform(lower_bounds, upper_bounds)
             count += 1
