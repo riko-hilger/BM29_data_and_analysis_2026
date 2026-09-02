@@ -14,13 +14,13 @@ from scipy.optimize import curve_fit
 # =========================================================================
 fit_function_name = "ellipsoid_asym_C4"
 fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
-DAY = "Aug31"
+DAY = "Sep1"
 task_name = "all_pure_lipids_and_BVI"
 
 who = [       # Pure lipid samples and BVI
     # Pure lipid samples
     #"BII_S2",
-    "BII_S10",
+    #"BII_S10",
     "BII_S4",
     "BII_S11",
     "BIX_S1",
