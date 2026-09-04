@@ -6,6 +6,9 @@ plt.rcParams["text.usetex"] = False
 import re
 from scipy.stats import lognorm
 from matplotlib.colors import LogNorm
+from scipy.stats import f
+from scipy import optimize
+from scipy.optimize import curve_fit
 
 concentrations = {
     "BII_S9": 0.0,
@@ -179,6 +182,168 @@ def get_chi2(sample, error_model):
     residuals     = I - I_sph_asym
     chi2_sph_asym = np.sum((residuals / Ierr_op)**2) / (len(I) - len(p0_sph_asym) - 1)     
     return chi2_sph_asym
+
+# ============================================================================================================
+def linear(x, m, n):
+    return m * x + n
+
+
+def mean_and_sem(values):
+    """
+    Calculate ordinary arithmetic mean and SEM.
+    """
+    values = np.asarray(values, dtype=float)
+
+    if values.size == 0:
+        return np.nan, np.nan
+
+    mean = np.mean(values)
+
+    if values.size < 2:
+        return mean, np.nan
+
+    sem = np.std(values, ddof=1) / np.sqrt(values.size)
+
+    return mean, sem
+
+def calculate_linear_fit_statistics(x, y, yerr):
+    """
+    Perform linear fit and calculate:
+
+        - slope and intercept
+        - parameter uncertainties
+        - R²
+        - chi²
+        - reduced chi²
+        - F statistic
+        - F-test p value
+        - residual standard deviation
+
+    The linear fit is weighted by yerr.
+    MODIFIED: weighted R² is calculated in addition to the standard R². F-statistic is calculated using chi² ().
+    """
+
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    yerr = np.asarray(yerr, dtype=float)
+
+    valid = (
+        np.isfinite(x)
+        & np.isfinite(y)
+        & np.isfinite(yerr)
+        & (yerr > 0)
+    )
+
+    x = x[valid]
+    y = y[valid]
+    yerr = yerr[valid]
+
+    # -------------------------------------------------------------------------
+    # Linear fit
+    # -------------------------------------------------------------------------
+
+    popt, pcov = curve_fit(
+        linear,
+        x,
+        y,
+        sigma=yerr,
+        p0=[0.0, 0.0],
+        maxfev=20000,
+    )
+
+    perr = np.sqrt(np.diag(pcov))
+
+    # -------------------------------------------------------------------------
+    # Degrees of freedom
+    # Two fitted parameters: slope + intercept
+    # -------------------------------------------------------------------------
+
+    dof = len(y) - len(popt)
+    
+    # -------------------------------------------------------------------------
+    # Predictions and residuals
+    # -------------------------------------------------------------------------
+
+    y_pred = linear(x, *popt)
+    residuals = y - y_pred
+
+    # -------------------------------------------------------------------------
+    # Chi² & R² Calculations (Properly Weighted)
+    # -------------------------------------------------------------------------
+    ymean = np.average(y, weights=1/yerr**2)
+
+    # Chi-squared of the full model
+    chi_squared = np.sum((residuals / yerr) ** 2)
+    reduced_chi_squared = chi_squared / dof
+
+    # Chi-squared of the flat baseline (intercept-only) model
+    chi_squared_of_mean = np.sum(((y - ymean) / yerr) ** 2)
+
+    # Weighted R²
+    R2weighted = 1.0 - (chi_squared / chi_squared_of_mean)
+
+    # Standard R²
+    ss_res = np.sum(residuals**2)
+    ss_tot = np.sum((y - np.mean(y))**2)
+    R2 = 1.0 - ss_res / ss_tot
+
+    # ---------------------------------------------------------------------
+    # F-test
+    # ---------------------------------------------------------------------
+    # Numerator df = 1 (Slope parameter), Denominator df = dof
+    f_stat = (chi_squared_of_mean - chi_squared) / (chi_squared / dof)
+
+    p_value = f.sf(f_stat, 1, dof)
+
+    # ---------------------------------------------------------------------
+    # Residual standard deviation
+    # ---------------------------------------------------------------------
+
+    residual_std = np.sqrt(ss_res / dof)
+
+    return {
+        "popt": popt,
+        "pcov": pcov,
+        "perr": perr,
+
+        "r_squared": R2,
+        "r_squared_weighted": R2weighted,
+
+        "chi_squared": chi_squared,
+        "reduced_chi_squared": reduced_chi_squared,
+
+        "f_stat": f_stat,
+        "p_value": p_value,
+
+        "residual_std": residual_std,
+
+        "dof": dof,
+
+        "x": x,
+        "y": y,
+        "yerr": yerr,
+    }
+
+def format_statistics_label(dataset_label, statistics):
+    """
+    Build the multiline legend entry containing the dataset name
+    and all fit statistics.
+    """
+
+    r2 = statistics["r_squared_weighted"]
+    red_chi2 = statistics["reduced_chi_squared"]
+    f_stat = statistics["f_stat"]
+    p_value = statistics["p_value"]
+
+    return (
+        f"{dataset_label}\n"
+        f"R² = {r2:.3f}\n"
+        f"$\chi^2_{{\mathrm{{red}}}} = {red_chi2:.3f}$\n"
+        f"F = {f_stat:.3f}\n"
+        f"p = {p_value:.3g}"
+    )
+
+# ===========================================================================================================
 
 sample_dict = {
     "BII_S1": "BII_S1_15mM_LV4_TBS",
