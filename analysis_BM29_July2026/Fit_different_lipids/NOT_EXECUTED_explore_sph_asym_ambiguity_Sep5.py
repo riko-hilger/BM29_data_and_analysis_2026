@@ -121,7 +121,7 @@ for sample in who:
                                 fit_lib_entry += "]"
                                 chi2, info_text_print = fit.all_info(q, I, I_err_op, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-                                if chi2 < chi2_threshold:
+                                if True:
                                     novelty_list = [average_deviation_percent(popt, previous_fit) for previous_fit in fit_list]
                                     if all(novelty > threshold for novelty in novelty_list):
                                         fit_list.append(popt)
@@ -143,3 +143,4 @@ for sample in who:
                                         plt.tight_layout()
                                         plt.savefig(target_folder / f"{fit_function_name}_{i}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
                                         i += 1
+                                
