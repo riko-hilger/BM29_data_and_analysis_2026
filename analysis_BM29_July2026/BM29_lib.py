@@ -160,7 +160,7 @@ def Poisson_error_focus_lowq_and_minimum(q, Ierr_Poisson):
 
 # ====================================================================================================
 
-def get_chi2(sample, error_model):
+def get_chi2(sample, error_model, p0=None):
     block = sample.split("_")[0]
     block_path = blockpath(block)
     dir_names = [x.name for x in block_path.iterdir()]
@@ -176,7 +176,10 @@ def get_chi2(sample, error_model):
         Ierr_op = Poisson_error_focus_minimum_highq(q, Ierr_Poisson)
     elif error_model == "op_error_classic":
         Ierr_op = op_error_classic(q, I)
-    p0_sph_asym = best_fits[sample]["ULV_spheric_asym_C4"][1]
+    if p0 is None:
+        p0_sph_asym = best_fits[sample]["ULV_spheric_asym_C4"][1]
+    else:
+        p0_sph_asym = p0
     fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
     I_sph_asym = fit_function(q, *p0_sph_asym)
     residuals     = I - I_sph_asym
