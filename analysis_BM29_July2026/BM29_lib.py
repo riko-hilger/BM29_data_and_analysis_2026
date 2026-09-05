@@ -1167,6 +1167,226 @@ best_fits = {
             1: [],
         }
     },
+    'BVI_S1': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S2': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S3': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S4': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S5': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S6': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S7': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S8': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S9': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S10': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S11': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S12': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S13': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S14': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S15': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S16': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S17': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S18': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S19': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
+    'BVI_S20': {
+        'ULV_spheric_asym_C4': {
+            1: [],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [],
+        },
+        'ULV_ellipsoid_asym_C4': {
+            1: [],
+        }
+    },
     'BIX_S1': {
         'ULV_spheric_asym_C4': {
         },
