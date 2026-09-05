@@ -17,8 +17,8 @@ threshold = 10
 # =============== SPHERIC ASYM NO BGR ======================================
 fit_function_name = "ULV_spheric_asym_C4"
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-DAY = "Sep1"
-task_name = "sph_asym_ambiguity_"
+DAY = "Sep5"
+task_name = "sph_asym_BVI"
 
 who = [
     "BIX_S2",
@@ -80,7 +80,9 @@ for sample in who:
         fit_list.append(fits[key])
 
     count = 0
+    i = 0
     while count < 200:
+        count += 1
         plt.close()
         # ========================== Setting Bounds ==============================
         # p0           = [     R,       sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      c4]
@@ -132,6 +134,7 @@ for sample in who:
             plt.savefig(target_folder / f"{fit_function_name}_{i}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
             i += 1
         else:
+            chi2_list = [BM29.get_chi2(sample, )]
             if all(novelty > threshold for novelty in novelty_list):
                 fit_list.append(popt)
                 print(f"Found successful fit nr. {i} for {sample} at attempt {count} with chi2 = {chi2:.4g}")
