@@ -17,17 +17,17 @@ DAY = "Sep5"
 task_name = "lognormal_experiments_BVI"
 
 who = [      
-    "BIX_S2",
-    "BVI_S1",
-    "BVI_S2",
-    "BVI_S3",
-    "BVI_S4",
-    "BVI_S5",
-    "BVI_S6",
-    "BVI_S7",
-    "BVI_S8",
-    "BVI_S9",
-    "BVI_S10",
+    #"BIX_S2",
+    #"BVI_S1",
+    #"BVI_S2",
+    #"BVI_S3",
+    #"BVI_S4",
+    #"BVI_S5",
+    #"BVI_S6",
+    #"BVI_S7",
+    #"BVI_S8",
+    #"BVI_S9",
+    #"BVI_S10",
 
     "BIX_S1",
     "BVI_S11",
