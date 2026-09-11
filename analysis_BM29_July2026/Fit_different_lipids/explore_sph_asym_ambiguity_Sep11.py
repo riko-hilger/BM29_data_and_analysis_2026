@@ -17,8 +17,8 @@ threshold = 10
 # =============== SPHERIC ASYM NO BGR ======================================
 fit_function_name = "ULV_spheric_asym_C4"
 fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-DAY = "Sep1"
-task_name = "sph_asym_ambiguity_"
+DAY = "Sep11"
+task_name = "sph_asym_ambiguity_BVI"
 
 who = [
     "BIX_S2",
@@ -121,13 +121,13 @@ for sample in who:
                                 fit_lib_entry += "]"
                                 chi2, info_text_print = fit.all_info(q, I, I_err_op, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-                                if True:
+                                if chi2 <= chi2_threshold:
                                     novelty_list = [average_deviation_percent(popt, previous_fit) for previous_fit in fit_list]
                                     if all(novelty > threshold for novelty in novelty_list):
                                         fit_list.append(popt)
                                         print(f"Found successful fit nr. {i} for {sample} at attempt {count} with chi2 = {chi2:.4g}")
                                         print(fit_lib_entry)  
-                                        print("\n")          
+                                        # print("\n")          
                                         with open(target_folder/f"info_texts_{sample}.txt", "a", encoding="utf-8") as k:
                                             k.write(f"\n\n{BM29.sample_dict[sample]} fit nr. {i} with chi2 = {chi2:.4g}\n" + fit_lib_entry + "\n###########################################\n")
                                         plt.figure(figsize=(12, 7.5))

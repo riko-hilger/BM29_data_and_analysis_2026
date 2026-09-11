@@ -1172,7 +1172,7 @@ best_fits = {
     },
     'BVI_S1': {
         'ULV_spheric_asym_C4': {
-            # FOUND NOTHING YET
+            1: [19.22, 7.881, 0.9507, 2, 0.8019, 0.1779, 0.9044, 1.742, 9.172e-05, 0.0004912],
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
@@ -1183,7 +1183,7 @@ best_fits = {
     },
     'BVI_S2': {
         'ULV_spheric_asym_C4': {
-            # FOUND NOTHING YET
+            1: [19.06, 7.757, 1.006, 2, 0.778, 0.1797, 0.9239, 1.741, 9.037e-05, 0.0004566],
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
@@ -1194,7 +1194,7 @@ best_fits = {
     },
     'BVI_S3': {
         'ULV_spheric_asym_C4': {
-            # FOUND NOTHING YET
+            1: [15.93, 7.882, 1.046, 2, 0.7708, 0.1788, 0.9389, 1.738, 0.0001255, 0.0004763],
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
@@ -1242,7 +1242,7 @@ best_fits = {
     },
     'BVI_S7': {
         'ULV_spheric_asym_C4': {
-            # FOUND NOTHING YET
+            1: [15.01, 8.157, 2.336, 0.8852, 0.431, 0.3189, 0.9825, 1.769, 7.665e-05, 0.0009907],
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
@@ -1322,8 +1322,7 @@ best_fits = {
     },
     'BVI_S14': {
         'ULV_spheric_asym_C4': {
-            1: [9.119, 10, 1.03, 3.706, 0.5776, 0.13, 0.7789, 1.779, 0.0002798, 0.0003996],
-            2: [9.428, 10, 3.9, 0.8627, 0.1473, 0.5683, 0.7693, 1.782, 0.0002714, 0.0004512],
+            1: [19.67, 8.907, 1.139, 1.908, 0.509, 0.2972, 0.8503, 1.763, 0.0001031, 0.0007643],
         },
         "ULV_spheric_asym_C4_lognormal": {
             1: [9, 0.7451, 1.168, 1.723, 0.4556, 0.3019, 0.7631, 1.789, 4.515e-07, 0.0008046],
@@ -1335,7 +1334,7 @@ best_fits = {
     },
     'BVI_S15': {
         'ULV_spheric_asym_C4': {
-            # FOUND NOTHING YET
+            1: [21.11, 9.13, 1.266, 2.188, 0.5551, 0.2327, 0.8996, 1.748, 0.0001054, 0.0006566],
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
@@ -1347,7 +1346,9 @@ best_fits = {
     },
     'BVI_S16': {
         'ULV_spheric_asym_C4': {
-            # FOUND NOTHING YET
+            1: [17.1, 9.5, 1.353, 2.459, 0.6214, 0.2259, 1.047, 1.717, 0.000138, 0.00062],
+            2: [15.16, 9.5, 2.869, 1.153, 0.2272, 0.6198, 1.044, 1.718, 0.0001646, 0.0006234],
+
         },
         "ULV_spheric_asym_C4_lognormal": {
             1: [22.11, 0.4393, 1.107, 2.086, 0.5166, 0.3134, 0.8884, 1.75, 1.424e-07, 0.000807],
@@ -1371,7 +1372,7 @@ best_fits = {
     },
     'BVI_S18': {
         'ULV_spheric_asym_C4': {
-            # FOUND NOTHING YET
+            1: [19.01, 8.961, 2.459, 1.084, 0.2269, 0.5257, 0.8355, 1.768, 0.0001065, 0.0006244],
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
@@ -1427,15 +1428,14 @@ best_fits = {
     },
     'BIX_S2': {      # 15 mM DOPC/GM1 (80/20)
         'ULV_spheric_asym_C4': {
-        },
-        "ULV_sph_asym_prot_layer": {
-            1: [9, 7.948, 1.094, 1.183, 0.3866, 0.299, 0.7474, 1.749, 3.008, 0.7865, 0.185, 5.086e-07, 0.0005352],
+            1: [10, 7.824, 0.7555, 2.04, 0.9219, 0.1588, 0.8167, 1.746, 0.0002865, 0.0004348], # VERY BAD
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
         },
-        'ULV_ellipsoid_asym_C4': {
-        }
+        "ULV_sph_asym_prot_layer": {
+            1: [9, 7.948, 1.094, 1.183, 0.3866, 0.299, 0.7474, 1.749, 3.008, 0.7865, 0.185, 5.086e-07, 0.0005352],
+        },
     },
 }
 
