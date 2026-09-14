@@ -160,7 +160,7 @@ def Poisson_error_focus_lowq_and_minimum(q, Ierr_Poisson):
 
 # ====================================================================================================
 
-def get_chi2(sample, error_model, p0=None):
+def get_chi2(sample, error_model, p0=None, fit_function="ULV_spheric_asym_C4"):
     block = sample.split("_")[0]
     block_path = blockpath(block)
     dir_names = [x.name for x in block_path.iterdir()]
@@ -177,14 +177,19 @@ def get_chi2(sample, error_model, p0=None):
     elif error_model == "op_error_classic":
         Ierr_op = op_error_classic(q, I)
     if p0 is None:
-        p0_sph_asym = best_fits[sample]["ULV_spheric_asym_C4"][1]
+        p0 = best_fits[sample][fit_function][1]
     else:
-        p0_sph_asym = p0
-    fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-    I_sph_asym = fit_function(q, *p0_sph_asym)
+        p0 = p0
+    if fit_function == "ULV_spheric_asym_C4_lognormal":
+        fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym_lognormal(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
+    elif fit_function == "ULV_sph_asym_prot_layer":
+        fit_function = lambda q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, c4: fit.ULV_sph_asym_prot_layer(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, 0, 0, c4)
+    elif fit_function == "ULV_spheric_asym_C4":
+        fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
+    I_sph_asym = fit_function(q, *p0)
     residuals     = I - I_sph_asym
-    chi2_sph_asym = np.sum((residuals / Ierr_op)**2) / (len(I) - len(p0_sph_asym) - 1)     
-    return chi2_sph_asym
+    chi2 = np.sum((residuals / Ierr_op)**2) / (len(I) - len(p0) - 1)     
+    return chi2
 
 # ============================================================================================================
 def linear(x, m, n):
@@ -1172,94 +1177,114 @@ best_fits = {
     },
     'BVI_S1': {
         'ULV_spheric_asym_C4': {
-            1: [19.22, 7.881, 0.9507, 2, 0.8019, 0.1779, 0.9044, 1.742, 9.172e-05, 0.0004912],
+            # 1: [19.22, 7.881, 0.9507, 2, 0.8019, 0.1779, 0.9044, 1.742, 9.172e-05, 0.0004912],
+            # see C:\Users\riko05\Documents\8. SoSe 26\Code\BM29_data_and_analysis_2026\analysis_BM29_July2026\Results_and_Figures\Sep11\sph_asym_ambiguity_BVI\BVI_S1
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
         },
         "ULV_sph_asym_prot_layer": {
             1: [9.003, 7.646, 1.359, 1.235, 0.3743, 0.4144, 0.962, 1.718, 3.001, 0.7564, 0.1721, 4.543e-07, 0.0005787],
+            2: [9.012, 7.796, 0.9664, 1.372, 0.4288, 0.3136, 0.7846, 1.752, 3.007, 0.7115, 0.1663, 4.839e-07, 0.0005676],
         }
     },
     'BVI_S2': {
         'ULV_spheric_asym_C4': {
-            1: [19.06, 7.757, 1.006, 2, 0.778, 0.1797, 0.9239, 1.741, 9.037e-05, 0.0004566],
+            # 1: [19.06, 7.757, 1.006, 2, 0.778, 0.1797, 0.9239, 1.741, 9.037e-05, 0.0004566],
+            # see C:\Users\riko05\Documents\8. SoSe 26\Code\BM29_data_and_analysis_2026\analysis_BM29_July2026\Results_and_Figures\Sep11\sph_asym_ambiguity_BVI\BVI_S2
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
         },
         "ULV_sph_asym_prot_layer": {
             1: [9.565, 8.549, 1.147, 1.154, 0.319, 0.3441, 0.7101, 1.769, 3.001, 0.7, 0.1724, 4.327e-07, 0.0005452],
+            2: [9.032, 8.189, 0.9198, 1.302, 0.4335, 0.3475, 0.7814, 1.754, 3.007, 0.701, 0.1501, 4.625e-07, 0.0005643],
         }
     },
     'BVI_S3': {
         'ULV_spheric_asym_C4': {
-            1: [15.93, 7.882, 1.046, 2, 0.7708, 0.1788, 0.9389, 1.738, 0.0001255, 0.0004763],
+            # 1: [15.93, 7.882, 1.046, 2, 0.7708, 0.1788, 0.9389, 1.738, 0.0001255, 0.0004763],
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
         },
         "ULV_sph_asym_prot_layer": {
-            1: [9.003, 7.6, 1.12, 1.25, 0.3716, 0.375, 0.8249, 1.745, 3.005, 0.7823, 0.1483, 4.973e-07, 0.0005717],
-            2: [13.37, 8.014, 0.8269, 1.956, 0.4497, 0.2329, 0.7611, 1.772, 3.026, 0.7457, 0.1465, 2.858e-07, 0.0004241],
+            # 1: [9.003, 7.6, 1.12, 1.25, 0.3716, 0.375, 0.8249, 1.745, 3.005, 0.7823, 0.1483, 4.973e-07, 0.0005717],
+            # 2: [13.37, 8.014, 0.8269, 1.956, 0.4497, 0.2329, 0.7611, 1.772, 3.026, 0.7457, 0.1465, 2.858e-07, 0.0004241],
+            # Nothing acceptable
         }
     },
     'BVI_S4': {
         'ULV_spheric_asym_C4': {
-            1: [8.193, 7.98, 3.438, 0.9101, 0.13, 0.741, 0.956, 1.747, 0.00029, 0.0004536],
+            # 1: [8.193, 7.98, 3.438, 0.9101, 0.13, 0.741, 0.956, 1.747, 0.00029, 0.0004536],
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
         },
         "ULV_sph_asym_prot_layer": {
-            1: [9.031, 7.667, 1.381, 1.476, 0.4262, 0.4236, 1.172, 1.704, 3.001, 0.712, 0.1976, 4.649e-07, 0.000613],
+            # 1: [9.031, 7.667, 1.381, 1.476, 0.4262, 0.4236, 1.172, 1.704, 3.001, 0.712, 0.1976, 4.649e-07, 0.000613],
+            # Nothing acceptable
         }
     },
     'BVI_S5': {
         'ULV_spheric_asym_C4': {
-            1: [8.065, 8.069, 3.685, 1.038, 0.13, 0.7377, 1.081, 1.729, 0.0002737, 0.00052],
+            # 1: [8.065, 8.069, 3.685, 1.038, 0.13, 0.7377, 1.081, 1.729, 0.0002737, 0.00052],
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
-            1: [15.67, 0.449, 2.155, 1.263, 0.1784, 0.6, 0.9563, 1.773, 1.663e-07, 0.0006841],
+            # 1: [15.67, 0.449, 2.155, 1.263, 0.1784, 0.6, 0.9563, 1.773, 1.663e-07, 0.0006841],
+            # Nothing acceptable
         },
         "ULV_sph_asym_prot_layer": {
-            1: [9.792, 7.835, 1.057, 1.753, 0.4637, 0.3844, 1.083, 1.722, 3.004, 0.7001, 0.1453, 3.76e-07, 0.0006854],
+            # 1: [9.792, 7.835, 1.057, 1.753, 0.4637, 0.3844, 1.083, 1.722, 3.004, 0.7001, 0.1453, 3.76e-07, 0.0006854],
+            # Nothing acceptable
         }
     },
     'BVI_S6': {
         'ULV_spheric_asym_C4': {
-            1: [8.14, 8.019, 3.852, 1.095, 0.13, 0.7558, 1.167, 1.718, 0.000249, 0.000524],
-            2: [8, 8.023, 1.582, 1.476, 0.2409, 0.516, 0.9576, 1.776, 0.0001878, 0.0007345],
+            # 1: [8.14, 8.019, 3.852, 1.095, 0.13, 0.7558, 1.167, 1.718, 0.000249, 0.000524],
+            # 2: [8, 8.023, 1.582, 1.476, 0.2409, 0.516, 0.9576, 1.776, 0.0001878, 0.0007345],
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
-            1: [15.49, 0.4257, 2.323, 1.422, 0.1604, 0.5679, 0.9862, 1.771, 1.47e-07, 0.0007015],
+            # 1: [15.49, 0.4257, 2.323, 1.422, 0.1604, 0.5679, 0.9862, 1.771, 1.47e-07, 0.0007015],
+            # Nothing acceptable
         },
         "ULV_sph_asym_prot_layer": {
-            1: [9.88, 7.517, 0.9635, 1.446, 0.2936, 0.3579, 0.715, 1.785, 3, 0.7002, 0.1223, 3.846e-07, 0.0007303],
-            2: [10.24, 7.663, 1.009, 1.624, 0.347, 0.3853, 0.8741, 1.751, 3, 0.7001, 0.1131, 3.218e-07, 0.000712],
-            3: [10.1, 7.675, 0.8122, 1.662, 0.3401, 0.3045, 0.7004, 1.789, 3.002, 0.7001, 0.1275, 3.689e-07, 0.0006861],
+            # 1: [9.88, 7.517, 0.9635, 1.446, 0.2936, 0.3579, 0.715, 1.785, 3, 0.7002, 0.1223, 3.846e-07, 0.0007303],
+            # 2: [10.24, 7.663, 1.009, 1.624, 0.347, 0.3853, 0.8741, 1.751, 3, 0.7001, 0.1131, 3.218e-07, 0.000712],
+            # 3: [10.1, 7.675, 0.8122, 1.662, 0.3401, 0.3045, 0.7004, 1.789, 3.002, 0.7001, 0.1275, 3.689e-07, 0.0006861],
+            # Nothing acceptable
         }
     },
     'BVI_S7': {
         'ULV_spheric_asym_C4': {
-            1: [15.01, 8.157, 2.336, 0.8852, 0.431, 0.3189, 0.9825, 1.769, 7.665e-05, 0.0009907],
+            # 1: [15.01, 8.157, 2.336, 0.8852, 0.431, 0.3189, 0.9825, 1.769, 7.665e-05, 0.0009907],
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
         },
         "ULV_sph_asym_prot_layer": {
-            1: [9.72, 7.706, 1.057, 1.921, 0.3509, 0.4045, 1.021, 1.748, 3, 0.7, 0.07649, 3.142e-07, 0.0009686],
+            # 1: [9.72, 7.706, 1.057, 1.921, 0.3509, 0.4045, 1.021, 1.748, 3, 0.7, 0.07649, 3.142e-07, 0.0009686],
+            # Nothing acceptable
         }
     },
     'BVI_S8': {
         'ULV_spheric_asym_C4': {
-            1: [8.172, 8.215, 3.302, 0.8599, 0.13, 0.7582, 0.9167, 1.75, 0.0002749, 0.0004437],
+            # 1: [8.172, 8.215, 3.302, 0.8599, 0.13, 0.7582, 0.9167, 1.75, 0.0002749, 0.0004437],
+            # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
             # FOUND NOTHING YET
         },
         "ULV_sph_asym_prot_layer": {
-            1: [9.055, 7.386, 1.246, 1.025, 0.2854, 0.3963, 0.7012, 1.771, 3, 0.7004, 0.1573, 5.339e-07, 0.0006061],
+            # 1: [9.055, 7.386, 1.246, 1.025, 0.2854, 0.3963, 0.7012, 1.771, 3, 0.7004, 0.1573, 5.339e-07, 0.0006061],
+            # Nothing acceptable
         }
     },
     'BVI_S9': {
@@ -1545,19 +1570,16 @@ nice_sample_names = {
     "BVII_S5": "15 mM DOPC/DOPS (80/20) + 100 uM aSynWT",
     "BVII_S6": "3 mM DOPC/DOPS (80/20) + 100 uM aSynWT",
     "BVII_S7": "3 mM LVs + 100 uM aSynWT",
-
     "BVII_S8": "15 mM DOPS + 75 uM aSynE61V",
     "BVII_S9": "3 mM DOPS + 100 uM aSynE61V",
     "BVII_S10": "15 mM DOPC/DOPS (80/20) + 75 uM aSynE61V",
     "BVII_S11": "3 mM DOPC/DOPS (80/20) + 100 uM aSynE61V",
     "BVII_S12": "3 mM LVs + 100 uM aSynE61V",
-
     "BVII_S13": "15 mM DOPS + 75 uM aSynA124T",
     "BVII_S14": "3 mM DOPS + 100 uM aSynA124T",
     "BVII_S15": "15 mM DOPC/DOPS (80/20) + 75 uM aSynA124T",
     "BVII_S16": "3 mM DOPC/DOPS (80/20) + 100 uM aSynA124T",
     "BVII_S17": "3 mM LVs + 100 uM aSynA124T",
-
     "BVII_S18": "15 mM DOPS + 75 uM aSynE46K",
     "BVII_S19": "3 mM DOPS + 100 uM aSynE46K",
     "BVII_S20": "15 mM DOPC/DOPS (80/20) + 75 uM aSynE46K",
