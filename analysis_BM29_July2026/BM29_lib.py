@@ -1387,7 +1387,6 @@ best_fits = {
         'ULV_sph_asym_prot_layer': {
             1: [10.53, 10, 1.503, 1.876, 0.5283, 0.3013, 1.045, 1.739, 5, 1.081, 0.01614, 5.117e-07, 0.0007531], # PREMIUM, though parameters are hard to interpret ...
             2: [10.53, 10, 1.309, 1.965, 0.4733, 0.209, 0.7315, 1.793, 5, 1.158, 0.0143, 5.668e-07, 0.0007331], 
-            
         }
     },
     'BVI_S16': {
@@ -1411,6 +1410,9 @@ best_fits = {
         },
         "ULV_spheric_asym_C4_lognormal": {
             1: [20.57, 0.4049, 1.046, 2.314, 0.5101, 0.3031, 0.7948, 1.77, 1.199e-07, 0.0006632], # best acceptable
+        },
+        'ULV_sph_asym_prot_layer': {
+            # Nothing found yet
         },
     },
     'BVI_S18': {
