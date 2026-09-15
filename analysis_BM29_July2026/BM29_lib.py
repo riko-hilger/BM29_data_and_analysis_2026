@@ -58,6 +58,17 @@ concentrations = {
     "BIV_S39": 75,
     "BIV_S40": 100,
 
+    "BVI_S1": 6.0,
+    "BVI_S2": 9.0,
+    "BVI_S3": 15.0,
+    "BVI_S4": 25.0,
+    "BVI_S5": 50.0,
+    "BVI_S6": 75.0,
+    "BVI_S7": 100,
+    "BVI_S8": 25,
+    "BVI_S9": 25,
+    "BVI_S10": 25,
+
     "BVI_S11": 6.0,
     "BVI_S12": 9.0,
     "BVI_S13": 15.0,
@@ -86,6 +97,52 @@ def blockpath(block):
     data_root = project_root / "data_BM29_July2026"
     
     return data_root / block
+
+# ====================================================================================================
+def gaussian(r, rho_pos, sigma, rho_h):
+    return rho_h * np.exp(-0.5 * ((r - rho_pos) / sigma)**2)
+
+def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
+    norm = LogNorm(vmin=1, vmax=100)
+
+    f=plt.figure(figsize=(12, 7.5))
+    for sample in who:
+        if "WT" in sample_dict[sample]:
+            cmap = plt.cm.Blues
+        elif "A124T" in sample_dict[sample]:
+            cmap = plt.cm.Reds
+        elif "E46K" in sample_dict[sample]:
+            cmap = plt.cm.Oranges
+        elif "E61V" in sample_dict[sample]:
+            cmap = plt.cm.Greens
+        if concentrations[sample] == 0:
+            color = "grey"
+        else:
+            color = cmap(norm(concentrations[sample]))
+            
+        R = 0
+        if ((fit_function == "ULV_spheric_asym_C4") or (fit_function == "ULV_spheric_asym_C4_lognormal")):
+            _, _,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   _, _ = best_fits[sample][fit_function][1]
+            r = np.linspace(R - 2*z_h, R + 3*z_h, 1500)
+            rho_h3, z_h3, sigma_h3 = 0, 1, 1
+        if fit_function == "ULV_sph_asym_prot_layer":
+            _, _, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, _, _ = best_fits[sample][fit_function][1]
+            r = np.linspace(R - 2*z_h, R + 6*z_h, 1500)
+        rho_h   = [rho_h1, -1, rho_h2, rho_h3]
+        rho_pos = [R - z_h, R, R + z_h, R + z_h3]
+        sigma   = [sigma_h1, sigma_c, sigma_h2, sigma_h3]
+        rho = np.zeros_like(r)
+        for i in range(4):
+            rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
+        plt.plot(r, rho, label=nice_sample_names[sample], color=color)
+
+    plt.xlabel('$r[\\mathrm{nm}]$')
+    plt.ylabel('$\\rho\\mathrm{[a.u.]}$')
+    plt.title(title)
+    plt.grid(True)
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
+    plt.close("all")
+    return f
 
 def plot_together(who, title):
     """
@@ -1367,11 +1424,12 @@ best_fits = {
     },
     'BVI_S14': {
         'ULV_spheric_asym_C4': {
-            # 1: [19.67, 8.907, 1.139, 1.908, 0.509, 0.2972, 0.8503, 1.763, 0.0001031, 0.0007643],
+            1: [19.67, 8.907, 1.139, 1.908, 0.509, 0.2972, 0.8503, 1.763, 0.0001031, 0.0007643],
             # not acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
-            1: [9, 0.7451, 1.168, 1.723, 0.4556, 0.3019, 0.7631, 1.789, 4.515e-07, 0.0008046], # best acceptable
+            1: [12.5, 0.6281, 1.171, 1.711, 0.4608, 0.305, 0.7663, 1.791, 3.099e-07, 0.0008186],
+            2: [9, 0.7451, 1.168, 1.723, 0.4556, 0.3019, 0.7631, 1.789, 4.515e-07, 0.0008046], # best acceptable
             # 2: [9.002, 0.7429, 1.413, 1.369, 0.3691, 0.3732, 0.7448, 1.794, 4.562e-07, 0.000884],
         },
     },
@@ -1382,7 +1440,8 @@ best_fits = {
             3: [19.27, 8.5, 2.5, 1.104, 0.2363, 0.55, 0.8995, 1.749, 0.0001251, 0.0006623],  
         },
         "ULV_spheric_asym_C4_lognormal": {
-            1: [9.823, 0.7317, 1.173, 1.855, 0.4859, 0.3039, 0.8328, 1.767, 4.383e-07, 0.0007747], # acceptable
+            1: [12.5, 0.6472, 1.167, 1.728, 0.4588, 0.3039, 0.7605, 1.787, 3.435e-07, 0.000824],
+            2: [9.823, 0.7317, 1.173, 1.855, 0.4859, 0.3039, 0.8328, 1.767, 4.383e-07, 0.0007747], # acceptable
         },
         'ULV_sph_asym_prot_layer': {
             1: [10.53, 10, 1.503, 1.876, 0.5283, 0.3013, 1.045, 1.739, 5, 1.081, 0.01614, 5.117e-07, 0.0007531], # PREMIUM, though parameters are hard to interpret ...
@@ -1417,8 +1476,11 @@ best_fits = {
     },
     'BVI_S18': {
         'ULV_spheric_asym_C4': {
-            # 1: [19.01, 8.961, 2.459, 1.084, 0.2269, 0.5257, 0.8355, 1.768, 0.0001065, 0.0006244], 
+            1: [19.01, 8.961, 2.459, 1.084, 0.2269, 0.5257, 0.8355, 1.768, 0.0001065, 0.0006244], 
             # not acceptable
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [12.684, 0.61411, 1, 1, 1, 1, 1, 1, 1, 1],
         },
         'ULV_sph_asym_prot_layer': {
             1: [10.42, 10, 1.117, 1.87, 0.4603, 0.2607, 0.732, 1.795, 4.999, 1.125, 0.01982, 4.838e-07, 0.0006739], # best acceptable
@@ -1464,8 +1526,8 @@ best_fits = {
             7: [19.6, 8.483, 1.2, 2.046, 0.4937, 0.2396, 0.8293, 1.8, 0.0001058, 0.000397],
         },
         "ULV_spheric_asym_C4_lognormal": {
-            1: [10.86, 0.7143, 3, 0.9518, 0.1812, 0.4986, 0.7707, 1.81, 3.479e-07, 0.0003053], 
-            2: [10.79, 0.7079, 1.104, 2.5, 0.4985, 0.1854, 0.7654, 1.821, 3.566e-07, 0.0003044],
+            2: [10.86, 0.7143, 3, 0.9518, 0.1812, 0.4986, 0.7707, 1.81, 3.479e-07, 0.0003053], 
+            1: [10.79, 0.7079, 1.104, 2.5, 0.4985, 0.1854, 0.7654, 1.821, 3.566e-07, 0.0003044],
         },
         "ULV_sph_asym_prot_layer": {
             1: [17.94, 10, 1.167, 1.992, 0.4605, 0.2272, 0.7503, 1.821, 5, 1.2, 0.008231, 2.435e-07, 0.0004234], # as good as best
