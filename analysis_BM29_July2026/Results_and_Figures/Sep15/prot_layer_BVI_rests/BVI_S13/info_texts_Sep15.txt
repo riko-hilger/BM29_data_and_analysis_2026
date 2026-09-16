@@ -48,3 +48,8 @@ BVI_S13_15mM_POPG_15uM_aSynWT using ULV_sph_asym_prot_layer with fit nr. 8
 BVI_S13_15mM_POPG_15uM_aSynWT using ULV_sph_asym_prot_layer with fit nr. 9
 [12.75, 9.97, 1.376, 1.267, 0.5544, 0.5334, 1.182, 1.702, 4.974, 1.177, 0.01124, 4.353e-07, 1.496e-08]
 ###########################################
+
+
+BVI_S13_15mM_POPG_15uM_aSynWT using ULV_sph_asym_prot_layer with fit nr. 10
+[14.32, 10, 1.382, 1.232, 0.5604, 0.5543, 1.2, 1.7, 5, 0.7013, 0.01465, 3.782e-07, 5.452e-41]
+###########################################
