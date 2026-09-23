@@ -144,7 +144,7 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
     plt.close("all")
     return f
 
-def plot_together(who, title, max_cutoff=5.1):
+def plot_together(who, title, min_cutoff= 0.07, max_cutoff=5.1):
     """
     who: list of samples of the form "BII_S3"
     """
@@ -159,7 +159,7 @@ def plot_together(who, title, max_cutoff=5.1):
             if dir_name[:-13].endswith(sample):
                 sub_dat_path = block_path / dir_name / "avg_and_sub" / sample_dict[sample]
                 q, I, Ierr_Poisson = np.loadtxt(sub_dat_path, unpack=True)
-                mask = (q >= 0.07) & (q <= max_cutoff)
+                mask = (q >= min_cutoff) & (q <= max_cutoff)
                 q    = q[mask]
                 I    = I[mask]
                 Ierr_Poisson = Ierr_Poisson[mask]
