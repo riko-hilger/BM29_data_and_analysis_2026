@@ -94,7 +94,7 @@ def extract_sample_name(sample):
 def blockpath(block):
     this_file = Path(__file__).resolve()
     project_root = this_file.parent.parent      
-    data_root = project_root / "data_BM29_July2026"
+    data_root = project_root / "data_BM29_2026"
     
     return data_root / block
 
@@ -1249,7 +1249,7 @@ best_fits = {
     'BVI_S1': {
         'ULV_spheric_asym_C4': {
             # 1: [19.22, 7.881, 0.9507, 2, 0.8019, 0.1779, 0.9044, 1.742, 9.172e-05, 0.0004912],
-            # see C:\Users\riko05\Documents\8. SoSe 26\Code\BM29_data_and_analysis_2026\analysis_BM29_July2026\Results_and_Figures\Sep11\sph_asym_ambiguity_BVI\BVI_S1
+            # see C:\Users\riko05\Documents\8. SoSe 26\Code\BM29_data_and_analysis_2026\analysis_BM29_2026\Results_and_Figures\Sep11\sph_asym_ambiguity_BVI\BVI_S1
             # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
@@ -1263,7 +1263,7 @@ best_fits = {
     'BVI_S2': {
         'ULV_spheric_asym_C4': {
             # 1: [19.06, 7.757, 1.006, 2, 0.778, 0.1797, 0.9239, 1.741, 9.037e-05, 0.0004566],
-            # see C:\Users\riko05\Documents\8. SoSe 26\Code\BM29_data_and_analysis_2026\analysis_BM29_July2026\Results_and_Figures\Sep11\sph_asym_ambiguity_BVI\BVI_S2
+            # see C:\Users\riko05\Documents\8. SoSe 26\Code\BM29_data_and_analysis_2026\analysis_BM29_2026\Results_and_Figures\Sep11\sph_asym_ambiguity_BVI\BVI_S2
             # Nothing acceptable
         },
         "ULV_spheric_asym_C4_lognormal": {
