@@ -144,13 +144,13 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
     plt.close("all")
     return f
 
-def plot_together(who, title):
+def plot_together(who, title, max_cutoff=5.1):
     """
     who: list of samples of the form "BII_S3"
     """
     plt.close("all")
     
-    f = plt.figure(figsize=(12, 7.5))
+    f = plt.figure(figsize=(14, 9))
     for sample in who:
         block = sample.split("_")[0]
         block_path = blockpath(block)
@@ -158,12 +158,17 @@ def plot_together(who, title):
         for dir_name in dir_names:
             if dir_name[:-13].endswith(sample):
                 sub_dat_path = block_path / dir_name / "avg_and_sub" / sample_dict[sample]
-                q, I, Ierr = np.loadtxt(sub_dat_path, unpack=True)
-                plt.errorbar(q, I, Ierr, ls = "None", marker="o", label=nice_sample_names[sample], markersize=2.0)
+                q, I, Ierr_Poisson = np.loadtxt(sub_dat_path, unpack=True)
+                mask = (q >= 0.07) & (q <= max_cutoff)
+                q    = q[mask]
+                I    = I[mask]
+                Ierr_Poisson = Ierr_Poisson[mask]
+                plt.errorbar(q, I, Ierr_Poisson, ls = "None", marker="o", label=nice_sample_names[sample], markersize=4.0)
     plt.xlabel("$q$")
     plt.ylabel("$I$")
     plt.xscale("log")
     plt.yscale("log")
+    plt.grid()
     plt.title(title)
     legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
     return
@@ -585,7 +590,60 @@ sample_dict = {
     "BIX_S16": "BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT",
     "BIX_S17": "BIX_S17_15mM_DOPC_DOPS_80_20_15uM_aSynWT",
     "BIX_S18": "BIX_S18_15mM_DOPC_DOPS_80_20_25uM_aSynWT",
-    "BIX_S19": "BIX_S19_15mM_DOPC_DOPS_80_20_50uM_aSynWT"
+    "BIX_S19": "BIX_S19_15mM_DOPC_DOPS_80_20_50uM_aSynWT",
+
+    "BXII_S1": "BXII_S1_15mM_LV4_30nm",
+    "BXII_S2": "BXII_S2_15mM_LV4_50nm",
+    "BXII_S3": "BXII_S3_15mM_LV4_100nm",
+    "BXII_S4": "BXII_S4_15mM_LV4_200nm",
+    "BXII_S5": "BXII_S5_15mM_DMPS",
+    "BXII_S6": "BXII_S6_15mM_DOPC",
+    "BXII_S7": "BXII_S7_15mM_LV4_30nm_9uM_aSynWT",
+    "BXII_S8": "BXII_S8_15mM_LV4_30nm_15uM_aSynWT",
+    "BXII_S9": "BXII_S9_15mM_LV4_30nm_40uM_aSynWT",
+    "BXII_S10": "BXII_S10_15mM_LV4_30nm_80uM_aSynWT",
+    "BXII_S11": "BXII_S11_15mM_LV4_30nm_15uM_aSynE61V",
+    "BXII_S12": "BXII_S12_15mM_LV4_100nm_9uM_aSynWT",
+    "BXII_S13": "BXII_S13_15mM_LV4_100nm_15uM_aSynWT",
+    "BXII_S14": "BXII_S14_15mM_LV4_100nm_40uM_aSynWT",
+    "BXII_S15": "BXII_S15_15mM_LV4_100nm_80uM_aSynWT",
+    "BXII_S16": "BXII_S16_15mM_LV4_100nm_15uM_aSynE61V",
+		
+    "BXII_S17": "BXII_S17_15mM_LV4_200nm_9uM_aSynWT",
+    "BXII_S18": "BXII_S18_15mM_LV4_200nm_15uM_aSynWT",
+    "BXII_S19": "BXII_S19_15mM_LV4_200nm_40uM_aSynWT",
+    "BXII_S20": "BXII_S20_15mM_LV4_200nm_80uM_aSynWT",
+    "BXII_S21": "BXII_S21_15mM_LV4_200nm_15uM_aSynE61V",
+		
+    "BXII_S22": "BXII_S22_15mM_DMPS_9uM_aSynWT",
+    "BXII_S23": "BXII_S23_15mM_DMPS_15uM_aSynWT",
+    "BXII_S24": "BXII_S24_15mM_DMPS_40uM_aSynWT",
+    "BXII_S25": "BXII_S25_15mM_DMPS_80uM_aSynWT",
+    "BXII_S26": "BXII_S26_15mM_DMPS_15uM_aSynE61V",
+		
+    "BXII_S27": "BXII_S27_15mM_DOPC_9uM_aSynWT",
+    "BXII_S28": "BXII_S28_15mM_DOPC_15uM_aSynWT",
+    "BXII_S29": "BXII_S29_15mM_DOPC_40uM_aSynWT",
+    "BXII_S30": "BXII_S30_15mM_DOPC_80uM_aSynWT",
+    "BXII_S31": "BXII_S31_15mM_DOPC_15uM_aSynE61V",
+		
+    "BXII_S32": "BXII_S32_15mM_LV4_aSynWT",
+    "BXII_S33": "BXII_S33_15mM_LV4_aSynG14R",
+
+    "BXIII_S1": "BXIII_S1_23nM_SVs",
+    "BXIII_S2": "BXIII_S2_60%_CSLB",
+    "BXIII_S3": "BXIII_S3_3uM_Syn1",
+    "BXIII_S4": "BXIII_S4_15mM_LV4_4uM_Syn1",
+    "BXIII_S5": "BXIII_S5_15mM_LV4_6uM_Syn1",
+    "BXIII_S6": "BXIII_S6_15mM_LV4_6uM_Syn1_24uM_aSynWT",
+    "BXIII_S11": "BXIII_S11_60%_CSLB_6uM_Syn1",
+    "BXIII_S12": "BXIII_S12_60%_CSLB_4uM_Syn1",
+    "BXIII_S13": "BXIII_S13_60%_CSLB_6uM_Syn1_12uM_aSynWT",
+    "BXIII_S14": "BXIII_S14_60%_CSLB_6uM_Syn1_24uM_aSynWT",
+
+    "BXIV_S1": "BXIV_S1_15mM_LV4_6uM_Syn1_24uM_ATP",
+    "BXIV_S2": "BXIV_S2_23nM_SV_6uM_Syn1_24uM_ATP",
+    "BXIV_S3": "BXIV_S3_60%_CSLB_6uM_Syn1_24uM_ATP"
 }
 
 best_fits = {
@@ -2049,4 +2107,59 @@ nice_sample_names = {
     "BIX_S17": "15 mM DOPC/DOPS (80/20) + 15 uM aSynWT",
     "BIX_S18": "15 mM DOPC/DOPS (80/20) + 25 uM aSynWT",
     "BIX_S19": "15 mM DOPC/DOPS (80/20) + 50 uM aSynWT",
+
+    "BXII_S1": "15 mM LV4 (30nm)",
+    "BXII_S2": "15 mM LV4 (50nm)",
+    "BXII_S3": "15 mM LV4 (100nm)",
+    "BXII_S4": "15 mM LV4 (200nm)",
+    "BXII_S5": "15 mM DMPS",
+    "BXII_S6": "15 mM DOPC",
+		
+    "BXII_S7": "15 mM LV4 (30nm) + 9 uM aSyn WT",
+    "BXII_S8": "15 mM LV4 (30nm) + 15 uM aSyn WT",
+    "BXII_S9": "15 mM LV4 (30nm) + 40 uM aSyn WT",
+    "BXII_S10": "15 mM LV4 (30nm) + 80 uM aSyn WT",
+    "BXII_S11": "15 mM LV4 (30nm) + 15 uM aSyn E61V",
+		
+    "BXII_S12": "15 mM LV4 (100nm) + 9 uM aSyn WT",
+    "BXII_S13": "15 mM LV4 (100nm) + 15 uM aSyn WT",
+    "BXII_S14": "15 mM LV4 (100nm) + 40 uM aSyn WT",
+    "BXII_S15": "15 mM LV4 (100nm) + 80 uM aSyn WT",
+    "BXII_S16": "15 mM LV4 (100nm) + 15 uM aSyn E61V",
+		
+    "BXII_S17": "15 mM LV4 (200nm) + 9 uM aSyn WT",
+    "BXII_S18": "15 mM LV4 (200nm) + 15 uM aSyn WT",
+    "BXII_S19": "15 mM LV4 (200nm) + 40 uM aSyn WT",
+    "BXII_S20": "15 mM LV4 (200nm) + 80 uM aSyn WT",
+    "BXII_S21": "15 mM LV4 (200nm) + 15 uM aSyn E61V",
+		
+    "BXII_S22": "15 mM DMPS + 9 uM aSyn WT",
+    "BXII_S23": "15 mM DMPS + 15 uM aSyn WT",
+    "BXII_S24": "15 mM DMPS + 40 uM aSyn WT",
+    "BXII_S25": "15 mM DMPS + 80 uM aSyn WT",
+    "BXII_S26": "15 mM DMPS + 15 uM aSyn E61V",
+		
+    "BXII_S27": "15 mM DOPC + 9 uM aSyn WT",
+    "BXII_S28": "15 mM DOPC + 15 uM aSyn WT",
+    "BXII_S29": "15 mM DOPC + 40 uM aSyn WT",
+    "BXII_S30": "15 mM DOPC + 80 uM aSyn WT",
+    "BXII_S31": "15 mM DOPC + 15 uM aSyn E61V",
+		
+    "BXII_S32": "15 mM LV4_aSynWT",
+    "BXII_S33": "15 mM LV4_aSynG14R",
+
+    "BXIII_S1": "23nM SVs",
+    "BXIII_S2": "CSLBs",
+    "BXIII_S3": "3uM Syn1",
+    "BXIII_S4": "15mM LV4 + 4uM Syn1",
+    "BXIII_S5": "15mM LV4 + 6uM Syn1",
+    "BXIII_S6": "15mM LV4 + 6uM Syn1 + 24uM aSynWT",
+    "BXIII_S11": "CSLB + 6uM Syn1",
+    "BXIII_S12": "CSLB + 4uM Syn1",
+    "BXIII_S13": "CSLB + 6uM Syn1 + 12uM aSynWT",
+    "BXIII_S14": "CSLB + 6uM Syn1 + 24uM aSynWT",
+
+    "BXIV_S1": "15mM LV4 + 6uM Syn1 + 24uM ATP",
+    "BXIV_S2": "23nM SVs + 6uM Syn1 + 24uM ATP",
+    "BXIV_S3": "CSLB + 6uM Syn1 + 24uM ATP"
 }
