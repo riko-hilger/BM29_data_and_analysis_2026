@@ -98,7 +98,7 @@ def plot_together(who, title, min_cutoff= 0.07, max_cutoff=5.1):
     plt.grid()
     plt.title(title)
     legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
-    return
+    return f
 
 def plot_together_lognorm_polydisp(who):
 
