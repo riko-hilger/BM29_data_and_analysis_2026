@@ -11,6 +11,14 @@ from scipy.stats import f
 from scipy import optimize
 from scipy.optimize import curve_fit
 
+# COLORS
+color_dict = {
+    "WT": "dodgerblue",
+    "A124T": "crimson",
+    "E46K": "darkorange",
+    "E61V": "green",
+}
+
 def extract_sample_name(sample):
     sample = sample[:-13] + "_"
     match = re.search(r"sample_([^_]+_[^_]+)", sample)
