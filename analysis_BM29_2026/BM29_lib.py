@@ -108,37 +108,102 @@ def plot_together(who, title, min_cutoff= 0.07, max_cutoff=5.1):
     legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
     return f
 
+# def plot_together_lognorm_polydisp(who):
+
+#     plt.close("all")
+
+#     f = plt.figure(figsize=(12, 7.5))
+#     norm = LogNorm(vmin=1, vmax=100)
+#     # norm = Normalize(vmin=1, vmax=100)
+#     for sample in who:
+#         if "WT" in sample_dict[sample]:
+#             cmap = plt.cm.Blues
+#         elif "A124T" in sample_dict[sample]:
+#             cmap = plt.cm.Reds
+#         elif "E46K" in sample_dict[sample]:
+#             cmap = plt.cm.Oranges
+#         elif "E61V" in sample_dict[sample]:
+#             cmap = plt.cm.Greens
+#         R0, sigma = best_fits[sample]["ULV_spheric_asym_C4_lognormal"][1][0:2]
+#         R = np.linspace(0, R0 + 40, 1000)
+#         P = lognorm.pdf(R, s=sigma, scale=R0)
+#         # 0 µM aSyn = grey
+#         if concentrations[sample] == 0:
+#             color = "grey"
+#         else:
+#             color = cmap(norm(concentrations[sample]))
+#         plt.plot(R, P, color=color, label=nice_sample_names[sample], lw=2.5)
+
+#     plt.xlabel("$R$ [nm]")
+#     plt.ylabel("$P(R)$")
+#     plt.grid()
+#     # plt.title("Lognormal polydispersity from fits with spherical asym. model")
+#     legend = plt.legend(loc="center left", bbox_to_anchor=(1, 0.5), alignment="left")
+#     return f
+
 def plot_together_lognorm_polydisp(who):
 
     plt.close("all")
 
     f = plt.figure(figsize=(12, 7.5))
-    norm = LogNorm(vmin=1, vmax=100)
-    # norm = Normalize(vmin=1, vmax=100)
+
+    c_min = 0
+    c_max = 100
+
     for sample in who:
+
         if "WT" in sample_dict[sample]:
-            cmap = plt.cm.Blues
+            cmap = plt.colormaps["Blues"]
         elif "A124T" in sample_dict[sample]:
-            cmap = plt.cm.Reds
+            cmap = plt.colormaps["Reds"]
         elif "E46K" in sample_dict[sample]:
-            cmap = plt.cm.Oranges
+            cmap = plt.colormaps["Oranges"]
         elif "E61V" in sample_dict[sample]:
-            cmap = plt.cm.Greens
+            cmap = plt.colormaps["Greens"]
+
         R0, sigma = best_fits[sample]["ULV_spheric_asym_C4_lognormal"][1][0:2]
+
         R = np.linspace(0, R0 + 40, 1000)
         P = lognorm.pdf(R, s=sigma, scale=R0)
+
         # 0 µM aSyn = grey
         if concentrations[sample] == 0:
             color = "grey"
-        else:
-            color = cmap(norm(concentrations[sample]))
-        plt.plot(R, P, color=color, label=nice_sample_names[sample])
 
-    plt.xlabel("$R$ [nm]")
-    plt.ylabel("$P(R)$")
-    plt.grid()
-    plt.title("Lognormal polydispersity from fits with spherical asym. model")
-    legend = plt.legend(loc="center left", bbox_to_anchor=(1, 0.5), alignment="left")
+        else:
+            # Same color normalization as BIV_plot_together()
+            norm = (
+                concentrations[sample] - c_min
+            ) / (
+                c_max - c_min
+            )
+
+            # Avoid extremely pale colors
+            norm = 0.25 + 0.70 * norm
+
+            color = cmap(norm)
+
+        plt.plot(
+            R,
+            P,
+            color=color,
+            label=nice_sample_names[sample],
+            lw=4
+        )
+
+    plt.xlabel("$R$ [nm]", fontsize=30)
+    plt.ylabel("$P(R)$", fontsize=30)
+    # plt.title(title)
+    plt.grid(True)
+    tick_params = {'labelsize': 30}
+    plt.tick_params(axis='both', **tick_params)
+
+    legend = plt.legend(
+        loc="center left",
+        bbox_to_anchor=(1, 0.5),
+        alignment="left"
+    )
+
     return f
 
 # ====================================================================================================
@@ -206,7 +271,6 @@ def get_chi2(sample, error_model, p0=None, fit_function="ULV_spheric_asym_C4"):
 # ============================================================================================================
 def linear(x, m, n):
     return m * x + n
-
 
 def mean_and_sem(values):
     """
@@ -550,7 +614,7 @@ sample_dict = {
     "BX_S33": "BX_S33_15mM_LV4_2μM_Syn1",
 
     "BXII_S1": "BXII_S1_15mM_LV4_30nm",
-    "BXII_S2": "BXII_S2_15mM_LV4_50nm",
+    "BXII_S2": "BXII_S2_15mM_LV4_50nm", # WRONG BUFFER !!!
     "BXII_S3": "BXII_S3_15mM_LV4_100nm",
     "BXII_S4": "BXII_S4_15mM_LV4_200nm",
     "BXII_S6": "BXII_S6_15mM_DOPC",
@@ -2076,7 +2140,7 @@ nice_sample_names = {
     "BX_S33": "15 mM LV4 + 2 μM Syn1",
 
     "BXII_S1": "15 mM LV4 (30nm)",
-    "BXII_S2": "15 mM LV4 (50nm)",
+    "BXII_S2": "15 mM LV4 (50nm)", # WRONG BUFFER !!!
     "BXII_S3": "15 mM LV4 (100nm)",
     "BXII_S4": "15 mM LV4 (200nm)",
     "BXII_S5": "15 mM DMPS",
