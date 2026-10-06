@@ -779,8 +779,8 @@ def ULV_spheric_asym_lognormal(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2
     I_func_partial = partial(spheric_asym_lognormal_integrator, R=R, sigma_R=sigma_R, rho_h1=rho_h1, rho_h2=rho_h2,
                              sigma_h1=sigma_h1, sigma_h2=sigma_h2, sigma_c=sigma_c, z_h=z_h)
     with Pool(processes=9) as pool: 
-        I_res = list(tqdm(pool.imap(I_func_partial, q), total=len(q), desc="Computing I(q)", ncols=80))
-        # I_res = pool.map(I_func_partial, q)
+        #I_res = list(tqdm(pool.imap(I_func_partial, q), total=len(q), desc="Computing I(q)", ncols=80))
+        I_res = pool.map(I_func_partial, q)
 
     return scale * np.array(I_res) + c2 * q**(-c3) + c4      
 
