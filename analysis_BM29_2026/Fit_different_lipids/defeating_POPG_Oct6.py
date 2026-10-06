@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # =============================================================================
     fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym_lognormal(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
     fit_function_name = "ULV_spheric_asym_C4_lognormal"
-    DAY = "Oct06"
+    DAY = "Oct6"
     task_name = "lognormal_POPG_rests"
     this_file = Path(__file__).resolve()
     analysis_BM29_2026 = this_file.parent.parent
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     p0_BVI_S18 = BM29.best_fits["BVI_S18"]["ULV_spheric_asym_C4_lognormal"][1]
 
     who = [
-        "BVI_S14",
+        # "BVI_S14",
         "BVI_S15",
         "BVI_S19",
         "BVI_S20"
@@ -104,24 +104,26 @@ if __name__ == "__main__":
             print(info_text_print)
             with open(target_folder/f"info_texts_{DAY}.txt", "a", encoding="utf-8") as k:
                 k.write(f"\n\n{BM29.sample_dict[sample]} fitted using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
-    
-            #=========================== Plot ===========================================
-            q_fit = np.linspace(min(q), max(q), 1000)
-            plt.close("all")
-            plt.figure(figsize=(12, 7.5))
-            plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
-            plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
-            plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
-            plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4_fit), color='black', label='pow law bgr')
-            plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, p0[-1]), color='black', label='initial bgr', ls="--")
 
-            plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
-            plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
-            plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name}')
-            plt.grid(True)
-            legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
-            legend.set_title(info_text_print)
-            plt.tight_layout()
-            plt.savefig(target_folder / f"{sample}_{fit_function_name}_{count}_{DAY}.png",dpi=150, bbox_inches='tight', pad_inches=0.05)
+            chi2_reference = BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq", fit_function=fit_function_name)
+            if chi2 < chi2_reference + 30:
+                #=========================== Plot ===========================================
+                q_fit = np.linspace(min(q), max(q), 1000)
+                plt.close("all")
+                plt.figure(figsize=(12, 7.5))
+                plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
+                plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
+                plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
+                plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4_fit), color='black', label='pow law bgr')
+                plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, p0[-1]), color='black', label='initial bgr', ls="--")
+
+                plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
+                plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
+                plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name}')
+                plt.grid(True)
+                legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
+                legend.set_title(info_text_print)
+                plt.tight_layout()
+                plt.savefig(target_folder / f"{sample}_{fit_function_name}_{count}_{DAY}.png",dpi=150, bbox_inches='tight', pad_inches=0.05)
 
             count += 1
