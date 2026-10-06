@@ -16,7 +16,7 @@ if __name__ == "__main__":
     fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym_lognormal(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
     fit_function_name = "ULV_spheric_asym_C4_lognormal"
     DAY = "Oct6"
-    task_name = "lognormal_POPG_rests"
+    task_name = "lognormal_POPG_rests_2nd"
     this_file = Path(__file__).resolve()
     analysis_BM29_2026 = this_file.parent.parent
     target_folder = analysis_BM29_2026 / "Results_and_Figures" / DAY / task_name
@@ -27,10 +27,10 @@ if __name__ == "__main__":
     p0_BVI_S18 = BM29.best_fits["BVI_S18"]["ULV_spheric_asym_C4_lognormal"][1]
 
     who = [
-        # "BVI_S14",
-        "BVI_S15",
-        "BVI_S19",
-        "BVI_S20"
+        "BVI_S14",
+        #"BVI_S15",
+        #"BVI_S19",
+        #"BVI_S20"
     ]
     for sample in who:
         count = 0
@@ -63,7 +63,7 @@ if __name__ == "__main__":
             
             # ========================== Setting Bounds ==============================
             # p0         = [   R,    sigma_R,   rho_h1,   rho_h2,    sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,   c4] 
-            lower_bounds = [10.7,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
+            lower_bounds = [12.0,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
             upper_bounds = [  25,          1,      2.5,      2.5,         0.6,       0.6,      1.2,      2,       1,    1] 
             if count == 0 and sample != "BVI_S14":
                 p0 = p0_BVI_S14
