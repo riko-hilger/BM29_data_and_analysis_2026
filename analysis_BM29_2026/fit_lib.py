@@ -44,7 +44,7 @@ def ULV_lognormal_sph_asym_prot_layer(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, s
 
 def lognormal_sph_asym_prot_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3):
     n_R = 120
-    R_vals   = np.linspace(0, 70, n_R)
+    R_vals   = np.linspace(0.001, 70, n_R)
     theta = np.linspace(0, np.pi/2, 250)  # fixed grid for integration
     sin_theta = np.sin(theta)
     
