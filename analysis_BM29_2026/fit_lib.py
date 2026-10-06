@@ -33,7 +33,6 @@ def DAB_model(q, c, xi):
     return c / (1 + (q*xi)**2)**2
 
 #=============== polydispersed ellipsoidal CSLB model ========================================================================
-rho_c = -1
 def CSLB_ellipsoidal(q, R, sigma_R, eps, sigma_eps, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2, scale, c4):
     integrate_CSLB_partial = partial(integrate_CSLB_ellips, R=R, sigma_R=sigma_R, eps=eps, sigma_eps=sigma_eps, z_h=z_h, 
                                      sigma_h=sigma_h, rho_h=rho_h, z_c=z_c, sigma_c=sigma_c, rho_SiO2=rho_SiO2)
@@ -53,37 +52,36 @@ def F_ellipsoid_homogen(theta, q, R, eps):
     volume = 4/3 * np.pi * eps * R**3
     return 3 * volume * (np.sin(u) - u * np.cos(u)) / u**3
 
-def F_CSLB_ellips(theta, q, R, eps, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2):
-    R_tot      = R + z_c
-    hom_ellipsoid = F_ellipsoid_homogen(theta, q, R, eps) * rho_SiO2
+# def F_CSLB_ellips(theta, q, R, eps, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2):
+#     rho_c = + OR -1 ???
+#     R_tot      = R + z_c
+#     hom_ellipsoid = F_ellipsoid_homogen(theta, q, R, eps) * rho_SiO2
 
-    u  = q *  R_tot * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
-    up = q * (R_tot + z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
-    um = q * (R_tot - z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
-    # Precompute exponentials and trig
-    exp_h = np.exp(-sigma_h**2 * u**2 / (2 * R_tot**2))
-    exp_c = np.exp(-sigma_c**2 * u**2 / (2 * R_tot**2))
+#     u  = q *  R_tot * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
+#     up = q * (R_tot + z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
+#     um = q * (R_tot - z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
+#     # Precompute exponentials and trig
+#     exp_h = np.exp(-sigma_h**2 * u**2 / (2 * R_tot**2))
+#     exp_c = np.exp(-sigma_c**2 * u**2 / (2 * R_tot**2))
     
-    sin_u_Rp = np.sin(up)
-    sin_u_Rm = np.sin(um)
-    sin_u_R  = np.sin(u)
+#     sin_u_Rp = np.sin(up)
+#     sin_u_Rm = np.sin(um)
+#     sin_u_R  = np.sin(u)
     
-    cos_u_Rp = np.cos(up)
-    cos_u_Rm = np.cos(um)
-    cos_u_R  = np.cos(u)
+#     cos_u_Rp = np.cos(up)
+#     cos_u_Rm = np.cos(um)
+#     cos_u_R  = np.cos(u)
     
-    term_h = (
-        (R_tot + z_h)**2 * sin_u_Rp / up +
-        (R_tot - z_h)**2 * sin_u_Rm / um +
-        sigma_h**2 * (cos_u_Rp + cos_u_Rm)
-    )
-    term_c = R_tot**2 * sin_u_R / u + sigma_c**2 * cos_u_R
+#     term_h = (
+#         (R_tot + z_h)**2 * sin_u_Rp / up +
+#         (R_tot - z_h)**2 * sin_u_Rm / um +
+#         sigma_h**2 * (cos_u_Rp + cos_u_Rm)
+#     )
+#     term_c = R_tot**2 * sin_u_R / u + sigma_c**2 * cos_u_R
     
-    res = (4 * np.pi * np.sqrt(2*np.pi) * eps *
-           (rho_h * sigma_h * exp_h * term_h -
-            rho_c * sigma_c * exp_c * term_c))
+#     res = (4 * np.pi * np.sqrt(2*np.pi) * eps * (rho_h * sigma_h * exp_h * term_h - rho_c * sigma_c * exp_c * term_c))
 
-    return hom_ellipsoid + res
+#     return hom_ellipsoid + res
 
 def integrate_CSLB_ellips(q, R, sigma_R, eps, sigma_eps, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2):
     
@@ -152,7 +150,6 @@ def Debye_Waller_factor(q, a):
     return np.exp(-q**2 * a)
 
 #=============== polydispersed CSLB model ========================================================================
-rho_c = -1
 def CSLB_spherical(q, R, sigma_R, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2, scale, c4):
     integrate_CSLB_partial = partial(integrate_CSLB, R=R, sigma_R=sigma_R, z_h=z_h, 
                                      sigma_h=sigma_h, rho_h=rho_h, z_c=z_c, sigma_c=sigma_c, rho_SiO2=rho_SiO2)
@@ -164,6 +161,7 @@ def CSLB_spherical(q, R, sigma_R, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2, s
     return scale * I_res + c4
 
 def F_CSLB(q, R, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2):
+    rho_c = -1
     R_tot      = R + z_c
     hom_sphere = hard_sphere_raw(q, R) * rho_SiO2
     
@@ -191,7 +189,6 @@ def integrate_CSLB(q, R, sigma_R, z_h, sigma_h, rho_h, z_c, sigma_c, rho_SiO2):
     return I 
 
 #============= ASYMMETRIC ellipsoid lipid bilayer vesicle model =============================================
-rho_c = 1
 from scipy.integrate import quad
 def ULV_ellipsoid_asym(q, R, sigma_R, eps, sigma_eps, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, scale, c2, c3, c4):
     I_func_partial = partial(ell_asym_integrator, R=R, sigma_R=sigma_R, eps=eps,
@@ -224,6 +221,7 @@ def ell_asym_integrator(q, R, sigma_R, eps, sigma_eps, rho_h1, rho_h2, sigma_h1,
     return I * dR * deps
 
 def F_ell_asym(theta, q, R, eps, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h):
+    rho_c = 1
     u  = q *  R        * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
     up = q * (R + z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
     um = q * (R - z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
@@ -250,8 +248,6 @@ def F_ell_asym(theta, q, R, eps, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_
     return res
 
 # ============== ellipsoid lipid bilayer shell vesicle model =====================================================
-rho_c = 1
-
 
 def ULV_ellipsoid(q, R, sigma_R, eps, sigma_eps, rho_h, sigma_h, sigma_c, z_h, scale, c2, c3, c4):
     I_func_partial = partial(I_func, R=R, sigma_R=sigma_R, eps=eps,
@@ -264,6 +260,7 @@ def ULV_ellipsoid(q, R, sigma_R, eps, sigma_eps, rho_h, sigma_h, sigma_c, z_h, s
     return scale * np.array(I_res) + c2 * q**(-c3) + c4
 
 def F(theta, q, R, eps, rho_h, sigma_h, sigma_c, z_h):
+    rho_c = 1
     u  = q * R * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
     up = q * (R + z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
     um = q * (R - z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
@@ -287,8 +284,7 @@ def F(theta, q, R, eps, rho_h, sigma_h, sigma_c, z_h):
     term_c = R**2 * sin_u_R / u + sigma_c**2 * cos_u_R
     
     res = (4 * np.pi * np.sqrt(2*np.pi) * eps *
-           (rho_h * sigma_h * exp_h * term_h -
-            rho_c * sigma_c * exp_c * term_c))
+           (rho_h * sigma_h * exp_h * term_h - rho_c * sigma_c * exp_c * term_c))
     return res
 
     
@@ -745,6 +741,7 @@ def spheric_asym_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, s
     return I * dR 
 
 def F_spheric_asym(q, R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h):
+    rho_c = 1
     u  = q *  R        
     up = q * (R + z_h) 
     um = q * (R - z_h) 
@@ -827,6 +824,7 @@ def ell_asym_prot_integrator(q, R, sigma_R, eps, sigma_eps, rho_h1, rho_h2, sigm
     return I * dR * deps
 
 def F_ell_asym_prot(theta, q, R, eps, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3):
+    rho_c = 1
     u     = q *  R        * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
     up    = q * (R + z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
     um    = q * (R - z_h) * np.sqrt(np.sin(theta)**2 + eps**2 * np.cos(theta)**2)
@@ -877,14 +875,15 @@ def sph_asym_prot_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, 
     
     I = 0
     for R_i in R_vals:
-        F_vals = F_sph_asym_prot(theta, q, R_i, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3)
+        F_vals = F_sph_asym_prot(q, R_i, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3)
         F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)         
         I += P_R(R_i, R, sigma_R) * F_int 
     
     dR = R_vals[1] - R_vals[0]
     return I * dR 
 
-def F_sph_asym_prot(theta, q, R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3):
+def F_sph_asym_prot(q, R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3):
+    rho_c = 1
     u     = q *  R        
     up    = q * (R + z_h) 
     um    = q * (R - z_h) 
