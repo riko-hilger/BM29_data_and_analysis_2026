@@ -80,17 +80,17 @@ if __name__ == "__main__":
             
             if count == 0:
                 # p0         = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,   sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale, c4] 
-                lower_bounds = [        9,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,     3,      0.7,      0.0,        0,  0] 
+                lower_bounds = [        9,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,     2,      0.7,      0.0,        0,  0] 
                 upper_bounds = [       27,        1,          2.5,    2.5,        0.6,      0.6,       1.2,      1.9,     5,      1.2,      2.0,   0.0001,  0.01] 
                 p0 = [        9,      0.6,        1.094,  1.183,     0.3866,    0.299,    0.7474,    1.749, 3.008,   0.7865,    0.185,5.086e-07, 0.0005352] 
             elif count == 1 or count == 2 or count == 3 or count == 4:
                 # p0         = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,   sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale, c4] 
-                lower_bounds = [       15,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,     3,      0.7,      0.0,        0,  0] 
+                lower_bounds = [       15,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,     2,      0.7,      0.0,        0,  0] 
                 upper_bounds = [       20,        1,          2.5,    2.5,        0.6,      0.6,       1.2,      1.9,     5,      1.2,      2.0,   0.0001,  0.01] 
                 p0 = np.random.uniform(lower_bounds, upper_bounds)
             elif count == 5 or count == 6:
                 # p0         = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,   sigma_c,      z_h,  z_h3, sigma_h3,   rho_h3,    scale, c4] 
-                lower_bounds = [       13,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,     3,      0.7,      0.0,        0,  0] 
+                lower_bounds = [       13,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,     2,      0.7,      0.0,        0,  0] 
                 upper_bounds = [       20,        1,          2.5,    2.5,        0.6,      0.6,       1.2,      1.9,     5,      1.2,      2.0,   0.0001,  0.01] 
                 p0 = np.random.uniform(lower_bounds, upper_bounds)
             else: 
@@ -132,7 +132,7 @@ if __name__ == "__main__":
             with open(target_folder/f"info_texts_{DAY}.txt", "a", encoding="utf-8") as k:
                 k.write(f"\n\n{BM29.sample_dict[sample]} fitted using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
 
-            chi2_reference = BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq", fit_function=fit_function_name)
+            # chi2_reference = BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq", fit_function=fit_function_name)
             if chi2 < 1e+5:
                 #=========================== Plot ===========================================
                 q_fit = np.linspace(min(q), max(q), 1000)
