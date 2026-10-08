@@ -13,6 +13,7 @@ from scipy.optimize import curve_fit
 
 # COLORS
 color_dict = {
+    "pure_lipid": "grey",
     "WT": "dodgerblue",
     "A124T": "crimson",
     "E46K": "darkorange",
@@ -45,15 +46,20 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
     for sample in who:
         if "WT" in sample_dict[sample]:
             cmap = plt.cm.Blues
+            variant = "WT"
         elif "A124T" in sample_dict[sample]:
             cmap = plt.cm.Reds
+            variant = "A124T"
         elif "E46K" in sample_dict[sample]:
             cmap = plt.cm.Oranges
+            variant = "E46K"
         elif "E61V" in sample_dict[sample]:
             cmap = plt.cm.Greens
+            variant = "E61V"
 
         if concentrations[sample] == 0:
             color = "grey"
+            variant = "pure_lipid"
 
         else:
             # Same color normalization as BIV_plot_together()
@@ -81,7 +87,11 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
         rho = np.zeros_like(r)
         for i in range(4):
             rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
-        plt.plot(r, rho, label=nice_sample_names[sample], color=color, linewidth=3.5)
+        color = color_dict[variant]
+        if "WT" in sample_dict[sample]:
+            plt.plot(r, rho, label=nice_sample_names[sample], color=color, linewidth=3, ls="--", zorder=10)
+        else:
+            plt.plot(r, rho, label=nice_sample_names[sample], color=color, linewidth=3)
 
     plt.xlabel('$r[\\mathrm{nm}]$', fontsize=25)
     plt.ylabel('$\\rho\\mathrm{[a.u.]}$', fontsize=25)
