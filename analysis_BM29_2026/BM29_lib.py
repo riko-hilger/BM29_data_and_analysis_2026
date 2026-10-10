@@ -2081,10 +2081,9 @@ best_fits = {
     },
     'BVII_S8': {     
         'ULV_spheric_asym_C4': { 
+            1: [8, 5.727, 1.307, 3.5, 0.5696, 0.1486, 0.7985, 1.885, 0.0005767, 0.0002766],
         },
         "ULV_spheric_asym_C4_lognormal": {
-        },
-        "ULV_sph_asym_prot_layer": {
         },
     },
     'BVII_S9': {     
@@ -2124,10 +2123,9 @@ best_fits = {
     },
     'BVII_S13': {     
         'ULV_spheric_asym_C4': { 
+            1: [8, 5.302, 1.323, 3.5, 0.5665, 0.1473, 0.788, 1.867, 0.0005886, 0.0002136],
         },
         "ULV_spheric_asym_C4_lognormal": {
-        },
-        "ULV_sph_asym_prot_layer": {
         },
     },
     'BVII_S14': {     
@@ -2166,10 +2164,9 @@ best_fits = {
     },
     'BVII_S18': {     
         'ULV_spheric_asym_C4': { 
+            1: [8, 5.425, 1.297, 3.5, 0.5808, 0.1482, 0.7962, 1.873, 0.0005955, 0.000271],
         },
         "ULV_spheric_asym_C4_lognormal": {
-        },
-        "ULV_sph_asym_prot_layer": {
         },
     },
     'BVII_S19': {     

@@ -11,35 +11,45 @@ from scipy import optimize
 from scipy.optimize import curve_fit
 
 
+DOPS = [
+    "BII_S10", # : "15 mM DOPS",
+
+    "BIX_S10", # : "15 mM DOPS + 6 μM aSynWT",
+    "BIX_S11", # : "15 mM DOPS + 9 μM aSynWT",
+    "BIX_S12", # : "15 mM DOPS + 15 μM aSynWT",
+    "BIX_S13", # : "15 mM DOPS + 25 μM aSynWT",
+    "BIX_S14", # : "15 mM DOPS + 50 μM aSynWT",
+
+    "BVII_S1", # : "15 mM DOPS + 75 μM aSynWT",
+    "BVII_S2", # : "15 mM DOPS + 100 μM aSynWT",
+    "BVII_S8", # : "15 mM DOPS + 75 μM aSynE61V",
+    "BVII_S13", # : "15 mM DOPS + 75 μM aSynA124T",
+    "BVII_S18", # : "15 mM DOPS + 75 μM aSynE46K",
+
+    # "BVII_S3", # : "3 mM DOPS + 100 μM aSynWT",
+    # "BVII_S9", # : "3 mM DOPS + 100 μM aSynE61V",
+    # "BVII_S14", # : "3 mM DOPS + 100 μM aSynA124T",
+    # "BVII_S19", # : "3 mM DOPS + 100 μM aSynE46K",
+]
+
+who = DOPS
+
 if __name__ == "__main__":
     # =============================================================================
-    fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym_lognormal(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-    fit_function_name = "ULV_spheric_asym_C4_lognormal"
-    DAY = "Oct6"
-    task_name = "lognormal_POPG_rests_2nd"
+    DAY = "Oct10"
+    task_name = "BVII_DOPS"
+
     this_file = Path(__file__).resolve()
-    analysis_BM29_2026 = this_file.parent.parent
-    target_folder = analysis_BM29_2026 / "Results_and_Figures" / DAY / task_name
+    analysis_BM29_July2026 = this_file.parent.parent
+    target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name
     if not target_folder.exists():
         target_folder.mkdir()
-    # =============================================================================
-    p0_BVI_S14 = BM29.best_fits["BVI_S14"]["ULV_spheric_asym_C4_lognormal"][1]
-    p0_BVI_S18 = BM29.best_fits["BVI_S18"]["ULV_spheric_asym_C4_lognormal"][1]
 
-    who = [
-        "BVI_S14",
-        #"BVI_S15",
-        #"BVI_S19",
-        #"BVI_S20"
-    ]
+    fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym_lognormal(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
+    fit_function_name = "ULV_spheric_asym_C4_lognormal"
+
     for sample in who:
         count = 0
-        this_file = Path(__file__).resolve()
-        analysis_BM29_2026 = this_file.parent.parent
-        target_folder = analysis_BM29_2026 / "Results_and_Figures" / DAY / task_name / sample
-        if not target_folder.exists():
-            target_folder.mkdir()
-        
         while (count < 10):
             block = sample.split("_")[0]
             block_path = BM29.blockpath(block)
@@ -63,16 +73,11 @@ if __name__ == "__main__":
             
             # ========================== Setting Bounds ==============================
             # p0         = [   R,    sigma_R,   rho_h1,   rho_h2,    sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,   c4] 
-            lower_bounds = [12.0,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
+            lower_bounds = [   9,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
             upper_bounds = [  25,          1,      2.5,      2.5,         0.6,       0.6,      1.2,      2,       1,    1] 
-            if count == 0 and sample != "BVI_S14":
-                p0 = p0_BVI_S14
-            elif count == 1:
-                p0 = p0_BVI_S18
-            else: 
-                p0 = np.random.uniform(lower_bounds, upper_bounds)
+            p0 = np.random.uniform(lower_bounds, upper_bounds)
 
-            print(f"Now fitting with {fit_function_name} sample {sample} ...")            
+            print(f"Now fitting (count={count}) with {fit_function_name} sample {sample} ...")            
             #======================== Fit ===========================================
             try:
                 popt, pcov = curve_fit(
@@ -100,12 +105,18 @@ if __name__ == "__main__":
             print(fit_lib_entry)
             chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-            print("Fit successful with chi2 = ", chi2)
-            print(info_text_print)
-            with open(target_folder/f"info_texts_{DAY}.txt", "a", encoding="utf-8") as k:
-                k.write(f"\n\n{BM29.sample_dict[sample]} fitted using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
+            this_file = Path(__file__).resolve()
+            analysis_BM29_July2026 = this_file.parent.parent
+            target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name / sample
+            if not target_folder.exists():
+                target_folder.mkdir()
 
-            chi2_reference = BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq", fit_function=fit_function_name)
+            print("Fit successful with chi2 = ", chi2)
+            # print(info_text_print)
+            with open(target_folder/f"{sample}_{DAY}.txt", "a", encoding="utf-8") as k:
+                k.write(f"\n\n{BM29.sample_dict[sample]} fitted (count={count}) using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
+
+            chi2_reference = BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
             if chi2 < chi2_reference + 30:
                 #=========================== Plot ===========================================
                 q_fit = np.linspace(min(q), max(q), 1000)
@@ -117,13 +128,15 @@ if __name__ == "__main__":
                 plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4_fit), color='black', label='pow law bgr')
                 plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, p0[-1]), color='black', label='initial bgr', ls="--")
 
-                plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
+                plt.xlabel('$q [1/\\mathrm{nm}]$')
                 plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
                 plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name}')
                 plt.grid(True)
                 legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
                 legend.set_title(info_text_print)
                 plt.tight_layout()
-                plt.savefig(target_folder / f"{sample}_{fit_function_name}_{count}_{DAY}.png",dpi=150, bbox_inches='tight', pad_inches=0.05)
+                plt.savefig(target_folder / f"{sample}_{fit_function_name}_{count}_{DAY}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
 
             count += 1
+
+    
