@@ -1,0 +1,50 @@
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=0) using ULV_spheric_asym_C4_lognormal with chi2 = 136.28764838154544
+[9, 0.315, 1.074, 2.093, 0.2998, 0.13, 0.6407, 1.816, 1.181e-06, 0.000653]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=1) using ULV_spheric_asym_C4_lognormal with chi2 = 136.2876822227082
+[9, 0.315, 1.074, 2.093, 0.2998, 0.13, 0.6407, 1.816, 1.181e-06, 0.000653]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=2) using ULV_spheric_asym_C4_lognormal with chi2 = 139.4030087415881
+[9, 0.315, 1.287, 1.295, 0.2438, 0.203, 0.6227, 1.817, 1.217e-06, 0.0007259]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=3) using ULV_spheric_asym_C4_lognormal with chi2 = 136.2876476386061
+[9, 0.315, 1.074, 2.093, 0.2998, 0.13, 0.6407, 1.816, 1.181e-06, 0.000653]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=4) using ULV_spheric_asym_C4_lognormal with chi2 = 471.9560552942594
+[9.001, 0.3021, 1.03, 0.9317, 0.5826, 0.5932, 1.191, 1.542, 1.647e-06, 0.001054]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=5) using ULV_spheric_asym_C4_lognormal with chi2 = 136.28764315764096
+[9, 0.315, 1.074, 2.093, 0.2998, 0.13, 0.6407, 1.816, 1.181e-06, 0.000653]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=6) using ULV_spheric_asym_C4_lognormal with chi2 = 106.35470524360049
+[9, 0.3387, 1.239, 1.642, 0.4879, 0.3282, 1.2, 1.725, 8.974e-07, 0.0006502]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=7) using ULV_spheric_asym_C4_lognormal with chi2 = 136.28781196492935
+[9, 0.315, 1.074, 2.093, 0.2998, 0.13, 0.6407, 1.816, 1.181e-06, 0.000653]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=8) using ULV_spheric_asym_C4_lognormal with chi2 = 136.28775578026824
+[9, 0.315, 1.074, 2.093, 0.2998, 0.13, 0.6407, 1.816, 1.181e-06, 0.000653]
+###########################################
+
+
+BVII_S15_15mM_DOPC_DOPS_75uM_aSynA124T fitted (count=9) using ULV_spheric_asym_C4_lognormal with chi2 = 140.03543945731232
+[9, 0.3157, 1.307, 1.309, 0.2391, 0.2001, 0.6199, 1.819, 1.225e-06, 0.0007214]
+###########################################

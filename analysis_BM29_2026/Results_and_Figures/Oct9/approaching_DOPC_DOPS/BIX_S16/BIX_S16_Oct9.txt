@@ -1,0 +1,50 @@
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=0) using ULV_spheric_asym_C4_lognormal with chi2 = 522.3597520275796
+[9, 0.1404, 1.225, 2.006, 0.3292, 0.13, 0.6417, 1.809, 1.255e-06, 0.0004116]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=1) using ULV_spheric_asym_C4_lognormal with chi2 = 90.79824315739067
+[9.001, 0.4376, 1.152, 1.381, 0.4049, 0.3426, 0.8485, 1.77, 6.871e-07, 0.0005004]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=2) using ULV_spheric_asym_C4_lognormal with chi2 = 91.01535139610802
+[9.002, 0.4377, 1.195, 1.394, 0.4106, 0.357, 0.8963, 1.76, 6.736e-07, 0.0005042]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=3) using ULV_spheric_asym_C4_lognormal with chi2 = 522.3594872213749
+[9, 0.1404, 1.225, 2.006, 0.3292, 0.13, 0.6417, 1.809, 1.255e-06, 0.0004116]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=4) using ULV_spheric_asym_C4_lognormal with chi2 = 81.86575943523052
+[16.47, 0.1644, 1.52, 1.06, 0.3793, 0.3364, 0.82, 1.772, 2.887e-07, 0.0005155]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=5) using ULV_spheric_asym_C4_lognormal with chi2 = 91.29464654252553
+[9.003, 0.438, 1.144, 1.426, 0.4195, 0.3411, 0.8744, 1.764, 6.79e-07, 0.0004941]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=6) using ULV_spheric_asym_C4_lognormal with chi2 = 752.0334426813306
+[9, 0.1376, 1.163, 1.104, 0.5926, 0.4814, 1.198, 1.633, 1.345e-06, 0.0007191]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=7) using ULV_spheric_asym_C4_lognormal with chi2 = 522.3594965527768
+[9, 0.1404, 1.225, 2.006, 0.3292, 0.13, 0.6417, 1.809, 1.255e-06, 0.0004116]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=8) using ULV_spheric_asym_C4_lognormal with chi2 = 91.08637465606584
+[9.004, 0.4368, 1.233, 1.236, 0.3582, 0.3628, 0.799, 1.778, 7.079e-07, 0.0005196]
+###########################################
+
+
+BIX_S16_15mM_DOPC_DOPS_80_20_9uM_aSynWT fitted (count=9) using ULV_spheric_asym_C4_lognormal with chi2 = 522.3592240036306
+[9, 0.1404, 1.225, 2.006, 0.3292, 0.13, 0.6417, 1.809, 1.255e-06, 0.0004116]
+###########################################
