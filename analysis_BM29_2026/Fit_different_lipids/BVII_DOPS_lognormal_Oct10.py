@@ -12,7 +12,7 @@ from scipy.optimize import curve_fit
 
 
 DOPS = [
-    "BII_S10", # : "15 mM DOPS",
+    # "BII_S10", # : "15 mM DOPS",
 
     "BIX_S10", # : "15 mM DOPS + 6 μM aSynWT",
     "BIX_S11", # : "15 mM DOPS + 9 μM aSynWT",
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
     for sample in who:
         count = 0
-        while (count < 10):
+        while (count < 3):
             block = sample.split("_")[0]
             block_path = BM29.blockpath(block)
             dir_names = [x.name for x in block_path.iterdir()]
@@ -73,9 +73,12 @@ if __name__ == "__main__":
             
             # ========================== Setting Bounds ==============================
             # p0         = [   R,    sigma_R,   rho_h1,   rho_h2,    sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,   c4] 
-            lower_bounds = [   9,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
-            upper_bounds = [  25,          1,      2.5,      2.5,         0.6,       0.6,      1.2,      2,       1,    1] 
-            p0 = np.random.uniform(lower_bounds, upper_bounds)
+            lower_bounds = [11.4,          0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
+            upper_bounds = [  25,          1,      2.6,      2.6,         0.6,       0.6,      1.2,      2,       1,    1] 
+            if count == 0:
+                p0 = BM29.best_fits["BII_S10"]["ULV_spheric_asym_C4_lognormal"][1]
+            else:
+                p0 = np.random.uniform(lower_bounds, upper_bounds)
 
             print(f"Now fitting (count={count}) with {fit_function_name} sample {sample} ...")            
             #======================== Fit ===========================================
