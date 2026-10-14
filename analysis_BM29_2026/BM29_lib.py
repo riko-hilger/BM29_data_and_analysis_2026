@@ -87,9 +87,9 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
         rho = np.zeros_like(r)
         for i in range(4):
             rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
-        color = color_dict[variant]
+        # color = color_dict[variant]
         if "WT" in sample_dict[sample]:
-            plt.plot(r, rho, label=nice_sample_names[sample], color=color, linewidth=3, ls="--", zorder=10)
+            plt.plot(r, rho, label=nice_sample_names[sample], color=color, linewidth=3, zorder=10)
         else:
             plt.plot(r, rho, label=nice_sample_names[sample], color=color, linewidth=3)
 
