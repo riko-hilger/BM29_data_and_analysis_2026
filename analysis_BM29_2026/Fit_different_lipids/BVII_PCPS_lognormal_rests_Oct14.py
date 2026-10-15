@@ -14,7 +14,6 @@ from scipy.optimize import curve_fit
 PCPS = [
     # "BII_S11", #: "15 mM DOPC/DOPS (8/2)",
     # "BIX_S19", #: "15 mM DOPC/DOPS (8/2) + 50 μM aSynWT", ===> GOOD FIT
-
     # "BVII_S4", #: "15 mM DOPC/DOPS (8/2) + 75 μM aSynWT", # bgr sub removed too much of the curve
     "BVII_S5", #: "15 mM DOPC/DOPS (8/2) + 100 μM aSynWT",  ===> BAD fit
     "BVII_S10", #: "15 mM DOPC/DOPS (8/2) + 75 μM aSynE61V", ===> BAD fit
