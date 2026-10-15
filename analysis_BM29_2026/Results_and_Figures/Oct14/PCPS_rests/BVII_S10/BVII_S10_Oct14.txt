@@ -8,3 +8,8 @@ BVII_S10_15mM_DOPC_DOPS_75uM_aSynE61V fitted (count=0) using ULV_spheric_asym_C4
 BVII_S10_15mM_DOPC_DOPS_75uM_aSynE61V fitted (count=1) using ULV_spheric_asym_C4_lognormal with chi2 = 93.23416338656631
 [16.59, 0.575, 1.162, 1.728, 0.4841, 0.3122, 1.2, 1.713, 1.641e-07, 0.0006597]
 ###########################################
+
+
+BVII_S10_15mM_DOPC_DOPS_75uM_aSynE61V fitted (count=2) using ULV_spheric_asym_C4_lognormal with chi2 = 48.7117973580267
+[20.25, 0.277, 2.033, 0.8002, 0.2854, 0.2358, 0.618, 1.822, 1.604e-07, 0.0007125]
+###########################################
