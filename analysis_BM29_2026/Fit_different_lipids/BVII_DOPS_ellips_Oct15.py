@@ -32,7 +32,7 @@ if __name__ == "__main__":
     # =============================================================================
     DAY = "Oct15"
     # =======================================================================================
-
+    """
     # =======================================================================================
     task_name = "BVII_DOPS_ellips_sym"
     this_file = Path(__file__).resolve()
@@ -69,8 +69,8 @@ if __name__ == "__main__":
             # ========================== Setting Bounds ==============================
             # ========================== Setting Bounds ==============================
             # p0         = [        R,  sigma_R,     eps, sigma_eps,  rho_h, sigma_h,    sigma_c,      z_h,    scale,    c4] 
-            lower_bounds = [        9,      1.0,     0.7,       0.0,    0.9,    0.10,        0.5,      1.7,        0,     0] 
-            upper_bounds = [       27,        9,     1.2,       0.7,    2.5,     0.5,        0.9,      2.0,   0.0001,     1] 
+            lower_bounds = [       14,      1.0,     0.7,       0.0,    0.9,    0.10,        0.5,      1.7,        0,     0] 
+            upper_bounds = [       27,       14,     1.2,       0.7,    2.5,     0.5,        0.9,      2.0,   0.0001,     1] 
             p0 = np.random.uniform(lower_bounds, upper_bounds)
 
             print(f"Now fitting (count={count}) with {fit_function_name} sample {sample} ...")            
@@ -137,7 +137,7 @@ if __name__ == "__main__":
             count += 1
 
     # =======================================================================================
-    
+    """
     # =======================================================================================
     task_name = "BVII_DOPS_ellips_ASYM"
     this_file = Path(__file__).resolve()
@@ -174,8 +174,8 @@ if __name__ == "__main__":
             # ========================== Setting Bounds ==============================
             # ========================== Setting Bounds ==============================
             # p0         = [          R,       sigma_R,         eps,   sigma_eps,        rho_h1,      rho_h2,     sigma_h1,      sigma_h2,     sigma_c,          z_h,        scale,    c4]
-            lower_bounds = [          9,             1,         0.7,           0,           0.8,         0.8,         0.13,          0.13,         0.5,          1.7,            0,     0] 
-            upper_bounds = [         27,             9,         1.2,         0.7,           2.5,         2.5,         0.60,          0.60,         1.0,          2.0,         1e-1,     1] 
+            lower_bounds = [         13,             1,         0.7,           0,           0.8,         0.8,         0.13,          0.13,         0.5,          1.7,            0,     0] 
+            upper_bounds = [         27,            13,         1.2,         0.7,           2.5,         2.5,         0.60,          0.60,         1.0,          2.0,         1e-1,     1] 
             p0 = np.random.uniform(lower_bounds, upper_bounds)
 
             print(f"Now fitting (count={count}) with {fit_function_name} sample {sample} ...")            
