@@ -2436,6 +2436,33 @@ best_fits = {
             1: [18.42, 0.2728, 1.82, 0.8333, 0.3201, 0.3054, 0.7023, 1.794, 2.239e-07, 0.0006907],
         },
     },
+    'BXII_S1': {     
+        'ULV_spheric_asym_C4': { 
+            1: [15.03, 5.755, 1.288, 1.016, 0.3092, 0.3289, 0.6363, 1.919, 0.0001761, 0.0004419], # chi2 = 50, excellent fit
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+        },
+    },
+    'BXII_S3': {     
+        'ULV_spheric_asym_C4': { 
+            1: [14.85, 3.385, 1.574, 0.7849, 0.3357, 0.4043, 0.7006, 1.885, 0.0001613, 0.0004424], # chi2 = 137
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+        },
+    },
+    'BXII_S4': {     
+        'ULV_spheric_asym_C4': { 
+            1: [15.12, 3.266, 1.75, 0.7189, 0.3201, 0.4592, 0.7362, 1.86, 0.0001587, 0.0004577], # chi2 = 195
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+        },
+    },
+    'BXII_S6': {     # 15 mM DOPC, curve points towards multilamellarity, fusion
+        'ULV_spheric_asym_C4': { 
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+        },
+    },
 }
 
 
