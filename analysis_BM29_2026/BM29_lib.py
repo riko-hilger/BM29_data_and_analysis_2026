@@ -258,6 +258,11 @@ def Poisson_error_focus_lowq_and_minimum(q, Ierr_Poisson):
     Ierr_op[mask2] = Ierr_op[mask2] * 0.33
     return Ierr_op
 
+def CSLB_op_error(q, I):
+    I_err_op = np.copy(I) / 30
+    op_err_mask = q > 0.6
+    I_err_op[op_err_mask] = I[op_err_mask] / 15
+    return I_err_op
 
 # ====================================================================================================
 
@@ -2441,6 +2446,7 @@ best_fits = {
             1: [15.03, 5.755, 1.288, 1.016, 0.3092, 0.3289, 0.6363, 1.919, 0.0001761, 0.0004419], # chi2 = 50, excellent fit
         },
         "ULV_spheric_asym_C4_lognormal": {
+            1: [17.14, 0.3129, 1.258, 1.059, 0.336, 0.3079, 0.6488, 1.916, 2.527e-07, 0.0004371],
         },
     },
     'BXII_S3': {     
@@ -2463,6 +2469,35 @@ best_fits = {
         "ULV_spheric_asym_C4_lognormal": {
         },
     },
+    "BXIII_S1": { # "23nM SVs",
+    },
+    "BXIII_S2": { # "CSLBs",
+        "hard_sphere_polydisp": {
+            1: [26.91, 1.662, 7.474e-09, 0.001673], # pretty bad
+        },
+    },
+    "BXIII_S3": { # "3 μM Syn1",
+    },
+    "BXIII_S4": { # "15mM LV4 + 4μM Syn1",
+    },
+    "BXIII_S5": { # "15mM LV4 + 6μM Syn1",
+    },
+    "BXIII_S6": { # "15mM LV4 + 6μM Syn1 + 24μM aSynWT",
+    },
+    "BXIII_S11": { # "CSLB + 6μM Syn1",
+    },
+    "BXIII_S12": { # "CSLB + 4μM Syn1",
+    },
+    "BXIII_S13": { # "CSLB + 6μM Syn1 + 12μM aSynWT",
+    },
+    "BXIII_S14": { # "CSLB + 6μM Syn1 + 24μM aSynWT",
+    },
+    "BXIV_S1": { # "15mM LV4 + 6μM Syn1 + 24μM ATP",
+    },
+    "BXIV_S2": { # "23nM SVs + 6μM Syn1 + 24μM ATP",
+    },
+    "BXIV_S3": { # "CSLB + 6μM Syn1 + 24 μM ATP"
+    }
 }
 
 
