@@ -12,7 +12,7 @@ from scipy.optimize import curve_fit
 
 
 DOPS = [
-    "BII_S10", # : "15 mM DOPS",
+    # "BII_S10", # : "15 mM DOPS",
     "BIX_S10", # : "15 mM DOPS + 6 μM aSynWT",
     "BIX_S11", # : "15 mM DOPS + 9 μM aSynWT",
     "BIX_S12", # : "15 mM DOPS + 15 μM aSynWT",
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
     for sample in who:
         count = 0
-        while (count < 7):
+        while (count < 1):
             block = sample.split("_")[0]
             block_path = BM29.blockpath(block)
             dir_names = [x.name for x in block_path.iterdir()]

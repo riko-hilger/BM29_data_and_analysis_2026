@@ -11,7 +11,7 @@ from scipy import optimize
 from scipy.optimize import curve_fit
 
 who = [
-    "BXII_S1", #: "BXII_S1_15mM_LV4_30nm",
+    # "BXII_S1", #: "BXII_S1_15mM_LV4_30nm",
     "BXII_S3", #: "BXII_S3_15mM_LV4_100nm",
     "BXII_S4", #: "BXII_S4_15mM_LV4_200nm",
     # "BXII_S6", #: "BXII_S6_15mM_DOPC",
@@ -26,6 +26,7 @@ who = [
 if __name__ == "__main__":
     # =============================================================================
     DAY = "Oct15"
+    """
     # =======================================================================================
     # 1. Spheric asym (BB) ambiguity
     # =======================================================================================
@@ -366,6 +367,7 @@ if __name__ == "__main__":
                 plt.savefig(target_folder / f"{sample}_{fit_function_name}_{count}_{DAY}.png",dpi=200, bbox_inches='tight', pad_inches=0.05)
 
             count += 1
+    """
 
     # =======================================================================================
     # 4. Ellipsoid asym 
@@ -381,7 +383,7 @@ if __name__ == "__main__":
     fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
     for sample in who:
         count = 0
-        while (count < 7):
+        while (count < 3):
             block = sample.split("_")[0]
             block_path = BM29.blockpath(block)
             dir_names = [x.name for x in block_path.iterdir()]
