@@ -165,6 +165,10 @@ def plot_together(who, title, min_cutoff= 0.07, max_cutoff=5.1):
 #     legend = plt.legend(loc="center left", bbox_to_anchor=(1, 0.5), alignment="left")
 #     return f
 
+def normalized_gaussian(x, mu=0.0, sigma=1.0):
+    """Normalized Gaussian (probability density): integrates to 1."""
+    return np.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * np.sqrt(2 * np.pi))
+
 def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_lognormal"):
 
     plt.close("all")
@@ -188,7 +192,10 @@ def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_l
         R0, sigma = best_fits[sample][fit_function_name][1][0:2]
 
         R = np.linspace(0, R0 + 40, 1000)
-        P = lognorm.pdf(R, s=sigma, scale=R0)
+        if fit_function_name == "ULV_spheric_asym_C4_lognormal":
+            P = lognorm.pdf(R, s=sigma, scale=R0)
+        elif fit_function_name == "ULV_spheric_asym_C4":
+            P = normalized_gaussian(R, mu=R0, sigma=sigma)
 
         # 0 µM aSyn = grey
         if concentrations[sample] == 0:
@@ -2160,8 +2167,8 @@ best_fits = {
     'BVII_S5': {     
         'ULV_spheric_asym_C4': { 
             # 1: [8.375, 6.267, 0.9268, 1.738, 0.277, 0.2665, 0.6375, 1.815, 0.0004056, 0.0006709],
-            1: [9, 6.11, 1.4, 1.4, 0.1869, 0.3348, 0.6469, 1.813, 0.0003781, 0.0007477],
-            2: [18.85, 6.191, 1.6, 1.6, 0.3674, 0.1284, 0.6484, 1.812, 0.0001153, 0.0007696],
+            1: [18.85, 6.191, 1.6, 1.6, 0.3674, 0.1284, 0.6484, 1.812, 0.0001153, 0.0007696],
+            2: [9, 6.11, 1.4, 1.4, 0.1869, 0.3348, 0.6469, 1.813, 0.0003781, 0.0007477],
             3: [19.2, 6.119, 1.6, 1.083, 0.3777, 0.2, 0.6742, 1.801, 0.0001095, 0.0007979],
             4: [15.35, 7.075, 2.113, 1, 0.389, 0.3476, 1, 1.737, 0.0001244, 0.0007139],
             5: [18.43, 6.202, 2.186, 0.722, 0.2673, 0.2758, 0.6371, 1.815, 0.0001172, 0.0006718],
