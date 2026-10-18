@@ -49,27 +49,6 @@ if __name__ == "__main__":
         if not target_folder.exists():
             target_folder.mkdir()
 
-        block = sample.split("_")[0]
-        block_path = BM29.blockpath(block)
-        dir_names = [x.name for x in block_path.iterdir()]
-        for dir_name in dir_names:
-            if dir_name[:-13].endswith(sample):
-                sub_dat_path = block_path / dir_name / "avg_and_sub" / BM29.sample_dict[sample]
-                q, I, I_err_Poisson = np.loadtxt(sub_dat_path, unpack=True)
-        q_full = np.copy(q)
-        I_full = np.copy(I)
-        I_err_full = BM29.CSLB_op_error(q_full, I_full)
-        mask = (q >= q_min) & (q <= 1.2)
-        q    = q[mask]
-        I    = I[mask]
-        I_err_Poisson = I_err_Poisson[mask]
-
-        Ierr = BM29.CSLB_op_error(q, I)
-
-        thinning = 1
-        q_thinned = q#[::thinning]
-        I_thinned = I#[::thinning]
-        I_err_thinned = Ierr#[::thinning]
         # ========================== Setting Bounds ==============================
         # p0         = [           R,         sigma_R,          eps, sigma_eps,     scale,       c4,        c,       xi]
         # p_CSLB_pure= [       27.19,          0.4084,       0.9592,    0.1784, 7.098e-09, 0.001004, 0.003202,    1.203]
@@ -81,6 +60,28 @@ if __name__ == "__main__":
             target_folder = target_folder / qmin_dict[q_min]
             if not target_folder.exists():
                     target_folder.mkdir()
+
+            block = sample.split("_")[0]
+            block_path = BM29.blockpath(block)
+            dir_names = [x.name for x in block_path.iterdir()]
+            for dir_name in dir_names:
+                if dir_name[:-13].endswith(sample):
+                    sub_dat_path = block_path / dir_name / "avg_and_sub" / BM29.sample_dict[sample]
+                    q, I, I_err_Poisson = np.loadtxt(sub_dat_path, unpack=True)
+            q_full = np.copy(q[q <= 1.2])
+            I_full = np.copy(I[q <= 1.2])
+            I_err_full = BM29.CSLB_op_error(q_full, I_full)
+            mask = (q >= q_min) & (q <= 1.2)
+            q    = q[mask]
+            I    = I[mask]
+            I_err_Poisson = I_err_Poisson[mask]
+
+            Ierr = BM29.CSLB_op_error(q, I)
+
+            thinning = 1
+            q_thinned = q#[::thinning]
+            I_thinned = I#[::thinning]
+            I_err_thinned = Ierr#[::thinning]
             count = 0
             while (count < 3):
                 p0 = np.random.uniform(lower_bounds, upper_bounds)
