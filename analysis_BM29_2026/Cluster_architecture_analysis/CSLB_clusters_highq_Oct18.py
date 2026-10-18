@@ -45,9 +45,9 @@ if __name__ == "__main__":
     for sample in who:
         this_file = Path(__file__).resolve()
         analysis_BM29_July2026 = this_file.parent.parent
-        target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name / sample
-        if not target_folder.exists():
-            target_folder.mkdir()
+        target_path = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name / sample
+        if not target_path.exists():
+            target_path.mkdir()
 
         # ========================== Setting Bounds ==============================
         # p0         = [           R,         sigma_R,          eps, sigma_eps,     scale,       c4,        c,       xi]
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
         qmin_dict = {0.25: "0p25", 0.32: "0p32", 0.4: "0p4"}
         for q_min in qmin_dict.keys():
-            target_folder = target_folder / qmin_dict[q_min]
+            target_folder = target_path / qmin_dict[q_min]
             if not target_folder.exists():
                     target_folder.mkdir()
 
@@ -117,7 +117,7 @@ if __name__ == "__main__":
                     k.write(f"\n\n{BM29.sample_dict[sample]} fitted (count={count}) using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
     
                 chi2_reference = 20 # BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
-                if chi2 < chi2_reference + 60:
+                if chi2 < chi2_reference + 0:
                     #=========================== Plot ===========================================
                     q_fit = np.linspace(min(q_full), max(q_full), 1000)
                     plt.close("all")
