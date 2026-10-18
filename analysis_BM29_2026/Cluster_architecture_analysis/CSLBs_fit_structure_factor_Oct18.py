@@ -41,7 +41,6 @@ if __name__ == "__main__":
 
     fit_function_name = "ellipsoid_homogen_DAB"
     fit_function = lambda q, R, sigma_R, eps, sigma_eps, scale, c4, c, xi: fit.ellipsoid_homogen(q, R, sigma_R, eps, sigma_eps, scale, c4) + fit.DAB_model(q, c, xi)
-    param_names = ["R_fit", "sigma_R_fit", "eps_fit", "sigma_eps_fit", "scale_fit", "c4_fit", "c_fit", "xi_fit"]
 
     for sample in who:
         this_file = Path(__file__).resolve()
@@ -65,10 +64,11 @@ if __name__ == "__main__":
 
         ellipsoid_homogen_DAB_name = "ellipsoid_homogen_DAB"
         ellipsoid_homogen_DAB = lambda q, R, sigma_R, eps, sigma_eps, scale, c4, c, xi: fit.ellipsoid_homogen(q, R, sigma_R, eps, sigma_eps, scale, c4) + fit.DAB_model(q, c, xi)
-        I_fit = ellipsoid_homogen_DAB(q, *BM29.best_fits[sample]["ellipsoid_homogen_DAB"][1])
+        I_fit = ellipsoid_homogen_DAB(q, *BM29.best_fits[sample]["ellipsoid_homogen_DAB"][-1])
 
         fit_function_name = "ellips_DAB_struc_factor"
         fit_function = lambda q, A, xi, D, s, P, q0, w: I_fit * BM29.structure_factor_single_peak(q, A, xi, D, s, P, q0, w)
+        param_names = ["A", "xi", "D", "s", "P", "q0", "w"]
         # A = 0.8     # A > 0 
         # xi = 20     # xi ≈ correlation length (~10–30 nm)
         # D = 0.2     # 
@@ -119,14 +119,11 @@ if __name__ == "__main__":
             chi2_reference = 20 # BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
             if chi2 < chi2_reference + 200:
                 #=========================== Plot ===========================================
-                q_fit = np.linspace(min(q), max(q), 1000)
                 plt.close("all")
                 plt.figure(figsize=(12, 7.5))
                 plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
-                plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
-                plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
-                plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4_fit), color='black', label='pow law bgr')
-                plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, p0[-1]), color='black', label='initial bgr', ls="--")
+                plt.loglog(q, fit_function(q, *popt), color='red', label='Fit')
+                plt.loglog(q, fit_function(q, *p0), color='orange', label='initial guess')
 
                 plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
                 plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
