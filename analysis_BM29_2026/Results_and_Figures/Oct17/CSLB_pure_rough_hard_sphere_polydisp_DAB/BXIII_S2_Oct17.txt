@@ -1,0 +1,15 @@
+
+
+BXIII_S2_60%_CSLB fitted (count=0) using rough_hard_sphere_polydisp_DAB with chi2 = 18.994149901322977
+[27.38, 1.516, 0.0001844, 9.891e-14, 0.001401, 0.009887, 2.593]
+###########################################
+
+
+BXIII_S2_60%_CSLB fitted (count=1) using rough_hard_sphere_polydisp_DAB with chi2 = 162.7896147060467
+[26.35, 1.277, 4, 1.228e-08, 0.002651, 2.21e-06, 4]
+###########################################
+
+
+BXIII_S2_60%_CSLB fitted (count=2) using rough_hard_sphere_polydisp_DAB with chi2 = 18.994153363458512
+[27.38, 1.516, 0.0002076, 1.333e-13, 0.001401, 0.009888, 2.593]
+###########################################

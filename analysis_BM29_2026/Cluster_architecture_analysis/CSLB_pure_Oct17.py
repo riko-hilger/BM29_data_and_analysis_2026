@@ -65,7 +65,7 @@ if __name__ == "__main__":
         target_folder.mkdir()
     fit_function_name = "hard_sphere_polydisp"
     fit_function = lambda q, R, sigma_R, scale, c4: fit.hard_sphere_polydisp(q, R, sigma_R, scale, 0, 0, c4)
-    param_names = ["R_fit", "sigma_R_fit", "scale_fit", "c2_fit", "c3_fit", "c4_fit"]
+    param_names = ["R_fit", "sigma_R_fit", "scale_fit", "c4_fit"]
 
     for sample in who:
             count = 0
@@ -141,7 +141,7 @@ if __name__ == "__main__":
         target_folder.mkdir()
     fit_function_name = "rough_hard_sphere_polydisp"
     fit_function = lambda q, R, sigma_R, a, scale, c4: fit.rough_hard_sphere_polydisp(q, R, sigma_R, a, scale, 0, 0, c4)
-    param_names = ["R_fit", "sigma_R_fit", "a_fit", "scale_fit", "c2_fit", "c3_fit", "c4_fit"]
+    param_names = ["R_fit", "sigma_R_fit", "a_fit", "scale_fit", "c4_fit"]
 
     for sample in who:
             count = 0
