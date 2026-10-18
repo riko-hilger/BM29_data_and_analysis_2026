@@ -38,6 +38,7 @@ if __name__ == "__main__":
     target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name
     if not target_folder.exists():
         target_folder.mkdir()
+
     fit_function_name = "ellipsoid_homogen_DAB"
     fit_function = lambda q, R, sigma_R, eps, sigma_eps, scale, c4, c, xi: fit.ellipsoid_homogen(q, R, sigma_R, eps, sigma_eps, scale, c4) + fit.DAB_model(q, c, xi)
     param_names = ["R_fit", "sigma_R_fit", "eps_fit", "sigma_eps_fit", "scale_fit", "c4_fit", "c_fit", "xi_fit"]
@@ -56,86 +57,85 @@ if __name__ == "__main__":
             if dir_name[:-13].endswith(sample):
                 sub_dat_path = block_path / dir_name / "avg_and_sub" / BM29.sample_dict[sample]
                 q, I, I_err_Poisson = np.loadtxt(sub_dat_path, unpack=True)
-        q_full = np.copy(q)
-        I_full = np.copy(I)
-        I_err_full = BM29.CSLB_op_error(q_full, I_full)
-        mask = (q >= q_min) & (q <= 1.2)
+        mask = (q >= 0.0) & (q <= 1.2)
         q    = q[mask]
         I    = I[mask]
         I_err_Poisson = I_err_Poisson[mask]
-
         Ierr = BM29.CSLB_op_error(q, I)
 
-        thinning = 1
-        q_thinned = q#[::thinning]
-        I_thinned = I#[::thinning]
-        I_err_thinned = Ierr#[::thinning]
+        ellipsoid_homogen_DAB_name = "ellipsoid_homogen_DAB"
+        ellipsoid_homogen_DAB = lambda q, R, sigma_R, eps, sigma_eps, scale, c4, c, xi: fit.ellipsoid_homogen(q, R, sigma_R, eps, sigma_eps, scale, c4) + fit.DAB_model(q, c, xi)
+        I_fit = ellipsoid_homogen_DAB(q, *BM29.best_fits[sample]["ellipsoid_homogen_DAB"][1])
+
+        fit_function_name = "ellips_DAB_struc_factor"
+        fit_function = lambda q, A, xi, D, s, P, q0, w: I_fit * BM29.structure_factor_single_peak(q, A, xi, D, s, P, q0, w)
+        # A = 0.8     # A > 0 
+        # xi = 20     # xi ≈ correlation length (~10–30 nm)
+        # D = 0.2     # 
+        # s = 0.15    # Width of the Gaussian centered at q = 0
+        # P = 0.3     # Amplitude of the nearest-neighbour correlation peak
+        # q0 = 0.17   # Position of the nearest-neighbour correlation peak
+        # w = 0.1    # Width of the nearest-neighbour correlation peak
+
         # ========================== Setting Bounds ==============================
-        # p0         = [           R,         sigma_R,          eps, sigma_eps,     scale,       c4,        c,       xi]
-        # p_CSLB_pure= [       27.19,          0.4084,       0.9592,    0.1784, 7.098e-09, 0.001004, 0.003202,    1.203]
-        lower_bounds = [          26,             0.2,          0.8,       0.0,       0.0,      0.0,      0.0,      1.0] 
-        upper_bounds = [          30,             5.0,          1.2,       0.5,      1e-6,     0.01,      2.0,      1.4] 
+        # p0         = [           A,       xi,       D,       s,     P,       q0,         w]
+        lower_bounds = [           0,      2.0,     0.0,     0.0,   0.0,    0.005,       0.0]     
+        upper_bounds = [          11,      100,    1000,     1.5,   9.0,     0.15,       0.7]
+        p0 = np.random.uniform(lower_bounds, upper_bounds)
 
-        qmin_dict = {0.25: "0p25", 0.32: "0p32", 0.4: "0p4"}
-        for q_min in qmin_dict.keys():
-            target_folder = target_folder / qmin_dict[q_min]
-            if not target_folder.exists():
-                    target_folder.mkdir()
-            count = 0
-            while (count < 3):
-                p0 = np.random.uniform(lower_bounds, upper_bounds)
-                print(f"Now fitting task {task_name} with {fit_function_name} sample {sample}, qmin {q_min}, {count} ...")            
-                #======================== Fit ===========================================
-                try:
-                    popt, pcov = curve_fit(
-                        fit_function,
-                        q_thinned,
-                        I_thinned,
-                        sigma=I_err_thinned,
-                        maxfev=7000,
-                        p0=p0,
-                        bounds=(lower_bounds, upper_bounds)
-                    )
-                except RuntimeError:
-                    print("Maximum number of evaluations reached — skipping this fit.")
-                    continue
-        
-                perr = np.sqrt(np.diag(pcov))
-                fit_lib_entry = "["
-                for name, value in zip(param_names, popt):
-                    globals()[name] = value
-                    fit_lib_entry += f"{value:.4g}, "
-                fit_lib_entry = fit_lib_entry[:-2]
-                fit_lib_entry += "]"
-                print(fit_lib_entry)
-                chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
+        count = 0
+        while (count < 7):
+            print(f"Now fitting task {task_name} with {fit_function_name} sample {sample}, attempt {count} ...")            
+            #======================== Fit ===========================================
+            try:
+                popt, pcov = curve_fit(
+                    fit_function,
+                    q,
+                    I,
+                    sigma=Ierr,
+                    maxfev=7000,
+                    p0=p0,
+                    bounds=(lower_bounds, upper_bounds)
+                )
+            except RuntimeError:
+                print("Maximum number of evaluations reached — skipping this fit.")
+                continue
     
-                print("Fit successful with chi2 = ", chi2)
-                # print(info_text_print)
-                with open(target_folder/f"{sample}_{DAY}.txt", "a", encoding="utf-8") as k:
-                    k.write(f"\n\n{BM29.sample_dict[sample]} fitted (count={count}) using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
-    
-                chi2_reference = 20 # BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
-                if chi2 < chi2_reference + 60:
-                    #=========================== Plot ===========================================
-                    q_fit = np.linspace(min(q_full), max(q_full), 1000)
-                    plt.close("all")
-                    plt.figure(figsize=(12, 7.5))
-                    plt.errorbar(q_full, I_full, I_err_full, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
-                    plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
-                    plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
-                    plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4_fit), color='black', label='pow law bgr')
-                    plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, p0[-1]), color='black', label='initial bgr', ls="--")
-                    plt.axvline(q_min,color="grey",linestyle="--",linewidth=2.6,label=fr"$q_\mathrm{{min}}={q_min}$ nm$^{{-1}}$")
+            perr = np.sqrt(np.diag(pcov))
+            fit_lib_entry = "["
+            for name, value in zip(param_names, popt):
+                globals()[name] = value
+                fit_lib_entry += f"{value:.4g}, "
+            fit_lib_entry = fit_lib_entry[:-2]
+            fit_lib_entry += "]"
+            print(fit_lib_entry)
+            chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-                    plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
-                    plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
-                    plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name}')
-                    plt.grid(True)
-                    legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
-                    legend.set_title(info_text_print)
-                    plt.tight_layout()
-                    plt.savefig(target_folder / f"{sample}__{count}_{DAY}.png",dpi=100, bbox_inches='tight', pad_inches=0.05)
-    
-                count += 1
+            print("Fit successful with chi2 = ", chi2)
+            # print(info_text_print)
+            with open(target_folder/f"{sample}_{DAY}.txt", "a", encoding="utf-8") as k:
+                k.write(f"\n\n{BM29.sample_dict[sample]} fitted (count={count}) using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
+
+            chi2_reference = 20 # BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
+            if chi2 < chi2_reference + 200:
+                #=========================== Plot ===========================================
+                q_fit = np.linspace(min(q), max(q), 1000)
+                plt.close("all")
+                plt.figure(figsize=(12, 7.5))
+                plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
+                plt.loglog(q_fit, fit_function(q_fit, *popt), color='red', label='Fit')
+                plt.loglog(q_fit, fit_function(q_fit, *p0), color='orange', label='initial guess')
+                plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, c4_fit), color='black', label='pow law bgr')
+                plt.loglog(q_fit, fit.powerlaw_bgr(q_fit, 0, 0, p0[-1]), color='black', label='initial bgr', ls="--")
+
+                plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
+                plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
+                plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name}')
+                plt.grid(True)
+                legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
+                legend.set_title(info_text_print)
+                plt.tight_layout()
+                plt.savefig(target_folder / f"{sample}__{count}_{DAY}.png",dpi=100, bbox_inches='tight', pad_inches=0.05)
+
+            count += 1
 

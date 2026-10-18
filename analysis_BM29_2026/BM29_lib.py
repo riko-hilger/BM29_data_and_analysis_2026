@@ -236,6 +236,20 @@ def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_l
     )
 
     return f
+# ===================================================================================================
+
+def structure_factor_single_peak(q, A, xi, D, s, P, q0, w):
+    return (1 + A/(1+(xi*q)**2)                 # Lorentzian (Ornstein-Zernike)
+              - D*np.exp(-q**2/(2*s**2))        # Gaussian centered at q = 0  
+              + P*np.exp(-(q-q0)**2/(2*w**2))  # Gaussian at q₀, nearest-neighbour correlation peak
+    )
+# A = 0.8     # A > 0 
+# xi = 20     # xi ≈ correlation length (~10–30 nm)
+# D = 0.2     # 
+# s = 0.15    # Width of the Gaussian centered at q = 0
+# P = 0.3     # Amplitude of the nearest-neighbour correlation peak
+# q0 = 0.17   # Position of the nearest-neighbour correlation peak
+# w = 0.1    # Width of the nearest-neighbour correlation peak
 
 # ====================================================================================================
 
@@ -2482,7 +2496,8 @@ best_fits = {
         "hard_sphere_polydisp": {
             1: [26.91, 1.662, 7.474e-09, 0.001673], # pretty bad
         },
-        "ellipsoid_homogen_DAB": {
+        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+            -1: [26.19, 0.5834, 1.187, 0.0228, 7.52e-09, 0.001064, 0.00154, 1],
             1: [27.19, 0.4084, 0.9592, 0.1784, 7.098e-09, 0.001004, 0.003202, 1.203],
         },
     },
@@ -2495,18 +2510,33 @@ best_fits = {
     "BXIII_S6": { # "15mM LV4 + 6μM Syn1 + 24μM aSynWT",
     },
     "BXIII_S11": { # "CSLB + 6μM Syn1",
+        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+            -1: [26.32, 0.8808, 1.2, 0.08813, 3.352e-09, 0.0002287, 0.0181, 1.4],
+        },
     },
     "BXIII_S12": { # "CSLB + 4μM Syn1",
+        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+            -1: [26.34, 0.6142, 1.2, 0.05759, 3.017e-09, 0.0005999, 0.01091, 1.4],
+        },
     },
     "BXIII_S13": { # "CSLB + 6μM Syn1 + 12μM aSynWT",
+        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+            -1: [26.34, 1.111, 1.2, 0.09494, 3.477e-09, 0.0002991, 0.02233, 1.4],
+        },
     },
     "BXIII_S14": { # "CSLB + 6μM Syn1 + 24μM aSynWT",
+        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+            -1: [26.38, 0.8424, 1.2, 0.07788, 4.537e-09, 0.0005131, 0.02226, 1.4],
+        },
     },
     "BXIV_S1": { # "15mM LV4 + 6μM Syn1 + 24μM ATP",
     },
     "BXIV_S2": { # "23nM SVs + 6μM Syn1 + 24μM ATP",
     },
     "BXIV_S3": { # "CSLB + 6μM Syn1 + 24 μM ATP"
+        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+            -1: [26.37, 1.034, 1.2, 0.09486, 3.212e-09, 0.0004608, 0.01256, 1.4],
+        },
     }
 }
 
