@@ -1,0 +1,15 @@
+
+
+BXIII_S13_60%_CSLB_6uM_Syn1_12uM_aSynWT fitted (count=0) using ellipsoid_homogen_DAB with chi2 = 0.18935216675396685
+[26.92, 0.7032, 0.8, 0.4328, 7.054e-09, 0.0005469, 0.01513, 1.285]
+###########################################
+
+
+BXIII_S13_60%_CSLB_6uM_Syn1_12uM_aSynWT fitted (count=1) using ellipsoid_homogen_DAB with chi2 = 0.18935216694479237
+[26.92, 0.7033, 0.8, 0.4328, 7.054e-09, 0.0005469, 0.01513, 1.285]
+###########################################
+
+
+BXIII_S13_60%_CSLB_6uM_Syn1_12uM_aSynWT fitted (count=2) using ellipsoid_homogen_DAB with chi2 = 0.1893521666982208
+[26.92, 0.7032, 0.8, 0.4328, 7.054e-09, 0.0005469, 0.01513, 1.285]
+###########################################
