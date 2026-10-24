@@ -18,6 +18,7 @@ DOPS = [
     "BIX_S12", # : "15 mM DOPS + 15 μM aSynWT",
     "BIX_S13", # : "15 mM DOPS + 25 μM aSynWT",
     "BIX_S14", # : "15 mM DOPS + 50 μM aSynWT",
+    #[21, 9.132, 2.371, 1.213, 0.2911, 0.4865, 0.853, 1.894, 0.000112, 0.0007839]
     "BVII_S1", # : "15 mM DOPS + 75 μM aSynWT",
     "BVII_S2", # : "15 mM DOPS + 100 μM aSynWT",
 
