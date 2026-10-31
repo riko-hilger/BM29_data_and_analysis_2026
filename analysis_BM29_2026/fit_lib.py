@@ -31,6 +31,74 @@ base_path = Path("/home/AG_Salditt/Projekte_Membranbiophysik/Riko_BA/Data/BM26/S
 def DAB_model(q, c, xi):
     return c / (1 + (q*xi)**2)**2
 
+# ================== model for spherical ULV (asym. EDP) with lognorm. polydisp., TWO protein layers =============================
+
+def ULV_lognormal_sph_asym_TWO_prot_layers(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, 
+                                           z_out, sigma_out, rho_out, z_in, sigma_in, rho_in, scale, c2, c3, c4):
+    I_func_partial = partial(lognormal_sph_asym_TWO_prot_layers_integrator, R=R, sigma_R=sigma_R, rho_h1=rho_h1, rho_h2=rho_h2,
+                             sigma_h1=sigma_h1, sigma_h2=sigma_h2, sigma_c=sigma_c, z_h=z_h, z_out=z_out, sigma_out=sigma_out, rho_out=rho_out, z_in=z_in, sigma_in=sigma_in, rho_in=rho_in)
+    with Pool(processes=12) as pool:  # 6–8 is ideal on typical CPUs
+        # I_res = list(tqdm(pool.imap(I_func_partial, q), total=len(q), desc="Computing I(q)", ncols=80))
+        I_res = pool.map(I_func_partial, q)
+    
+    return scale * np.array(I_res) + c2 * q**(-c3) + c4
+
+def lognormal_sph_asym_TWO_prot_layers_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in):
+    n_R = 120
+    R_vals   = np.linspace(0.001, 70, n_R)
+    theta = np.linspace(0, np.pi/2, 250)  # fixed grid for integration
+    sin_theta = np.sin(theta)
+    
+    I = 0
+    for R_i in R_vals:
+        F_vals = F_sph_asym_TWO_prot_layers(q, R_i, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, 
+                                            z_out, sigma_out, rho_out, z_in, sigma_in, rho_in)
+        F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)         
+        I += lognormal_polydisp(R_i, sigma_R, R) * F_int 
+    dR = R_vals[1] - R_vals[0]
+    return I * dR 
+
+def F_sph_asym_TWO_prot_layers(q, R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, 
+                               z_out, sigma_out, rho_out, z_in, sigma_in, rho_in):
+    rho_c = 1
+    u     = q *  R        
+    up    = q * (R + z_h) 
+    um    = q * (R - z_h) 
+    uout = q * (R + z_out)
+    uin = q * (R - z_in)
+
+    exp_h2 = np.exp(-sigma_h2**2 * u**2 / (2 * R**2))
+    exp_h1 = np.exp(-sigma_h1**2 * u**2 / (2 * R**2))
+    exp_c  = np.exp(-sigma_c**2  * u**2 / (2 * R**2))
+    exp_out = np.exp(-sigma_out**2  * u**2 / (2 * R**2))
+    exp_in = np.exp(-sigma_in**2  * u**2 / (2 * R**2))
+    
+    sin_u_Rp = np.sin(up)
+    sin_u_Rm = np.sin(um)
+    sin_u_R  = np.sin(u)
+    sin_u_out = np.sin(uout)
+    sin_u_in = np.sin(uin)
+    
+    cos_u_Rp = np.cos(up)
+    cos_u_Rm = np.cos(um)
+    cos_u_R  = np.cos(u)
+    cos_u_out = np.cos(uout)
+    cos_u_in = np.cos(uin)
+
+    # lipid head groups
+    term_h = (
+        ((R + z_h)**2 * sin_u_Rp / up + sigma_h2**2 * cos_u_Rp) * rho_h2 * sigma_h2 * exp_h2 + 
+        ((R - z_h)**2 * sin_u_Rm / um + sigma_h1**2 * cos_u_Rm) * rho_h1 * sigma_h1 * exp_h1
+    )
+    # lipid tail groups
+    term_c =    (R**2 * sin_u_R  / u  + sigma_c**2  * cos_u_R)  * rho_c  * sigma_c  * exp_c
+    # additional scattering density inside and outside (GM1 heads, proteins)
+    term_out = ((R + z_out)**2 * sin_u_out / uout + sigma_out**2 * cos_u_out) * rho_out * sigma_out * exp_out
+    term_in =  ((R - z_in)**2 *  sin_u_in / uin   + sigma_in**2 *  cos_u_in)  * rho_in  * sigma_in  * exp_in
+    
+    res = 4 * np.pi * np.sqrt(2*np.pi) * (term_h - term_c + term_out + term_in)
+    return res
+
 # ================== model for spherical ULV (asym. EDP) with additional outer protein layer =============================
 
 def ULV_lognormal_sph_asym_prot_layer(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, c2, c3, c4):
