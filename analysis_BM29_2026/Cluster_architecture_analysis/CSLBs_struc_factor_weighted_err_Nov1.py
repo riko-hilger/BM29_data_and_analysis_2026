@@ -79,6 +79,10 @@ if __name__ == "__main__":
             print(f"Now fitting task {task_name} with {fit_function_name} sample {sample}, attempt {count} ...")            
             if count==1:
                 p0 = BM29.best_fits[sample]["ellips_DAB_struc_factor"][1]
+                if all(lo <= v <= hi for v, lo, hi in zip(p0, lower_bounds, upper_bounds)):
+                    p0 = p0
+                else:
+                    p0 = np.random.uniform(lower_bounds, upper_bounds)
             else:
                 p0 = np.random.uniform(lower_bounds, upper_bounds)
             #======================== Fit ===========================================
