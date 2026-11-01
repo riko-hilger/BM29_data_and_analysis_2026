@@ -315,11 +315,11 @@ def CSLB_op_error(q, I):
     return I_err_op
 
 def CSLB_weighted_op_error(q, I):
-    I_err_op = np.copy(I) / 30
+    I_err_op = np.copy(I) / 60
     op_err_mask1 = q > 0.6
-    I_err_op[op_err_mask1] = I[op_err_mask1] / 15
-    op_err_mask2 = q < 0.125
-    I_err_op[op_err_mask2] = I[op_err_mask2] / 75
+    I_err_op[op_err_mask1] = I[op_err_mask1] / 30
+    op_err_mask2 = (q > 0.05) & (q < 0.125)
+    I_err_op[op_err_mask2] = I[op_err_mask2] / 90
     return I_err_op
 
 # ====================================================================================================

@@ -132,6 +132,7 @@ if __name__ == "__main__":
             legend.set_title(info_text_print)
             plt.tight_layout()
             plt.savefig(target_folder / f"{sample}__{count}_{DAY}.png",dpi=100, bbox_inches='tight', pad_inches=0.05)
-
+            g = BM29.plot_structure_factor_single_peak([sample], initial_guess=p0)
+            g.savefig(target_folder / f"{sample}__{count}_{DAY}_structure_factor.png", dpi=100, bbox_inches='tight', pad_inches=0.05)
             count += 1
 
