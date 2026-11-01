@@ -78,14 +78,20 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
             _, _,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   _, _ = best_fits[sample][fit_function][1]
             r = np.linspace(R - 2*z_h, R + 3*z_h, 1500)
             rho_h3, z_h3, sigma_h3 = 0, 1, 1
+            rho_in, z_in, sigma_in = 0, 1, 1
         elif ((fit_function == "ULV_sph_asym_prot_layer") or (fit_function == "ULV_lognormal_sph_asym_prot_layer")):
             _, _, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, _, _ = best_fits[sample][fit_function][1]
+            rho_in, z_in, sigma_in = 0, 1, 1
             r = np.linspace(R - 2*z_h, R + 4*z_h, 1500)
-        rho_h   = [rho_h1, -1, rho_h2, rho_h3]
-        rho_pos = [R - z_h, R, R + z_h, R + z_h3]
-        sigma   = [sigma_h1, sigma_c, sigma_h2, sigma_h3]
+        elif fit_function == "ULV_lognormal_sph_asym_TWO_prot_layers":
+            _, _, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in, _, _ = best_fits[sample][fit_function][1]
+            rho_h3, z_h3, sigma_h3 = rho_out, z_out, sigma_out
+            r = np.linspace(R - 3.25*z_h, R + 3.25*z_h, 1500)
+        rho_h   = [rho_in, rho_h1, -1, rho_h2, rho_h3]
+        rho_pos = [R - z_in, R - z_h, R, R + z_h, R + z_h3]
+        sigma   = [sigma_in, sigma_h1, sigma_c, sigma_h2, sigma_h3]
         rho = np.zeros_like(r)
-        for i in range(4):
+        for i in range(5):
             rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
         # color = color_dict[variant]
         if "WT" in sample_dict[sample]:
@@ -192,7 +198,7 @@ def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_l
         R0, sigma = best_fits[sample][fit_function_name][1][0:2]
 
         R = np.linspace(0, R0 + 40, 1000)
-        if fit_function_name == "ULV_spheric_asym_C4_lognormal":
+        if ((fit_function_name == "ULV_spheric_asym_C4_lognormal") or (fit_function_name == "ULV_lognormal_sph_asym_TWO_prot_layers")):
             P = lognorm.pdf(R, s=sigma, scale=R0)
         elif fit_function_name == "ULV_spheric_asym_C4":
             P = normalized_gaussian(R, mu=R0, sigma=sigma)
@@ -238,7 +244,7 @@ def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_l
     return f
 
 # ===================================================================================================
-def plot_structure_factor_single_peak(who):
+def plot_structure_factor_single_peak(who, initial_guess=None, qmax=1):
     f=plt.figure(figsize=(12, 7.5))
     for sample in who:
         block = sample.split("_")[0]
@@ -248,11 +254,14 @@ def plot_structure_factor_single_peak(who):
             if dir_name[:-13].endswith(sample):
                 sub_dat_path = block_path / dir_name / "avg_and_sub" / sample_dict[sample]
                 q, I, Ierr_Poisson = np.loadtxt(sub_dat_path, unpack=True)
-        mask = (q >= 0.07) & (q <= 1)
+        mask = (q >= 0.07) & (q <= qmax)
         q    = q[mask]
+        if initial_guess is not None:
+            struc_fac_init = structure_factor_single_peak(q, *initial_guess)
+            plt.plot(q, struc_fac_init, label="initial guess " + sample_dict[sample])
         structure_factor = structure_factor_single_peak(q, *best_fits[sample]["ellips_DAB_struc_factor"][1])
         plt.plot(q, structure_factor, label=sample_dict[sample])
-    plt.xlabel("$q$ [nm]", fontsize=25)
+    plt.xlabel("$q$ [nm$\mathrm{^{-1}}]$", fontsize=25)
     plt.ylabel("$S(q)$", fontsize=25)
     plt.grid()
     plt.legend()
@@ -303,6 +312,14 @@ def CSLB_op_error(q, I):
     I_err_op = np.copy(I) / 30
     op_err_mask = q > 0.6
     I_err_op[op_err_mask] = I[op_err_mask] / 15
+    return I_err_op
+
+def CSLB_weighted_op_error(q, I):
+    I_err_op = np.copy(I) / 30
+    op_err_mask1 = q > 0.6
+    I_err_op[op_err_mask1] = I[op_err_mask1] / 15
+    op_err_mask2 = q < 0.125
+    I_err_op[op_err_mask2] = I[op_err_mask2] / 75
     return I_err_op
 
 # ====================================================================================================
@@ -2395,6 +2412,9 @@ best_fits = {
             1: [11.55, 0.497, 1.546, 0.8, 0.2563, 0.3353, 0.718, 1.757, 2.517, 0.9936, 0.231, 3.412e-07, 0.0005203], # chi2 = 59 BEST
             2: [13, 0.5003, 1.004, 1.369, 0.4061, 0.1925, 0.7809, 1.757, 2.163, 1.2, 0.2349, 2.849e-07, 0.0005142], # chi2 = 67
             3: [15, 0.5432, 1.137, 1.115, 0.3412, 0.3229, 0.724, 1.759, 3, 0.7787, 0.1947, 1.87e-07, 0.0005393], # chi2 = 84
+        },
+        "ULV_lognormal_sph_asym_TWO_prot_layers": {
+            1: [11.76, 0.4971, 1.419, 1.047, 0.2309, 0.3814, 0.7298, 1.747, 2.872, 0.7839, 0.1602, 2.522, 0.7008, 0.08372, 3.133e-07, 0.0005331],
         }
     },
     'BIX_S10': {     
