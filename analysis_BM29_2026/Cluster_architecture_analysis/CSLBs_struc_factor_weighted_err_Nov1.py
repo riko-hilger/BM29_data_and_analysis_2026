@@ -10,6 +10,11 @@ plt.rcParams["text.usetex"] = False
 from scipy import optimize
 from scipy.optimize import curve_fit
 
+def average_deviation_percent(a, b):
+    deviations = [abs(x - y) / abs(x) * 100 for x, y in zip(a, b)]
+    return sum(deviations) / len(deviations)
+threshold = 10
+
 who = [
     # "BXIII_S2", #: "BXIII_S2_60%_CSLB",
 
@@ -54,6 +59,12 @@ if __name__ == "__main__":
         I_err_Poisson = I_err_Poisson[mask]
         Ierr = BM29.CSLB_weighted_op_error(q, I)
 
+        # ======================== keep track of fits =====================
+        fit_list = []
+        fits = BM29.best_fits[sample]["ellips_DAB_struc_factor"]
+        for key in fits:
+            fit_list.append(fits[key])
+
         ellipsoid_homogen_DAB_name = "ellipsoid_homogen_DAB"
         ellipsoid_homogen_DAB = lambda q, R, sigma_R, eps, sigma_eps, scale, c4, c, xi: fit.ellipsoid_homogen(q, R, sigma_R, eps, sigma_eps, scale, c4) + fit.DAB_model(q, c, xi)
         I_fit = ellipsoid_homogen_DAB(q, *BM29.best_fits[sample]["ellipsoid_homogen_DAB"][-1])
@@ -75,7 +86,9 @@ if __name__ == "__main__":
         upper_bounds = [          11,      100,     +10,     0.3,   3.0,     0.15,       0.7]
 
         count = 1
-        while (count < 4):
+        while (count < 101):
+            if len(fit_list) > 15:
+                break
             print(f"Now fitting task {task_name} with {fit_function_name} sample {sample}, attempt {count} ...")            
             if count==1:
                 p0 = BM29.best_fits[sample]["ellips_DAB_struc_factor"][1]
@@ -117,22 +130,27 @@ if __name__ == "__main__":
 
             # chi2_reference = 20 # BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
             # if chi2 < chi2_reference + 200:
-                #=========================== Plot ===========================================
-            plt.close("all")
-            plt.figure(figsize=(12, 7.5))
-            plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
-            plt.loglog(q, fit_function(q, *popt), color='red', label='Fit')
-            plt.loglog(q, fit_function(q, *p0), color='orange', label='initial guess')
+            chi2_threshold = 23
+            if chi2 <= chi2_threshold:
+                novelty_list = [average_deviation_percent(popt, previous_fit) for previous_fit in fit_list]
+                if all(novelty > threshold for novelty in novelty_list):
+                    fit_list.append(popt)
+                    #=========================== Plot ===========================================
+                    plt.close("all")
+                    plt.figure(figsize=(12, 7.5))
+                    plt.errorbar(q, I, Ierr, marker="o", markersize=3,markeredgewidth=1,ecolor="Blue",      markeredgecolor='Blue',      markerfacecolor='None', alpha=0.5, ls="None", label='I_SUB', zorder=1)
+                    plt.loglog(q, fit_function(q, *popt), color='red', label='Fit')
+                    plt.loglog(q, fit_function(q, *p0), color='orange', label='initial guess')
 
-            plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
-            plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
-            plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name}')
-            plt.grid(True)
-            legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
-            legend.set_title(info_text_print)
-            plt.tight_layout()
-            plt.savefig(target_folder / f"{sample}__{count}_{DAY}.png",dpi=100, bbox_inches='tight', pad_inches=0.05)
-            g = BM29.plot_structure_factor_single_peak([sample], initial_guess=p0)
-            g.savefig(target_folder / f"{sample}__{count}_{DAY}_structure_factor.png", dpi=100, bbox_inches='tight', pad_inches=0.05)
+                    plt.xlabel('$q [\\mathrm{nm}^{-1}]$')
+                    plt.ylabel('$I(q) [\\mathrm{cm}^{-1}]$')
+                    plt.title(f'{BM29.sample_dict[sample]} \nusing {fit_function_name}')
+                    plt.grid(True)
+                    legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
+                    legend.set_title(info_text_print)
+                    plt.tight_layout()
+                    plt.savefig(target_folder / f"{sample}__{count}_{DAY}.png",dpi=100, bbox_inches='tight', pad_inches=0.05)
+                    g = BM29.plot_structure_factor_single_peak([sample], initial_guess=p0)
+                    g.savefig(target_folder / f"{sample}__{count}_{DAY}_structure_factor.png", dpi=100, bbox_inches='tight', pad_inches=0.05)
             count += 1
 
