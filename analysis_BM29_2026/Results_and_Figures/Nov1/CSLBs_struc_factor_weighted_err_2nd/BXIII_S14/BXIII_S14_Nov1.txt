@@ -1,0 +1,15 @@
+
+
+BXIII_S14_60%_CSLB_6uM_Syn1_24uM_aSynWT fitted (count=1) using ellips_DAB_struc_factor with chi2 = 23.00185534963911
+[3.175, 18.48, 2.829, 0.1209, 1.606, 0.1224, 0.03625]
+###########################################
+
+
+BXIII_S14_60%_CSLB_6uM_Syn1_24uM_aSynWT fitted (count=2) using ellips_DAB_struc_factor with chi2 = 23.00185534269157
+[3.175, 18.48, 2.829, 0.1209, 1.606, 0.1224, 0.03625]
+###########################################
+
+
+BXIII_S14_60%_CSLB_6uM_Syn1_24uM_aSynWT fitted (count=3) using ellips_DAB_struc_factor with chi2 = 23.00185535199105
+[3.175, 18.48, 2.829, 0.1209, 1.606, 0.1224, 0.03625]
+###########################################

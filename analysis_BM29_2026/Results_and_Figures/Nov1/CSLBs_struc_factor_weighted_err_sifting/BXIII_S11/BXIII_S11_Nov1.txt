@@ -1,0 +1,500 @@
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=1) using ellips_DAB_struc_factor with chi2 = 25.614992751423426
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=2) using ellips_DAB_struc_factor with chi2 = 25.614992754223984
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=3) using ellips_DAB_struc_factor with chi2 = 25.614992759071193
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=4) using ellips_DAB_struc_factor with chi2 = 25.614992754738164
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=5) using ellips_DAB_struc_factor with chi2 = 25.614992750616874
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=6) using ellips_DAB_struc_factor with chi2 = 25.61499276480466
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=7) using ellips_DAB_struc_factor with chi2 = 25.614992775250347
+[2.874, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=8) using ellips_DAB_struc_factor with chi2 = 25.61499274839682
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=9) using ellips_DAB_struc_factor with chi2 = 116.9858758855767
+[11, 74.56, 2.283, 0.05536, 0.04663, 0.06, 0.0007609]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=10) using ellips_DAB_struc_factor with chi2 = 25.614992751342815
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=11) using ellips_DAB_struc_factor with chi2 = 25.61499275377868
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=12) using ellips_DAB_struc_factor with chi2 = 25.6149927494125
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=13) using ellips_DAB_struc_factor with chi2 = 25.614992751156112
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=14) using ellips_DAB_struc_factor with chi2 = 117.16501205470618
+[11, 78.3, 2.171, 0.05572, 1.097e-17, 0.06025, 0.4165]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=15) using ellips_DAB_struc_factor with chi2 = 25.614992772250183
+[2.874, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=16) using ellips_DAB_struc_factor with chi2 = 25.614992770802434
+[2.874, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=17) using ellips_DAB_struc_factor with chi2 = 25.6149927536813
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=18) using ellips_DAB_struc_factor with chi2 = 25.614992747084212
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=19) using ellips_DAB_struc_factor with chi2 = 25.614992747147884
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=20) using ellips_DAB_struc_factor with chi2 = 25.61499275325548
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=21) using ellips_DAB_struc_factor with chi2 = 25.614992750709757
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=22) using ellips_DAB_struc_factor with chi2 = 25.614992751063202
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=23) using ellips_DAB_struc_factor with chi2 = 25.61499276285985
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=24) using ellips_DAB_struc_factor with chi2 = 25.614992749221077
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=25) using ellips_DAB_struc_factor with chi2 = 25.614992748070872
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=26) using ellips_DAB_struc_factor with chi2 = 25.614992757324064
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=27) using ellips_DAB_struc_factor with chi2 = 25.614992748176473
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=28) using ellips_DAB_struc_factor with chi2 = 116.98586824053741
+[11, 74.59, 2.282, 0.05537, 0.05969, 0.06006, 0.0007131]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=29) using ellips_DAB_struc_factor with chi2 = 25.614992749377713
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=30) using ellips_DAB_struc_factor with chi2 = 25.614992749503863
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=31) using ellips_DAB_struc_factor with chi2 = 25.61499274795272
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=32) using ellips_DAB_struc_factor with chi2 = 25.614992750037324
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=33) using ellips_DAB_struc_factor with chi2 = 25.614992748094124
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=34) using ellips_DAB_struc_factor with chi2 = 25.61499276154437
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=35) using ellips_DAB_struc_factor with chi2 = 25.614992774670743
+[2.874, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=36) using ellips_DAB_struc_factor with chi2 = 25.614992750051908
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=37) using ellips_DAB_struc_factor with chi2 = 25.614992756050317
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=38) using ellips_DAB_struc_factor with chi2 = 25.614992770771046
+[2.874, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=39) using ellips_DAB_struc_factor with chi2 = 25.6149927489688
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=40) using ellips_DAB_struc_factor with chi2 = 25.61499274946228
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=41) using ellips_DAB_struc_factor with chi2 = 25.614992749694515
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=42) using ellips_DAB_struc_factor with chi2 = 25.614992755007034
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=43) using ellips_DAB_struc_factor with chi2 = 25.614992756536513
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=44) using ellips_DAB_struc_factor with chi2 = 25.61499275302796
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=45) using ellips_DAB_struc_factor with chi2 = 25.614992750744616
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=46) using ellips_DAB_struc_factor with chi2 = 25.614992749221564
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=47) using ellips_DAB_struc_factor with chi2 = 25.614992759539668
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=48) using ellips_DAB_struc_factor with chi2 = 25.61499275884875
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=49) using ellips_DAB_struc_factor with chi2 = 25.614992778125284
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=50) using ellips_DAB_struc_factor with chi2 = 25.61499275415037
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=51) using ellips_DAB_struc_factor with chi2 = 25.614992759223355
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=52) using ellips_DAB_struc_factor with chi2 = 25.614992748580452
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=53) using ellips_DAB_struc_factor with chi2 = 25.614992752056278
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=54) using ellips_DAB_struc_factor with chi2 = 25.614992765785047
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=55) using ellips_DAB_struc_factor with chi2 = 25.61499275182291
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=56) using ellips_DAB_struc_factor with chi2 = 25.61499277466779
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=57) using ellips_DAB_struc_factor with chi2 = 25.614992763321887
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=58) using ellips_DAB_struc_factor with chi2 = 25.614992754376804
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=59) using ellips_DAB_struc_factor with chi2 = 25.614992748225834
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=60) using ellips_DAB_struc_factor with chi2 = 25.6149927477039
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=61) using ellips_DAB_struc_factor with chi2 = 25.614992782177218
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=62) using ellips_DAB_struc_factor with chi2 = 25.614992749213325
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=63) using ellips_DAB_struc_factor with chi2 = 25.61499274987572
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=64) using ellips_DAB_struc_factor with chi2 = 25.614992757121435
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=65) using ellips_DAB_struc_factor with chi2 = 25.614992758206615
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=66) using ellips_DAB_struc_factor with chi2 = 25.614992747251947
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=67) using ellips_DAB_struc_factor with chi2 = 1548.585700078593
+[1.482e-12, 92.1, -6.317, 0.0008849, 2.454e-15, 0.06171, 0.08346]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=68) using ellips_DAB_struc_factor with chi2 = 25.614992757516628
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=69) using ellips_DAB_struc_factor with chi2 = 25.614992748359082
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=70) using ellips_DAB_struc_factor with chi2 = 25.61499277210127
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=71) using ellips_DAB_struc_factor with chi2 = 25.61499274938777
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=72) using ellips_DAB_struc_factor with chi2 = 25.61499275006444
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=73) using ellips_DAB_struc_factor with chi2 = 25.61499275001115
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=74) using ellips_DAB_struc_factor with chi2 = 25.614992754806046
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=75) using ellips_DAB_struc_factor with chi2 = 25.614992748821347
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=76) using ellips_DAB_struc_factor with chi2 = 25.614992747981447
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=77) using ellips_DAB_struc_factor with chi2 = 25.614992750397107
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=78) using ellips_DAB_struc_factor with chi2 = 25.61499275353799
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=79) using ellips_DAB_struc_factor with chi2 = 25.614992773956317
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=80) using ellips_DAB_struc_factor with chi2 = 25.614992759861412
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=81) using ellips_DAB_struc_factor with chi2 = 25.6149927505839
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=82) using ellips_DAB_struc_factor with chi2 = 1548.5857004424818
+[3.051e-09, 95.57, 5.13, 0.0015, 5.873e-19, 0.07547, 0.239]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=83) using ellips_DAB_struc_factor with chi2 = 25.614992750038365
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=84) using ellips_DAB_struc_factor with chi2 = 1548.5857005432763
+[3.493e-09, 90.34, 4.238, 0.004981, 2.743, 0.1259, 2.713e-05]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=85) using ellips_DAB_struc_factor with chi2 = 25.614992755418708
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=86) using ellips_DAB_struc_factor with chi2 = 25.61499276268334
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=87) using ellips_DAB_struc_factor with chi2 = 25.61499276585272
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=88) using ellips_DAB_struc_factor with chi2 = 25.614992747825536
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=89) using ellips_DAB_struc_factor with chi2 = 25.61499274842844
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=90) using ellips_DAB_struc_factor with chi2 = 25.61499276929148
+[2.874, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=91) using ellips_DAB_struc_factor with chi2 = 25.614992747639672
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=92) using ellips_DAB_struc_factor with chi2 = 25.614992749712655
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=93) using ellips_DAB_struc_factor with chi2 = 25.614992748381813
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=94) using ellips_DAB_struc_factor with chi2 = 25.61499275394315
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=95) using ellips_DAB_struc_factor with chi2 = 25.61499275191491
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=96) using ellips_DAB_struc_factor with chi2 = 25.614992754998063
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=97) using ellips_DAB_struc_factor with chi2 = 25.614992750131456
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=98) using ellips_DAB_struc_factor with chi2 = 25.614992753734906
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=99) using ellips_DAB_struc_factor with chi2 = 25.61499274857129
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################
+
+
+BXIII_S11_60%_CSLB_6uM_Syn1 fitted (count=100) using ellips_DAB_struc_factor with chi2 = 25.614992753767694
+[2.875, 17.77, 2.688, 0.1212, 1.544, 0.124, 0.03439]
+###########################################

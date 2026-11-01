@@ -1,0 +1,15 @@
+
+
+BXIV_S3_60%_CSLB_6uM_Syn1_24uM_ATP fitted (count=1) using ellips_DAB_struc_factor with chi2 = 25.039442892987758
+[3.299, 17.64, 3.063, 0.1222, 1.547, 0.1221, 0.03791]
+###########################################
+
+
+BXIV_S3_60%_CSLB_6uM_Syn1_24uM_ATP fitted (count=2) using ellips_DAB_struc_factor with chi2 = 25.039442889867527
+[3.299, 17.64, 3.063, 0.1222, 1.547, 0.1221, 0.03791]
+###########################################
+
+
+BXIV_S3_60%_CSLB_6uM_Syn1_24uM_ATP fitted (count=3) using ellips_DAB_struc_factor with chi2 = 25.03944289935468
+[3.299, 17.64, 3.063, 0.1223, 1.547, 0.1221, 0.03791]
+###########################################
