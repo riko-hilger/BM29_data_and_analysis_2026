@@ -18,7 +18,7 @@ if __name__ == "__main__":
     DAY = "Nov1"
     # =======================================================================================
     # =======================================================================================
-    task_name = "GM1_TWO_added_layers_1st_attempt"
+    task_name = "GM1_TWO_added_layers_2nd_attempt"
     this_file = Path(__file__).resolve()
     analysis_BM29_July2026 = this_file.parent.parent
     target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name
@@ -59,7 +59,7 @@ if __name__ == "__main__":
             # p0         = [        R,  sigma_R,       rho_h1, rho_h2,   sigma_h1, sigma_h2,   sigma_c,      z_h,  z_out,  sigma_out,  rho_out,      z_in, sigma_in, rho_in,      scale,        c4] 
               #[    11.55,    0.497,        1.546,    0.8,     0.2563,   0.3353,     0.718,    1.757,  2.517,     0.9936,    0.231,     2.517,   0.9936,  0.231,  3.412e-07, 0.0005203]
             p0           = [    11.55,    0.497,        1.546,    0.8,     0.2563,   0.3353,     0.718,    1.757,  3.008,    0.7865,     0.185,     3.008,   0.7865,  0.185,  5.086e-07, 0.0005352] 
-            lower_bounds = [        9,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,    2.5,       0.7,       0.0,       2.5,      0.7,    0.0,          0,         0] 
+            lower_bounds = [        9,        0,          0.8,    0.8,       0.13,     0.13,       0.7,      1.7,    2.5,       0.7,       0.0,       1.8,      0.1,    0.0,          0,         0] 
             upper_bounds = [       27,        9,          2.5,    2.5,        0.6,      0.6,       1.2,      1.9,      5,       1.7,       2.0,         5,      1.7,    2.0,     0.0001,      0.01] 
             # p0 = np.random.uniform(lower_bounds, upper_bounds)
 

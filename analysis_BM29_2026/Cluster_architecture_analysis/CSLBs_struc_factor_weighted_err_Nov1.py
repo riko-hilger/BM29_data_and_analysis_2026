@@ -32,7 +32,7 @@ if __name__ == "__main__":
     # =======================================================================================
     # 2. Fit total q-range with additional structure factor
     # =======================================================================================
-    task_name = "CSLBs_struc_factor_weighted_err_sifting"
+    task_name = "CSLBs_struc_factor_weighted_err_LARGEsearch"
     this_file = Path(__file__).resolve()
     analysis_BM29_July2026 = this_file.parent.parent
     target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name
@@ -86,7 +86,7 @@ if __name__ == "__main__":
         upper_bounds = [          11,      100,     +10,     0.3,   3.0,     0.15,       0.7]
 
         count = 1
-        while (count < 101):
+        while (count < 25001):
             if len(fit_list) > 15:
                 break
             print(f"Now fitting task {task_name} with {fit_function_name} sample {sample}, attempt {count} ...")            
@@ -123,11 +123,6 @@ if __name__ == "__main__":
             print(fit_lib_entry)
             chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
 
-            print("Fit successful with chi2 = ", chi2)
-            # print(info_text_print)
-            with open(target_folder/f"{sample}_{DAY}.txt", "a", encoding="utf-8") as k:
-                k.write(f"\n\n{BM29.sample_dict[sample]} fitted (count={count}) using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
-
             # chi2_reference = 20 # BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
             # if chi2 < chi2_reference + 200:
             chi2_threshold = 23
@@ -135,6 +130,10 @@ if __name__ == "__main__":
                 novelty_list = [average_deviation_percent(popt, previous_fit) for previous_fit in fit_list]
                 if all(novelty > threshold for novelty in novelty_list):
                     fit_list.append(popt)
+                    print("Fit successful with chi2 = ", chi2)
+                    # print(info_text_print)
+                    with open(target_folder/f"{sample}_{DAY}.txt", "a", encoding="utf-8") as k:
+                        k.write(f"\n\n{BM29.sample_dict[sample]} fitted (count={count}) using {fit_function_name} with chi2 = {chi2}\n" + fit_lib_entry + "\n###########################################\n")
                     #=========================== Plot ===========================================
                     plt.close("all")
                     plt.figure(figsize=(12, 7.5))
