@@ -109,7 +109,7 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
     plt.close("all")
     return f
 
-def plot_together(who, title, min_cutoff= 0.07, max_cutoff=5.1):
+def plot_together(who, title=None, min_cutoff= 0.07, max_cutoff=5.1):
     """
     who: list of samples of the form "BII_S3"
     """
@@ -134,7 +134,8 @@ def plot_together(who, title, min_cutoff= 0.07, max_cutoff=5.1):
     plt.xscale("log")
     plt.yscale("log")
     plt.grid()
-    plt.title(title)
+    if title is not None:
+        plt.title(title)
     legend = plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), alignment='left')
     return f
 
@@ -2502,6 +2503,11 @@ best_fits = {
             1: [18.42, 0.2728, 1.82, 0.8333, 0.3201, 0.3054, 0.7023, 1.794, 2.239e-07, 0.0006907],
         },
     },
+    'BX_S1': {     
+        'ULV_spheric_asym_C4': { 
+            1: [13.47, 3.663, 1.319, 0.9806, 0.3462, 0.3035, 0.6472, 1.916, 0.0002304, 0.0005164],
+        },
+    },
     'BXII_S1': {     
         'ULV_spheric_asym_C4': { 
             1: [15.03, 5.755, 1.288, 1.016, 0.3092, 0.3289, 0.6363, 1.919, 0.0001761, 0.0004419], # chi2 = 50, excellent fit
@@ -2530,6 +2536,16 @@ best_fits = {
         "ULV_spheric_asym_C4_lognormal": {
         },
     },
+    'BXII_S32': {     
+        'ULV_spheric_asym_C4': { 
+            1: [6.186, 3.964, 1.185, 1.431, 0.4733, 0.352, 0.8774, 1.796, 0.0006247, 0.0006551],
+        },
+    },
+    "BXII_S33": {   #: "15 mM LV4_aSynG14R",
+        'ULV_spheric_asym_C4': { 
+            1: [6.641, 4.076, 1.188, 1.476, 0.523, 0.3516, 0.9298, 1.774, 0.0005022, 0.0005267],
+        },
+    }, 
     "BXIII_S1": { # "23nM SVs",
     },
     "BXIII_S2": { # "CSLBs",
