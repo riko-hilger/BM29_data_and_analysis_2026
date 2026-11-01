@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # =======================================================================================
     # 2. Fit total q-range with additional structure factor
     # =======================================================================================
-    task_name = "CSLBs_struc_factor_weighted_err"
+    task_name = "CSLBs_struc_factor_weighted_err_2nd"
     this_file = Path(__file__).resolve()
     analysis_BM29_July2026 = this_file.parent.parent
     target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name
