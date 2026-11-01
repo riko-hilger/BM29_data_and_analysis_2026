@@ -38,8 +38,8 @@ def ULV_lognormal_sph_asym_TWO_prot_layers(q, R, sigma_R, rho_h1, rho_h2, sigma_
     I_func_partial = partial(lognormal_sph_asym_TWO_prot_layers_integrator, R=R, sigma_R=sigma_R, rho_h1=rho_h1, rho_h2=rho_h2,
                              sigma_h1=sigma_h1, sigma_h2=sigma_h2, sigma_c=sigma_c, z_h=z_h, z_out=z_out, sigma_out=sigma_out, rho_out=rho_out, z_in=z_in, sigma_in=sigma_in, rho_in=rho_in)
     with Pool(processes=12) as pool:  # 6–8 is ideal on typical CPUs
-        # I_res = list(tqdm(pool.imap(I_func_partial, q), total=len(q), desc="Computing I(q)", ncols=80))
-        I_res = pool.map(I_func_partial, q)
+        I_res = list(tqdm(pool.imap(I_func_partial, q), total=len(q), desc="Computing I(q)", ncols=80))
+        # I_res = pool.map(I_func_partial, q)
     
     return scale * np.array(I_res) + c2 * q**(-c3) + c4
 
