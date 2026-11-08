@@ -15,10 +15,11 @@ who = ["BIX_S2"]
 
 if __name__ == "__main__":
     # =============================================================================
-    DAY = "Nov1"
+    DAY = "Nov6"
     # =======================================================================================
     # =======================================================================================
-    task_name = "GM1_TWO_added_layers_2nd_attempt"
+    # task_name = "GM1_TWO_added_layers_2nd_attempt"
+    task_name = "vectorization_test"
     this_file = Path(__file__).resolve()
     analysis_BM29_July2026 = this_file.parent.parent
     target_folder = analysis_BM29_July2026 / "Results_and_Figures" / DAY / task_name

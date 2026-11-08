@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 plt.rcParams["text.usetex"] = False
 import re
-from scipy.stats import lognorm
+from scipy.stats import chi2, lognorm
 from matplotlib.colors import LogNorm
 from matplotlib.colors import Normalize
 from scipy.stats import f
@@ -245,7 +245,13 @@ def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_l
     return f
 
 # ===================================================================================================
-def plot_structure_factor_single_peak(who, initial_guess=None, qmax=1):
+def plot_structure_factor_single_peak(who, initial_guess=None, qmax=1, function_name="lorentzian"):
+    if function_name == "lorentzian":
+        function = fit.lorentzian
+    elif function_name == "claude_peak":
+        function = claude_peak
+    elif function_name == "lorentzian_plus_sigmoid":
+        function = fit.lorentzian_plus_sigmoid
     f=plt.figure(figsize=(12, 7.5))
     for sample in who:
         block = sample.split("_")[0]
@@ -258,17 +264,17 @@ def plot_structure_factor_single_peak(who, initial_guess=None, qmax=1):
         mask = (q >= 0.07) & (q <= qmax)
         q    = q[mask]
         if initial_guess is not None:
-            struc_fac_init = structure_factor_single_peak(q, *initial_guess)
+            struc_fac_init = function(q, *initial_guess)
             plt.plot(q, struc_fac_init, label="initial guess " + sample_dict[sample])
-        structure_factor = structure_factor_single_peak(q, *best_fits[sample]["ellips_DAB_struc_factor"][1])
-        plt.plot(q, structure_factor, label=sample_dict[sample])
+        # structure_factor = function(q, *best_fits[sample]["ellips_DAB_struc_factor"][1])
+        # plt.plot(q, structure_factor, label=sample_dict[sample])
     plt.xlabel("$q$ [nm$\mathrm{^{-1}}]$", fontsize=25)
     plt.ylabel("$S(q)$", fontsize=25)
     plt.grid()
     plt.legend()
     return f
 
-def structure_factor_single_peak(q, A, xi, D, s, P, q0, w):
+def claude_peak(q, A, xi, D, s, P, q0, w):
     return (1 + A/(1+(xi*q)**2)                 # Lorentzian (Ornstein-Zernike)
               - D*np.exp(-q**2/(2*s**2))        # Gaussian centered at q = 0  
               + P*np.exp(-(q-q0)**2/(2*w**2))  # Gaussian at q₀, nearest-neighbour correlation peak
@@ -325,7 +331,7 @@ def CSLB_weighted_op_error(q, I):
 
 # ====================================================================================================
 
-def get_chi2(sample, error_model, p0=None, fit_function="ULV_spheric_asym_C4"):
+def get_chi2(sample, error_model, p0=None, fit_function_name="ULV_spheric_asym_C4"):
     block = sample.split("_")[0]
     block_path = blockpath(block)
     dir_names = [x.name for x in block_path.iterdir()]
@@ -345,16 +351,21 @@ def get_chi2(sample, error_model, p0=None, fit_function="ULV_spheric_asym_C4"):
         p0 = best_fits[sample][fit_function][1]
     else:
         p0 = p0
-    if fit_function == "ULV_spheric_asym_C4_lognormal":
+    if fit_function_name == "ULV_spheric_asym_C4_lognormal":
         fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym_lognormal(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-    elif fit_function == "ULV_sph_asym_prot_layer":
+    elif fit_function_name == "ULV_sph_asym_prot_layer":
         fit_function = lambda q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, c4: fit.ULV_sph_asym_prot_layer(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, 0, 0, c4)
-    elif fit_function == "ULV_spheric_asym_C4":
+    elif fit_function_name == "ULV_spheric_asym_C4":
         fit_function = lambda q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale, c4: fit.ULV_spheric_asym(q, R,    sigma_R,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,      0, 0, c4)
-    elif fit_function == "ULV_lognormal_sph_asym_prot_layer":
+    elif fit_function_name == "ULV_lognormal_sph_asym_prot_layer":
         fit_function = lambda q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, c4: fit.ULV_lognormal_sph_asym_prot_layer(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, scale, 0, 0, c4)
-    I_sph_asym = fit_function(q, *p0)
-    residuals     = I - I_sph_asym
+    elif fit_function_name == "ULV_lognormal_sph_asym_TWO_prot_layers":
+        fit_function = lambda q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in, scale, c4: fit.ULV_lognormal_sph_asym_TWO_prot_layers(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, 
+                        z_out, sigma_out, rho_out, z_in, sigma_in, rho_in, scale, 0, 0, c4)
+    elif fit_function_name == "ULV_ellipsoid_asym_C4":
+        fit_function = lambda q,  R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale, c4: fit.ULV_ellipsoid_asym(q, R,  sigma_R,     eps, sigma_eps,  rho_h1, rho_h2,   sigma_h1, sigma_h2,  sigma_c,      z_h,    scale,   0, 0, c4)
+    I_fit = fit_function(q, *p0)
+    residuals     = I - I_fit
     chi2 = np.sum((residuals / Ierr_op)**2) / (len(I) - len(p0) - 1)     
     return chi2
 
@@ -1145,8 +1156,8 @@ concentrations = {
     "BXII_S29": 40,
     "BXII_S30": 80,
     "BXII_S31": 15,
-    # "BXII_S32": "15 mM LV4_aSynWT",
-    # "BXII_S33": "15 mM LV4_aSynG14R",
+    "BXII_S32": 625, #uM,  "15 mM LV4_aSynWT", == 15mM / 24
+    "BXII_S33": 625, #uM,  "15 mM LV4_aSynG14R", == 15mM / 24
 
     "BXIII_S1": 0,
     "BXIII_S2": 0,
@@ -2503,9 +2514,20 @@ best_fits = {
             1: [18.42, 0.2728, 1.82, 0.8333, 0.3201, 0.3054, 0.7023, 1.794, 2.239e-07, 0.0006907],
         },
     },
-    'BX_S1': {     
+    'BX_S1': {     # "BX_S1_15mM_LV4",
         'ULV_spheric_asym_C4': { 
             1: [13.47, 3.663, 1.319, 0.9806, 0.3462, 0.3035, 0.6472, 1.916, 0.0002304, 0.0005164],
+            2: [15.95, 2.379, 1.084, 2.5, 0.4221, 0.1138, 0.6386, 1.918, 0.0001757, 0.0004062],
+        },
+        "ULV_ellipsoid_asym_C4": {
+            1: [10, 5.019, 1.137, 0.2311, 1.634, 1.283, 0.2214, 0.2292, 0.5592, 1.865, 7.118e-07, 0.0004167],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [10, 0.4396, 1.224, 1.015, 0.333, 0.3546, 0.668, 1.909, 5.984e-07, 0.000531],
+        },
+        "ULV_lognormal_sph_asym_TWO_prot_layers": { # by far best ????
+            #       R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c,   z_h, z_out, sigma_out,  rho_out, z_in, sigma_in,  rho_in, scale, c4
+            1: [11.09,   0.444,  1.295, 0.9632,   0.2586,   0.3628,     0.7, 1.895,  4.63,     1.331,  0.01052,  1.8,   0.6138,  0.1828, 4.807e-07, 0.0005004],
         },
     },
     'BXII_S1': {     
@@ -2538,12 +2560,30 @@ best_fits = {
     },
     'BXII_S32': {     
         'ULV_spheric_asym_C4': { 
-            1: [6.186, 3.964, 1.185, 1.431, 0.4733, 0.352, 0.8774, 1.796, 0.0006247, 0.0006551],
+            1: [12.85, 2.763, 1.6, 0.943, 0.3991, 0.3175, 0.7338, 1.835, 0.0002136, 0.0006917],
+            2: [6.186, 3.964, 1.185, 1.431, 0.4733, 0.352, 0.8774, 1.796, 0.0006247, 0.0006551],
+        },
+        "ULV_ellipsoid_asym_C4": {
+            1: [10.52, 1.156, 0.7011, 0.5095, 0.867, 0.8, 0.4986, 0.2784, 0.5024, 1.872, 1.703e-06, 0.0007682],
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [10.02, 0.476, 2.007, 0.995, 0.2618, 0.6, 0.9289, 1.791, 4.504e-07, 0.0006455],
+        },
+        "ULV_lognormal_sph_asym_TWO_prot_layers": { # by far best
+            1: [9.001, 0.5105, 1.516, 1.166, 0.24, 0.3912, 0.7002, 1.828, 2.504, 0.857, 0.03437, 4.99, 1.189, 0.04787, 5.587e-07, 0.0006556],
         },
     },
     "BXII_S33": {   #: "15 mM LV4_aSynG14R",
         'ULV_spheric_asym_C4': { 
-            1: [6.641, 4.076, 1.188, 1.476, 0.523, 0.3516, 0.9298, 1.774, 0.0005022, 0.0005267],
+            1: [11.61, 3.055, 1.917, 0.8001, 0.3634, 0.4565, 0.8348, 1.795, 0.0002167, 0.000543],
+            2: [6.641, 4.076, 1.188, 1.476, 0.523, 0.3516, 0.9298, 1.774, 0.0005022, 0.0005267],
+        },
+        "ULV_ellipsoid_asym_C4": { # all bad
+        },
+        "ULV_spheric_asym_C4_lognormal": {
+            1: [10, 0.3978, 0.9493, 1.623, 0.6, 0.3485, 0.9177, 1.792, 4.553e-07, 0.0005279],
+        },
+        "ULV_lognormal_sph_asym_TWO_prot_layers": { # all bad
         },
     }, 
     "BXIII_S1": { # "23nM SVs",

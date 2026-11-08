@@ -16,6 +16,19 @@ plt.rcParams['font.size']   = 18
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'\usepackage{xfrac, amsmath}'
 
+# =========== Lorentzian =====================================
+def lorentzian_plus_sigmoid(x, x0, gamma, scale, c4):
+    """
+    Lorentzian (Cauchy) peak.
+
+    x      : array of x values
+    x0     : peak center
+    gamma  : half-width at half-maximum (HWHM)
+    scale  : scaling factor for the peak
+    c4     : constant background
+    """
+    return scale / ((x**2 - x0**2)**2 + gamma**2 * x**2) + 1 / (1 + np.exp(-100*(x - x0))) + c4
+
 # =========== Guinier fit =====================================
 # remember: q * Rg < 1.3 for the Guinier approximation to be valid
 def guinier_fit(q, I0, Rg):
@@ -55,8 +68,33 @@ def lognormal_sph_asym_TWO_prot_layers_integrator(q, R, sigma_R, rho_h1, rho_h2,
                                             z_out, sigma_out, rho_out, z_in, sigma_in, rho_in)
         F_int = np.trapezoid(np.abs(F_vals)**2 * sin_theta, theta)         
         I += lognormal_polydisp(R_i, sigma_R, R) * F_int 
+
     dR = R_vals[1] - R_vals[0]
     return I * dR 
+
+# def lognormal_sph_asym_TWO_prot_layers_integrator(
+#         q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c,
+#         z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in):
+#     R_vals = np.linspace(0.001, 70, 120)
+#     theta  = np.linspace(0, np.pi/2, 250)
+
+#     # Broadcast to (n_R, n_theta) for scalar q
+#     R_grid     = R_vals[:, None]
+#     theta_grid = theta[None, :]
+
+#     # F must accept array R and theta and return shape (n_R, n_theta)
+#     F_vals = F_sph_asym_TWO_prot_layers(
+#         q, R_grid, theta_grid, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c,
+#         z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in)
+
+#     # Integrate over theta -> shape (n_R,)
+#     F_int = np.trapezoid(np.abs(F_vals)**2 * np.sin(theta), theta, axis=-1)
+
+#     # Size-distribution weights -> shape (n_R,)
+#     w = lognormal_polydisp(R_vals, sigma_R, R)
+
+#     # Integrate over R (trapezoid is more accurate than sum * dR)
+#     return np.trapezoid(w * F_int, R_vals)
 
 def F_sph_asym_TWO_prot_layers(q, R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, 
                                z_out, sigma_out, rho_out, z_in, sigma_in, rho_in):
