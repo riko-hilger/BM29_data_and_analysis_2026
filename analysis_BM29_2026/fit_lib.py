@@ -17,7 +17,7 @@ plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'\usepackage{xfrac, amsmath}'
 
 # =========== Lorentzian =====================================
-def lorentzian_plus_sigmoid(x, x0, gamma, scale, c4):
+def lorentzian_plus_sigmoid(x, x0, gamma, k, scale, c4):
     """
     Lorentzian (Cauchy) peak.
 
@@ -26,8 +26,9 @@ def lorentzian_plus_sigmoid(x, x0, gamma, scale, c4):
     gamma  : half-width at half-maximum (HWHM)
     scale  : scaling factor for the peak
     c4     : constant background
+    k      : sigmoid steepness
     """
-    return scale / ((x**2 - x0**2)**2 + gamma**2 * x**2) + 1 / (1 + np.exp(-100*(x - x0))) + c4
+    return scale / ((x**2 - x0**2)**2 + gamma**2 * x**2) + 1 / (1 + np.exp(-k*(x - x0))) + c4
 
 # =========== Guinier fit =====================================
 # remember: q * Rg < 1.3 for the Guinier approximation to be valid
@@ -57,9 +58,9 @@ def ULV_lognormal_sph_asym_TWO_prot_layers(q, R, sigma_R, rho_h1, rho_h2, sigma_
     return scale * np.array(I_res) + c2 * q**(-c3) + c4
 
 def lognormal_sph_asym_TWO_prot_layers_integrator(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in):
-    n_R = 120
+    n_R = 120 # 120
     R_vals   = np.linspace(0.001, 70, n_R)
-    theta = np.linspace(0, np.pi/2, 250)  # fixed grid for integration
+    theta = np.linspace(0, np.pi/2, 250)  # fixed grid for integration 250
     sin_theta = np.sin(theta)
     
     I = 0

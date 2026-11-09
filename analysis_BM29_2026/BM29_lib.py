@@ -56,6 +56,9 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
         elif "E61V" in sample_dict[sample]:
             cmap = plt.cm.Greens
             variant = "E61V"
+        elif "G14R" in sample_dict[sample]:
+            cmap = plt.cm.Purples
+            variant = "G14R"
 
         if concentrations[sample] == 0:
             color = "grey"
@@ -109,12 +112,14 @@ def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
     plt.close("all")
     return f
 
-def plot_together(who, title=None, min_cutoff= 0.07, max_cutoff=5.1):
+def plot_together(who, title=None, min_cutoff= 0.07, max_cutoff=5.1, fit_function_name=None):
     """
     who: list of samples of the form "BII_S3"
     """
     plt.close("all")
-    
+    if fit_function_name == "ULV_lognormal_sph_asym_TWO_prot_layers":
+        fit_function = lambda q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in, scale, c4: fit.ULV_lognormal_sph_asym_TWO_prot_layers(q, R, sigma_R, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, 
+                                    z_out, sigma_out, rho_out, z_in, sigma_in, rho_in, scale, 0, 0, c4)
     f = plt.figure(figsize=(14, 9))
     for sample in who:
         block = sample.split("_")[0]
@@ -128,6 +133,10 @@ def plot_together(who, title=None, min_cutoff= 0.07, max_cutoff=5.1):
                 q    = q[mask]
                 I    = I[mask]
                 Ierr_Poisson = Ierr_Poisson[mask]
+                if fit_function_name == "ULV_lognormal_sph_asym_TWO_prot_layers":
+                    popt = best_fits[sample][fit_function_name][1]
+                    I_fit = fit_function(q, *popt)
+                    plt.plot(q, I_fit, color="red", lw=2, zorder=10)
                 plt.errorbar(q, I, Ierr_Poisson, ls = "None", marker="o", label=nice_sample_names[sample], markersize=4.0)
     plt.xlabel("$q$")
     plt.ylabel("$I$")
@@ -195,6 +204,8 @@ def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_l
             cmap = plt.colormaps["Oranges"]
         elif "E61V" in sample_dict[sample]:
             cmap = plt.colormaps["Greens"]
+        elif "G14R" in sample_dict[sample]:
+            cmap = plt.cm.Purples
 
         R0, sigma = best_fits[sample][fit_function_name][1][0:2]
 
@@ -2583,7 +2594,8 @@ best_fits = {
         "ULV_spheric_asym_C4_lognormal": {
             1: [10, 0.3978, 0.9493, 1.623, 0.6, 0.3485, 0.9177, 1.792, 4.553e-07, 0.0005279],
         },
-        "ULV_lognormal_sph_asym_TWO_prot_layers": { # all bad
+        "ULV_lognormal_sph_asym_TWO_prot_layers": { 
+            1: [15.41, 1.758, 1.33, 1.077, 0.3452, 0.4213, 0.8477, 1.756, 4.997, 1.688, 0.05903, 2.197, 0.1393, 0.4309, 1.465e-07, 0.0005502],
         },
     }, 
     "BXIII_S1": { # "23nM SVs",
