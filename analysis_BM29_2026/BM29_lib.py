@@ -2621,32 +2621,32 @@ best_fits = {
         "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
             -1: [26.32, 0.8808, 1.2, 0.08813, 3.352e-09, 0.0002287, 0.0181, 1.4],
         },
-        "ellips_DAB_struc_factor": {
-            1: [3.44, 18.65, 3.108, 0.1199, 1.623, 0.1221, 0.0388],
+        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+            -1: [3.44, 18.65, 3.108, 0.1199, 1.623, 0.1221, 0.0388],
         },
     },
     "BXIII_S12": { # "CSLB + 4μM Syn1",
         "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
             -1: [26.34, 0.6142, 1.2, 0.05759, 3.017e-09, 0.0005999, 0.01091, 1.4],
         },
-        "ellips_DAB_struc_factor": {
-            1: [4.234, 3.923, 13.37, 0.3838, 9, 0.15, 0.3154],
+        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+            -1: [4.234, 3.923, 13.37, 0.3838, 9, 0.15, 0.3154],
         },
     },
     "BXIII_S13": { # "CSLB + 6μM Syn1 + 12μM aSynWT",
         "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
             -1: [26.34, 1.111, 1.2, 0.09494, 3.477e-09, 0.0002991, 0.02233, 1.4],
         },
-        "ellips_DAB_struc_factor": {
-            1: [3.207, 18.23, 3.053, 0.1205, 1.477, 0.1212, 0.03941],
+        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+            -1: [3.207, 18.23, 3.053, 0.1205, 1.477, 0.1212, 0.03941],
         },
     },
     "BXIII_S14": { # "CSLB + 6μM Syn1 + 24μM aSynWT",
         "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
             -1: [26.38, 0.8424, 1.2, 0.07788, 4.537e-09, 0.0005131, 0.02226, 1.4],
         },
-        "ellips_DAB_struc_factor": {
-            1: [2.363, 100, 1.248, 0.05707, 7.096e-05, 0.005395, 0.0006818],
+        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+            -1: [2.363, 100, 1.248, 0.05707, 7.096e-05, 0.005395, 0.0006818],
         },
     },
     "BXIV_S1": { # "15mM LV4 + 6μM Syn1 + 24μM ATP",
@@ -2657,8 +2657,8 @@ best_fits = {
         "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
             -1: [26.37, 1.034, 1.2, 0.09486, 3.212e-09, 0.0004608, 0.01256, 1.4],
         },
-        "ellips_DAB_struc_factor": {
-            1: [3.975, 3.909, 13.24, 0.3853, 9, 0.15, 0.3174],
+        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+            -1: [3.975, 3.909, 13.24, 0.3853, 9, 0.15, 0.3174],
         },
     }
 }

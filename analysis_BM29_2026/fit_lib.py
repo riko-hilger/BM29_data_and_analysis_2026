@@ -17,7 +17,7 @@ plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = r'\usepackage{xfrac, amsmath}'
 
 # =========== Lorentzian =====================================
-def lorentzian_plus_sigmoid(x, x0, gamma, k, scale, c4):
+def lorentzian_plus_sigmoid(x, x0, gamma, k, scale):
     """
     Lorentzian (Cauchy) peak.
 
@@ -25,10 +25,9 @@ def lorentzian_plus_sigmoid(x, x0, gamma, k, scale, c4):
     x0     : peak center
     gamma  : half-width at half-maximum (HWHM)
     scale  : scaling factor for the peak
-    c4     : constant background
     k      : sigmoid steepness
     """
-    return scale / ((x**2 - x0**2)**2 + gamma**2 * x**2) + 1 / (1 + np.exp(-k*(x - x0))) + c4
+    return scale / ((x**2 - x0**2)**2 + gamma**2 * x**2) + 1 / (1 + np.exp(-k*(x - x0)))
 
 # =========== Guinier fit =====================================
 # remember: q * Rg < 1.3 for the Guinier approximation to be valid
