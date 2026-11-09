@@ -79,8 +79,8 @@ if __name__ == "__main__":
 
         # ========================== Setting Bounds ==============================
         # p0         = [          q0,    gamma,       k,     scale]
-        lower_bounds = [        0.05,      0.0,      99,   -np.inf]   
-        upper_bounds = [        0.17,      0.3,     200,   +np.inf]
+        lower_bounds = [        0.05,      0.0,      99,         0]   
+        upper_bounds = [        0.17,      0.3,     200,         1]
 
         count = 1
         while (count < 25001):
