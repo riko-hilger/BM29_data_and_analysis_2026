@@ -13,3 +13,13 @@ BXII_S33_15mM_LV4_aSynG14R fitted (count=1) using ULV_lognormal_sph_asym_TWO_pro
 BXII_S33_15mM_LV4_aSynG14R fitted (count=2) using ULV_lognormal_sph_asym_TWO_prot_layers with chi2 = 51.89318774706622
 [9.002, 0.5535, 1.093, 1.159, 0.2435, 0.32, 0.6677, 1.835, 4.968, 1.318, 0.03332, 1.802, 1.09, 0.169, 5.641e-07, 0.0005387]
 ###########################################
+
+
+BXII_S33_15mM_LV4_aSynG14R fitted (count=3) using ULV_lognormal_sph_asym_TWO_prot_layers with chi2 = 68.58337380803306
+[9.002, 0.4923, 1.253, 1.192, 0.2962, 0.2791, 0.6449, 1.856, 2.015, 0.7837, 0.1375, 4.98, 0.2522, 0.1781, 5.545e-07, 0.0005349]
+###########################################
+
+
+BXII_S33_15mM_LV4_aSynG14R fitted (count=4) using ULV_lognormal_sph_asym_TWO_prot_layers with chi2 = 54.38294944428442
+[9.001, 0.54, 1.679, 0.8789, 0.2127, 0.2793, 0.6008, 1.835, 2.014, 1.378, 0.1184, 6, 0.262, 0.1165, 6.316e-07, 0.0005167]
+###########################################

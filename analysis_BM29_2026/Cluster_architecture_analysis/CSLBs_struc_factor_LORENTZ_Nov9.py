@@ -79,8 +79,8 @@ if __name__ == "__main__":
 
         # ========================== Setting Bounds ==============================
         # p0         = [          q0,    gamma,       k,     scale]
-        lower_bounds = [        0.05,      0.0,      99,         0]   
-        upper_bounds = [        0.17,      0.3,     200,         1]
+        lower_bounds = [        0.05,      0.0,      50,         0]   
+        upper_bounds = [        1.00,      0.3,    1000,      1e-3]
 
         count = 1
         while (count < 25001):
@@ -119,10 +119,10 @@ if __name__ == "__main__":
             fit_lib_entry += "]"
             print(fit_lib_entry)
             chi2, info_text_print = fit.all_info(q, I, Ierr, param_names, p0, popt, perr, fit_function, lower_bounds, upper_bounds)
-
+            print(sample, chi2)
             # chi2_reference = 20 # BM29.get_chi2(sample, "Poisson_error_focus_minimum_highq")
             # if chi2 < chi2_reference + 200:
-            chi2_threshold = 23
+            chi2_threshold = 30
             if chi2 <= chi2_threshold:
                 if fit_list == []:
                     fit_list.append(popt)

@@ -27,7 +27,7 @@ def lorentzian_plus_sigmoid(x, x0, gamma, k, scale):
     scale  : scaling factor for the peak
     k      : sigmoid steepness
     """
-    return scale / ((x**2 - x0**2)**2 + gamma**2 * x**2) + 1 / (1 + np.exp(-k*(x - x0)))
+    return scale * (1 / ((x**2 - x0**2)**2 + gamma**2 * x**2) + 1 / (1 + np.exp(-k*(x - x0))))
 
 # =========== Guinier fit =====================================
 # remember: q * Rg < 1.3 for the Guinier approximation to be valid
