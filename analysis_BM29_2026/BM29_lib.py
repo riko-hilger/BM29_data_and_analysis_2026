@@ -2606,7 +2606,8 @@ best_fits = {
         "hard_sphere_polydisp": {
             1: [26.91, 1.662, 7.474e-09, 0.001673], # pretty bad
         },
-        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+        "ellipsoid_homogen_DAB": { # -1 means q > 0.25 /nm, -2 means q > 0.15 /nm
+            -2: [27.05, 0.2, 0.9914, 0.2029, 6.397e-09, 0.0009524, 0.005185, 1.4],
             -1: [26.19, 0.5834, 1.187, 0.0228, 7.52e-09, 0.001064, 0.00154, 1],
             1: [27.19, 0.4084, 0.9592, 0.1784, 7.098e-09, 0.001004, 0.003202, 1.203],
         },
@@ -2620,35 +2621,43 @@ best_fits = {
     "BXIII_S6": { # "15mM LV4 + 6μM Syn1 + 24μM aSynWT",
     },
     "BXIII_S11": { # "CSLB + 6μM Syn1",
-        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+        "ellipsoid_homogen_DAB": { # -1 means q > 0.25 /nm, -2 means q > 0.15 /nm
+            -2: [27.05, 0.2, 1.009, 0.2755, 2.655e-09, 1.127e-18, 0.02067, 1.4],
             -1: [26.32, 0.8808, 1.2, 0.08813, 3.352e-09, 0.0002287, 0.0181, 1.4],
         },
-        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+        "ellips_DAB_struc_factor": { # -1 means struc factor (by Claude), 1 means Lorentzian plus sigmoid
             -1: [3.44, 18.65, 3.108, 0.1199, 1.623, 0.1221, 0.0388],
+            1: [0.106683, 0.0302393, 379.199, 1.75954e-05],
         },
     },
     "BXIII_S12": { # "CSLB + 4μM Syn1",
-        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+        "ellipsoid_homogen_DAB": { # -1 means q > 0.25 /nm, -2 means q > 0.15 /nm
+            -2: [27.14, 0.2, 1.022, 0.2519, 2.467e-09, 0.0004332, 0.01275, 1.4],
             -1: [26.34, 0.6142, 1.2, 0.05759, 3.017e-09, 0.0005999, 0.01091, 1.4],
         },
-        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+        "ellips_DAB_struc_factor": { # -1 means struc factor (by Claude), 1 means Lorentzian plus sigmoid
             -1: [4.234, 3.923, 13.37, 0.3838, 9, 0.15, 0.3154],
+            1: [0.107321, 0.0336912, 334.871, 2.29181e-05],
         },
     },
     "BXIII_S13": { # "CSLB + 6μM Syn1 + 12μM aSynWT",
-        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+        "ellipsoid_homogen_DAB": { # -1 means q > 0.25 /nm, -2 means q > 0.15 /nm
+            -2: [27.07, 0.6884, 0.9953, 0.2735, 2.653e-09, 1.11e-16, 0.02561, 1.4],
             -1: [26.34, 1.111, 1.2, 0.09494, 3.477e-09, 0.0002991, 0.02233, 1.4],
         },
-        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+        "ellips_DAB_struc_factor": { # -1 means struc factor (by Claude), 1 means Lorentzian plus sigmoid
             -1: [3.207, 18.23, 3.053, 0.1205, 1.477, 0.1212, 0.03941],
+            1: [0.104977, 0.0294111, 411.716, 1.44022e-05],
         },
     },
     "BXIII_S14": { # "CSLB + 6μM Syn1 + 24μM aSynWT",
-        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+        "ellipsoid_homogen_DAB": { # -1 means q > 0.25 /nm, -2 means q > 0.15 /nm
+            -2: [27.16, 0.2, 1.001, 0.2685, 3.593e-09, 0.000189, 0.0258, 1.4],
             -1: [26.38, 0.8424, 1.2, 0.07788, 4.537e-09, 0.0005131, 0.02226, 1.4],
         },
-        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+        "ellips_DAB_struc_factor": { # -1 means struc factor (by Claude), 1 means Lorentzian plus sigmoid
             -1: [2.363, 100, 1.248, 0.05707, 7.096e-05, 0.005395, 0.0006818],
+            1: [0.105606, 0.0317619, 384.195, 1.85946e-05],
         },
     },
     "BXIV_S1": { # "15mM LV4 + 6μM Syn1 + 24μM ATP",
@@ -2656,11 +2665,13 @@ best_fits = {
     "BXIV_S2": { # "23nM SVs + 6μM Syn1 + 24μM ATP",
     },
     "BXIV_S3": { # "CSLB + 6μM Syn1 + 24 μM ATP"
-        "ellipsoid_homogen_DAB": { # negative means q > 0.25 /nm
+        "ellipsoid_homogen_DAB": { # -1 means q > 0.25 /nm, -2 means q > 0.15 /nm
+            -2: [27.07, 0.4922, 1.003, 0.2835, 2.473e-09, 0.0002004, 0.01534, 1.4],
             -1: [26.37, 1.034, 1.2, 0.09486, 3.212e-09, 0.0004608, 0.01256, 1.4],
         },
-        "ellips_DAB_struc_factor": { # negative means struc factor model proposed by Claude
+        "ellips_DAB_struc_factor": { # -1 means struc factor (by Claude), 1 means Lorentzian plus sigmoid
             -1: [3.975, 3.909, 13.24, 0.3853, 9, 0.15, 0.3174],
+            1: [0.104157, 0.0309957, 409.936, 1.49435e-05],
         },
     }
 }
