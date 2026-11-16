@@ -1,1 +1,1 @@
-## BM29_data_and_analysis_2026
+Data and analysis of SAXS measurements at BM29 (BioSAXS) of the ESRF in Grenoble (beamtime MX-2851). We studied the interaction of different alpha-Synuclein variants with lipid vesicles.
