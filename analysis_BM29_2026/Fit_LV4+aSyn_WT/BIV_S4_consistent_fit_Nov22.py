@@ -52,8 +52,8 @@ if __name__ == "__main__":
             
             # ========================== Setting Bounds ==============================
             # p0         = [           R,         sigma_R,   rho_h1,   rho_h2,    sigma_h1,  sigma_h2,  sigma_c,    z_h,   scale,   c4] 
-            lower_bounds = [          10,               0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
-            upper_bounds = [          13,             8.5,      2.5,      2.5,         0.6,       0.6,      1.2,      2,       1,    1] 
+            lower_bounds = [           9,               0,      0.8,      0.8,        0.13,      0.13,      0.5,    1.5,       0,    0] 
+            upper_bounds = [          13,             1.0,      2.5,      2.5,         0.6,       0.6,      1.2,      2,       1,    1] 
             if count == 0:
                 p0 = BM29.best_fits["BIV_S1"]["ULV_spheric_asym_C4_lognormal"][1]
             else:
