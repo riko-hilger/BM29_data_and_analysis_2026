@@ -359,7 +359,7 @@ def get_chi2(sample, error_model, p0=None, fit_function_name="ULV_spheric_asym_C
     elif error_model == "op_error_classic":
         Ierr_op = op_error_classic(q, I)
     if p0 is None:
-        p0 = best_fits[sample][fit_function][1]
+        p0 = best_fits[sample][fit_function_name][1]
     else:
         p0 = p0
     if fit_function_name == "ULV_spheric_asym_C4_lognormal":
