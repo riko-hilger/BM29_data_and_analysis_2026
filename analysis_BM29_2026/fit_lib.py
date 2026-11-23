@@ -11,6 +11,7 @@ from pathlib import Path
 from multiprocessing import Pool
 from functools import partial
 from tqdm import tqdm
+import BM29_lib as BM29
 
 plt.rcParams['font.size']   = 18
 plt.rcParams['text.usetex'] = True
@@ -1052,17 +1053,37 @@ def gaussian(r, rho_pos, sigma, rho_h):
 
     return rho_h * np.exp(-0.5 * ((r - rho_pos) / sigma)**2)
 
-def EDP_analysis(params):
+def EDP_analysis(params, fit_function_name = "ULV_spheric_asym_C4", sample=None):
     R = 0
-    rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h = params
-    r = np.linspace(R - 2*z_h, R + 2*z_h, 10000)
-    rho_h   = [rho_h1, -1, rho_h2]
-    rho_pos = [R - z_h, R, R + z_h]
-    sigma   = [sigma_h1, sigma_c, sigma_h2]
-    
-    rho = np.zeros_like(r)
-    for i in range(3):
-        rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
+    if sample != None:
+        if ((fit_function_name == "ULV_spheric_asym_C4") or (fit_function_name == "ULV_spheric_asym_C4_lognormal")):
+            _, _,   rho_h1,   rho_h2,   sigma_h1,  sigma_h2,  sigma_c,    z_h,   _, _ = BM29.best_fits[sample][fit_function_name][1]
+            r = np.linspace(R - 2*z_h, R + 3*z_h, 2000)
+            rho_h3, z_h3, sigma_h3 = 0, 1, 1
+            rho_in, z_in, sigma_in = 0, 1, 1
+        elif ((fit_function_name == "ULV_sph_asym_prot_layer") or (fit_function_name == "ULV_lognormal_sph_asym_prot_layer")):
+            _, _, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_h3, sigma_h3, rho_h3, _, _ = BM29.best_fits[sample][fit_function_name][1]
+            rho_in, z_in, sigma_in = 0, 1, 1
+            r = np.linspace(R - 2*z_h, R + 4*z_h, 2000)
+        elif fit_function_name == "ULV_lognormal_sph_asym_TWO_prot_layers":
+            _, _, rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h, z_out, sigma_out, rho_out, z_in, sigma_in, rho_in, _, _ = BM29.best_fits[sample][fit_function_name][1]
+            rho_h3, z_h3, sigma_h3 = rho_out, z_out, sigma_out
+            r = np.linspace(R - 3.25*z_h, R + 3.25*z_h, 2000)
+        rho_h   = [rho_in, rho_h1, -1, rho_h2, rho_h3]
+        rho_pos = [R - z_in, R - z_h, R, R + z_h, R + z_h3]
+        sigma   = [sigma_in, sigma_h1, sigma_c, sigma_h2, sigma_h3]
+        rho = np.zeros_like(r)
+        for i in range(5):
+            rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
+    else:
+        rho_h1, rho_h2, sigma_h1, sigma_h2, sigma_c, z_h = params
+        r = np.linspace(R - 2*z_h, R + 2*z_h, 10000)
+        rho_h   = [rho_h1, -1, rho_h2]
+        rho_pos = [R - z_h, R, R + z_h]
+        sigma   = [sigma_h1, sigma_c, sigma_h2]
+        rho = np.zeros_like(r)
+        for i in range(3):
+            rho += gaussian(r, rho_pos[i], sigma[i], rho_h[i])
     root_indices = []
     for i in range(len(r)):
         if ((rho[i-1]>0 and rho[i]<0) or (rho[i-1]<0 and rho[i]>0)) and (np.abs(r[i]) < z_h):
