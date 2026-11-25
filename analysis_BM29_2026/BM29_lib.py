@@ -11,14 +11,28 @@ from scipy.stats import f
 from scipy import optimize
 from scipy.optimize import curve_fit
 
-# COLORS
+# =================== COLORS ==================
+# color_dict = {
+#     "pure_lipid": "grey",
+#     "WT":       "dodgerblue",
+#     "A124T":    "crimson",
+#     "E46K":     "darkorange",
+#     "E61V":     "green",
+# }
 color_dict = {
-    "pure_lipid": "grey",
-    "WT": "dodgerblue",
-    "A124T": "crimson",
-    "E46K": "darkorange",
-    "E61V": "green",
+    "pure_lipid": ["grey", None],
+    "WT":         ["#332288", "Blues"],   # Indigo
+    "A124T":      ["#81527D", "Purples"], # Deep teal
+    "E46K":       ["#668044", "YlGn"],    # Forest
+    "E61V":       ["#B18A3B", "YlOrBr"],  # Ochre
+
+    "LV4":        ["#A64D5D", "Reds"],     # Crimson
+    "POPG":       ["#287C78", "Greens"],   # Plum
+    "DOPC_GM1":   ["#B46C3C", "Oranges"],  # Terracotta
+    "PCPS":       ["#52718B", "PuBu"],     # Steel blue
 }
+
+# =============================================
 
 def extract_sample_name(sample):
     sample = sample[:-13] + "_"
@@ -38,27 +52,30 @@ def blockpath(block):
 def gaussian(r, rho_pos, sigma, rho_h):
     return rho_h * np.exp(-0.5 * ((r - rho_pos) / sigma)**2)
 
-def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4"):
+def EDP_plot_together(who, title, fit_function="ULV_spheric_asym_C4", colortype=None):
     norm = LogNorm(vmin=1, vmax=100)
     c_min = 0
     c_max = 100
     f=plt.figure(figsize=(12, 7.5))
     for sample in who:
-        if "WT" in sample_dict[sample]:
-            cmap = plt.cm.Blues
-            variant = "WT"
-        elif "A124T" in sample_dict[sample]:
-            cmap = plt.cm.Reds
-            variant = "A124T"
-        elif "E46K" in sample_dict[sample]:
-            cmap = plt.cm.Oranges
-            variant = "E46K"
-        elif "E61V" in sample_dict[sample]:
-            cmap = plt.cm.Greens
-            variant = "E61V"
-        elif "G14R" in sample_dict[sample]:
-            cmap = plt.cm.Purples
-            variant = "G14R"
+        if colortype is not None:
+            cmap = plt.colormaps[color_dict[colortype][1]]
+        else:
+            if "WT" in sample_dict[sample]:
+                cmap = plt.cm.Blues
+                variant = "WT"
+            elif "A124T" in sample_dict[sample]:
+                cmap = plt.cm.Reds
+                variant = "A124T"
+            elif "E46K" in sample_dict[sample]:
+                cmap = plt.cm.Oranges
+                variant = "E46K"
+            elif "E61V" in sample_dict[sample]:
+                cmap = plt.cm.Greens
+                variant = "E61V"
+            elif "G14R" in sample_dict[sample]:
+                cmap = plt.cm.Purples
+                variant = "G14R"
 
         if concentrations[sample] == 0:
             color = "grey"
@@ -185,7 +202,7 @@ def normalized_gaussian(x, mu=0.0, sigma=1.0):
     """Normalized Gaussian (probability density): integrates to 1."""
     return np.exp(-0.5 * ((x - mu) / sigma) ** 2) / (sigma * np.sqrt(2 * np.pi))
 
-def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_lognormal"):
+def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_lognormal", colortype=None):
 
     plt.close("all")
 
@@ -196,21 +213,24 @@ def plot_together_lognorm_polydisp(who, fit_function_name="ULV_spheric_asym_C4_l
 
     for sample in who:
 
-        if "WT" in sample_dict[sample]:
-            cmap = plt.colormaps["Blues"]
-        elif "A124T" in sample_dict[sample]:
-            cmap = plt.colormaps["Reds"]
-        elif "E46K" in sample_dict[sample]:
-            cmap = plt.colormaps["Oranges"]
-        elif "E61V" in sample_dict[sample]:
-            cmap = plt.colormaps["Greens"]
-        elif "G14R" in sample_dict[sample]:
-            cmap = plt.cm.Purples
+        if colortype == None:
+            if "WT" in sample_dict[sample]:
+                cmap = plt.colormaps["Blues"]
+            elif "A124T" in sample_dict[sample]:
+                cmap = plt.colormaps["Reds"]
+            elif "E46K" in sample_dict[sample]:
+                cmap = plt.colormaps["Oranges"]
+            elif "E61V" in sample_dict[sample]:
+                cmap = plt.colormaps["Greens"]
+            elif "G14R" in sample_dict[sample]:
+                cmap = plt.cm.Purples
+        else:
+            cmap = plt.colormaps[color_dict[colortype][1]]
 
         R0, sigma = best_fits[sample][fit_function_name][1][0:2]
 
         R = np.linspace(0, R0 + 40, 1000)
-        if ((fit_function_name == "ULV_spheric_asym_C4_lognormal") or (fit_function_name == "ULV_lognormal_sph_asym_TWO_prot_layers")):
+        if ((fit_function_name == "ULV_spheric_asym_C4_lognormal") or (fit_function_name == "ULV_lognormal_sph_asym_prot_layer") or (fit_function_name == "ULV_lognormal_sph_asym_TWO_prot_layers")):
             P = lognorm.pdf(R, s=sigma, scale=R0)
         elif fit_function_name == "ULV_spheric_asym_C4":
             P = normalized_gaussian(R, mu=R0, sigma=sigma)
