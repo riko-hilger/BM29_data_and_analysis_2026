@@ -1014,14 +1014,14 @@ nice_sample_names = {
     "BXIII_S4": "15mM LV4 + 4μM Syn1",
     "BXIII_S5": "15mM LV4 + 6μM Syn1",
     "BXIII_S6": "15mM LV4 + 6μM Syn1 + 24μM aSynWT",
-    "BXIII_S11": "CSLB + 6μM Syn1",
-    "BXIII_S12": "CSLB + 4μM Syn1",
-    "BXIII_S13": "CSLB + 6μM Syn1 + 12μM aSynWT",
-    "BXIII_S14": "CSLB + 6μM Syn1 + 24μM aSynWT",
+    "BXIII_S11": "CSLBs + 6μM Syn1",
+    "BXIII_S12": "CSLBs + 4μM Syn1",
+    "BXIII_S13": "CSLBs + 6μM Syn1 + 12μM aSynWT",
+    "BXIII_S14": "CSLBs + 6μM Syn1 + 24μM aSynWT",
 
     "BXIV_S1": "15mM LV4 + 6μM Syn1 + 24μM ATP",
     "BXIV_S2": "23nM SVs + 6μM Syn1 + 24μM ATP",
-    "BXIV_S3": "CSLB + 6μM Syn1 + 24 μM ATP"
+    "BXIV_S3": "CSLBs + 6μM Syn1 + 24 μM ATP"
 }
 
 concentrations = {
